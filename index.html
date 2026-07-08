@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>SEC Survivor — Football 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --bg:#0A1B3D; --bg-2:#071433; --panel:#122A5C; --panel-2:#193569; --hair:#26417E;
+    --text:#F5F7FB; --text-dim:#AEBBDE; --text-faint:#6C7EAE;
+    --gold:#F2C230; --gold-dim:#4A3E17; --red:#E2685C; --red-dim:#3A1F26; --green:#5FBE8C;
+    --radius:14px; --disp:'Raleway', sans-serif; --body:'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:var(--body); min-height:100vh; padding-bottom:24px; font-variant-numeric:tabular-nums;}
+  html.lock-scroll, body.lock-scroll{overflow:hidden; height:100%; overscroll-behavior:none;}
+  body::before{
+    content:''; position:fixed; inset:0;
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(242,194,48,0.08), transparent 60%),
+      repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+    pointer-events:none; z-index:0;
+  }
+  .wrap{position:relative; z-index:1; max-width:640px; margin:0 auto;}
+
+  header{
+    padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+    border-bottom:1px solid var(--hair); background:linear-gradient(180deg, var(--bg-2), var(--bg) 90%);
+  }
+  .h-title{font-family:var(--disp); font-weight:800; font-size:16px; line-height:1.25; text-transform:uppercase; letter-spacing:.02em;}
+  .h-title small{display:block; font-size:11px; font-weight:700; color:var(--text-faint); letter-spacing:.1em;}
+  .h-tally{display:flex; align-items:baseline; gap:6px;}
+  .h-tally .num{font-family:var(--disp); font-weight:900; font-size:32px; color:var(--gold); text-shadow:0 0 18px rgba(242,194,48,.35);}
+  .h-tally .of{font-size:13px; font-weight:700; color:var(--text-dim);}
+  .h-tally-label{font-size:9.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); text-align:right;}
+
+  .tabs{display:flex; gap:6px; padding:14px 18px 0; position:sticky; top:0; z-index:5; background:var(--bg); flex-wrap:wrap;}
+  .tab{flex:1; min-width:88px; text-align:center; padding:11px 0; font-weight:700; font-size:13px; letter-spacing:.02em; color:var(--text-dim); background:var(--panel); border:1px solid var(--hair); border-radius:10px; cursor:pointer; user-select:none;}
+  .tab.active{color:var(--bg-2); background:var(--gold); border-color:var(--gold);}
+  main{padding:16px 18px 0;}
+  .view{display:none;} .view.active{display:block;}
+  .empty{text-align:center; padding:40px 20px; color:var(--text-faint); font-size:12.5px;}
+  .loading{text-align:center; padding:60px 20px; font-size:12.5px; color:var(--text-faint);}
+  .error{color:var(--red); text-align:center; padding:20px;}
+
+  /* ---- forms / panels ---- */
+  .panel{background:var(--panel); border:1px solid var(--hair); border-radius:var(--radius); padding:16px; margin-bottom:14px;}
+  .panel h3{margin:0 0 4px; font-size:15px; font-weight:800;}
+  .panel p.hint{margin:0 0 12px; font-size:12.5px; color:var(--text-faint);}
+  .field{margin-bottom:10px;}
+  .field label{display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); margin-bottom:5px;}
+  .field input{width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--hair); border-radius:8px; color:var(--text); font-family:var(--body); font-size:14.5px; outline:none;}
+  .field input:focus{border-color:var(--gold);}
+  .btn{display:inline-block; padding:11px 18px; border-radius:10px; font-weight:700; font-size:13.5px; border:1px solid var(--gold); background:var(--gold); color:var(--bg-2); cursor:pointer;}
+  .btn.secondary{background:transparent; color:var(--gold);}
+  .btn:disabled{opacity:.5; cursor:not-allowed;}
+  .msg{font-size:12.5px; padding:10px 12px; border-radius:8px; margin-top:10px;}
+  .msg.error-msg{background:var(--red-dim); color:#f0a29c; border:1px solid rgba(226,104,92,.4);}
+  .msg.ok-msg{background:var(--gold-dim); color:var(--gold); border:1px solid rgba(242,194,48,.4);}
+
+  .pick-option{display:flex; align-items:center; gap:10px; padding:11px 12px; border:1px solid var(--hair); border-radius:10px; margin-bottom:7px; cursor:pointer; background:var(--panel-2);}
+  .pick-option.selected{border-color:var(--gold); background:rgba(242,194,48,.08);}
+  .pick-option input{accent-color:var(--gold); width:16px; height:16px; flex:none;}
+  .pick-option .team-dot{width:11px; height:11px; border-radius:50%; flex:none;}
+  .pick-option .opt-name{flex:1; font-weight:700; font-size:14px;}
+  .pick-option .opt-meta{font-size:11px; color:var(--text-faint); font-weight:600;}
+  .pick-option .opt-tag{font-size:9.5px; font-weight:800; letter-spacing:.05em; padding:2px 7px; border-radius:999px; text-transform:uppercase;}
+  .opt-tag.g5{background:rgba(226,104,92,.14); color:var(--red);}
+  .opt-tag.nc{background:rgba(242,194,48,.14); color:var(--gold);}
+  .allowance-row{display:flex; gap:8px; margin-bottom:14px;}
+  .allowance{flex:1; background:var(--panel-2); border:1px solid var(--hair); border-radius:10px; padding:10px; text-align:center;}
+  .allowance .v{font-weight:800; font-size:18px; color:var(--gold);}
+  .allowance .l{font-size:9.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-faint); margin-top:2px;}
+  .current-pick-banner{padding:11px 14px; border-radius:10px; background:var(--gold-dim); border:1px solid rgba(242,194,48,.4); color:var(--gold); font-size:12.5px; font-weight:700; margin-bottom:14px; text-align:center;}
+  .current-pick-banner.locked{background:var(--red-dim); color:#f0a29c; border-color:rgba(226,104,92,.4);}
+
+  .card{position:relative; display:flex; align-items:center; gap:12px; padding:13px 14px; background:var(--panel); border:1px solid var(--hair); border-radius:var(--radius); margin-bottom:8px; cursor:pointer;}
+  .card.alive{border-color:rgba(242,194,48,0.35);}
+  .card .avatar{flex:none; width:14px;height:14px; border-radius:50%; background:var(--tc, var(--text-faint));}
+  .card.dead .avatar{opacity:0.5;}
+  .card .info{flex:1; min-width:0;}
+  .card .name{font-weight:700; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .card.dead .name{color:var(--text-dim);}
+  .card .sub{font-size:11.5px; color:var(--text-faint); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .card .badge{flex:none; font-size:10.5px; font-weight:700; letter-spacing:.05em; padding:4px 9px; border-radius:999px;}
+  .badge.alive{background:rgba(242,194,48,0.14); color:var(--gold); border:1px solid rgba(242,194,48,0.4);}
+  .badge.dead{background:rgba(226,104,92,0.1); color:var(--red); border:1px solid rgba(226,104,92,0.3);}
+  .card .chev{color:var(--text-faint); font-size:16px; flex:none;}
+
+  .grid-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid rgba(255,255,255,0.14); border-radius:12px;}
+  table.grid{border-collapse:separate; border-spacing:0; width:max-content;}
+  table.grid thead th{position:sticky; top:0; z-index:3; background:var(--panel-2); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--gold); padding:11px 6px; text-align:center; border-bottom:2px solid rgba(242,194,48,0.45); font-weight:800; min-width:56px;}
+  table.grid th.corner{position:sticky; left:0; top:0; z-index:5; background:var(--panel-2); text-align:left; padding:11px 10px; border-right:1px solid rgba(255,255,255,0.14); min-width:108px; color:var(--text);}
+  table.grid td.name-cell{position:sticky; left:0; z-index:2; background:var(--panel); border-right:1px solid rgba(255,255,255,0.14); padding:8px 10px; text-align:left; min-width:108px; max-width:108px; cursor:pointer;}
+  table.grid tr.dead td.name-cell{background:var(--bg-2);}
+  .name-cell .name-inner{display:flex; align-items:center; gap:7px; min-width:0;}
+  .name-cell .team-dot{flex:none; width:9px;height:9px; border-radius:50%; background:var(--tc, var(--text-faint));}
+  .name-cell .name-text{flex:1; min-width:0; font-weight:700; font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  tr.dead .name-cell .name-text{color:var(--text-faint); text-decoration:line-through; text-decoration-color:var(--red); font-weight:600;}
+  table.grid tbody tr{background:var(--panel);} table.grid tbody tr.dead{background:var(--bg-2);}
+  table.grid tbody td{padding:8px 5px; text-align:center; font-size:11.5px; font-weight:700; border-bottom:1px solid rgba(255,255,255,0.08); border-right:1px solid rgba(255,255,255,0.06); white-space:nowrap; color:var(--text-dim);}
+  table.grid tbody tr:last-child td{border-bottom:none;}
+  td.pick.win{color:var(--green);}
+  td.pick.loss{background:rgba(226,104,92,0.18); color:#F7C9C3; text-decoration:line-through; font-weight:800;}
+  td.pick.neutral{color:var(--text-dim);} td.pick.empty{color:var(--text-faint); font-weight:400;}
+  td.pick.hidden-pick{color:var(--text-faint); font-style:italic; font-weight:400;}
+  td.pick.dead-week{background:repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 6px, rgba(255,255,255,0.06) 6px 12px); color:var(--text-faint); font-weight:400;}
+
+  .overlay{position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:20; opacity:0; pointer-events:none; transition:opacity .25s ease;}
+  .overlay.open{opacity:1; pointer-events:auto;}
+  .sheet{position:fixed; left:0; right:0; bottom:0; max-width:640px; margin:0 auto; max-height:94vh; max-height:94dvh; background:var(--bg-2); border-top:1px solid var(--hair); border-radius:20px 20px 0 0; transform:translateY(100%); transition:transform .3s cubic-bezier(.4,0,.2,1); z-index:21; display:flex; flex-direction:column; overflow:hidden;}
+  .sheet.open{transform:translateY(0);}
+  .sheet-top{flex:none; position:relative; background:var(--bg-2); padding-top:env(safe-area-inset-top,0px);}
+  .sheet-scroll{flex:1 1 auto; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));}
+  .sheet-handle{width:36px; height:4px; border-radius:99px; background:var(--hair); margin:10px auto 4px;}
+  .sheet-head{padding:14px 20px 16px; border-bottom:1px solid var(--hair);}
+  .sheet-head .name{font-family:var(--disp); font-size:26px; text-transform:uppercase;}
+  .stat-row{display:flex; gap:8px; padding:14px 20px 4px; flex-wrap:wrap;}
+  .stat{flex:1; min-width:88px; background:var(--panel); border:1px solid var(--hair); border-radius:10px; padding:9px 10px; text-align:center;}
+  .stat .v{font-size:16px; font-weight:600; color:var(--gold);}
+  .stat .v.out-status{color:var(--red);}
+  .stat .l{font-size:9.5px; letter-spacing:.06em; color:var(--text-faint); text-transform:uppercase; margin-top:2px;}
+  .week-section{padding:16px 20px 4px;}
+  .week-section h3{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); margin:0 0 10px; font-weight:700;}
+  .timeline{padding:16px 20px 4px;}
+  .week-row{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--hair);}
+  .week-row:last-child{border-bottom:none;}
+  .week-row .wk{flex:none; width:34px; font-size:11px; color:var(--text-faint);}
+  .team-chip{flex:1; display:flex; align-items:center; gap:9px; min-width:0;}
+  .team-dot{width:10px;height:10px;border-radius:3px; flex:none;}
+  .team-name{font-weight:600; font-size:14.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .team-name .opp-context{font-weight:400; color:var(--text-faint); font-size:12.5px;}
+  .team-name.empty{color:var(--text-faint); font-weight:400; font-style:italic;}
+  .team-name.lost{color:#F7C9C3; text-decoration:line-through; text-decoration-color:var(--red);}
+  .result-icon{flex:none; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800;}
+  .result-icon.win{background:rgba(95,190,140,0.14); color:var(--green);}
+  .result-icon.loss{background:rgba(226,104,92,0.14); color:var(--red);}
+  .result-icon.pending{background:var(--panel-2); color:var(--text-faint);}
+  .out-banner{margin:14px 20px 0; padding:11px 14px; background:var(--red-dim); border:1px solid rgba(226,104,92,0.4); border-radius:10px; font-size:12px; color:#f0a29c; text-align:center; font-weight:700;}
+  .alive-banner{margin:14px 20px 0; padding:11px 14px; background:var(--gold-dim); border:1px solid rgba(242,194,48,0.4); border-radius:10px; font-size:12px; color:var(--gold); text-align:center; font-weight:700;}
+  .close-btn{position:absolute; top:12px; right:14px; width:30px;height:30px; border-radius:50%; background:var(--panel); border:1px solid var(--hair); color:var(--text-dim); display:flex;align-items:center;justify-content:center; font-size:16px; cursor:pointer; z-index:2;}
+
+  .admin-row{display:flex; align-items:center; gap:8px; padding:9px 0; border-bottom:1px solid var(--hair); font-size:13px;}
+  .admin-row:last-child{border-bottom:none;}
+  .admin-row .an{flex:1; font-weight:700;}
+  .admin-row select{background:var(--panel-2); border:1px solid var(--hair); color:var(--text); border-radius:6px; padding:5px 8px; font-size:12.5px;}
+  .admin-row button{background:none; border:1px solid var(--red); color:var(--red); border-radius:6px; padding:5px 9px; font-size:11.5px; cursor:pointer;}
+  .commish-link{text-align:center; padding:18px; font-size:11px; color:var(--text-faint); cursor:pointer; text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="h-title">SEC SURVIVOR<small>FOOTBALL — 2026</small></div>
+    <div>
+      <div class="h-tally"><span class="num" id="aliveCount">–</span><span class="of" id="totalCount">/ –</span></div>
+      <div class="h-tally-label">Still Standing</div>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="grid">Picks Grid</div>
+    <div class="tab" data-tab="players">Players</div>
+    <div class="tab" data-tab="mypick">My Pick</div>
+  </div>
+
+  <main>
+    <div id="loadingMsg" class="loading">Loading the pool…</div>
+    <div id="errorMsg" class="error" style="display:none;"></div>
+
+    <div class="view active" id="view-grid"></div>
+    <div class="view" id="view-players"><div id="playersList"></div></div>
+    <div class="view" id="view-mypick"><div id="myPickPanel"></div></div>
+  </main>
+
+  <div class="commish-link" id="commishLink">Commissioner</div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-top"><div class="close-btn" id="closeSheet">✕</div><div class="sheet-handle"></div></div>
+  <div class="sheet-scroll" id="sheetScroll"><div id="sheetContent"></div></div>
+</div>
+
+<script>
+/* ======================== CONFIG ======================== */
+const SUPABASE_URL = 'https://zdifdapuotcxlhdglmwu.supabase.co';   // <-- fill in
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkaWZkYXB1b3RjeGxoZGdsbXd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1Mzg5NjQsImV4cCI6MjA5OTExNDk2NH0.hV5WgR3Fug6oib6DE6MgAG_iSsKz-qLTu_DBmoepk_s
+';                 // <-- fill in
+const SEASON_YEAR = 2026;
+const WEEKS = 14;
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const SEC_TEAMS = [
+  'Alabama','Arkansas','Auburn','Florida','Georgia','Kentucky','LSU',
+  'Mississippi State','Missouri','Oklahoma','Ole Miss','South Carolina',
+  'Tennessee','Texas','Texas A&M','Vanderbilt'
+];
+const TEAM_COLORS = {
+  'Alabama':'#9E1B32','Arkansas':'#9D2235','Auburn':'#DD550C','Florida':'#0021A5',
+  'Georgia':'#BA0C2F','Kentucky':'#0033A0','LSU':'#461D7C','Mississippi State':'#660000',
+  'Missouri':'#F1B82D','Oklahoma':'#841617','Ole Miss':'#CE1126','South Carolina':'#73000A',
+  'Tennessee':'#FF8200','Texas':'#BF5700','Texas A&M':'#500000','Vanderbilt':'#866D4B'
+};
+function teamColor(name){ return TEAM_COLORS[name] || '#5d636e'; }
+function teamAbbr(name){ return name ? name.slice(0,4).toUpperCase() : ''; }
+
+/* ======================== IDENTITY ======================== */
+const IDENTITY_KEY = 'secsurv2026_identity';
+function loadIdentity(){ try{ return JSON.parse(localStorage.getItem(IDENTITY_KEY)); }catch(e){ return null; } }
+function saveIdentity(obj){ localStorage.setItem(IDENTITY_KEY, JSON.stringify(obj)); }
+
+(function adoptLinkIdentity(){
+  const params = new URLSearchParams(location.search);
+  if(params.get('pid') && params.get('tok')){
+    saveIdentity({ id: params.get('pid'), token: params.get('tok'), name: params.get('name') || '' });
+    history.replaceState({}, '', location.pathname);
+  }
+})();
+let IDENTITY = loadIdentity();
+
+function randomToken(){
+  return (crypto.randomUUID() + crypto.randomUUID()).replace(/-/g, '');
+}
+
+/* ======================== DATA LOADING ======================== */
+let GAMES = [];           // all rows from `games`
+let CLASSIFICATION = {};  // opponent -> {eligible, category}
+let PLAYERS_RAW = [];     // {id, name}
+let BOARD_ROWS = [];      // from get_public_board(): {player_id, player_name, week, team, revealed}
+let MY_PICKS = [];        // from get_my_picks(), only if IDENTITY set
+
+async function loadAll(){
+  const [{ data: games, error: e1 }, { data: cls, error: e2 }, { data: players, error: e3 }, { data: board, error: e4 }] =
+    await Promise.all([
+      sb.from('games').select('*'),
+      sb.from('opponent_classification').select('*'),
+      sb.from('players_public').select('*'),
+      sb.rpc('get_public_board')
+    ]);
+  if(e1) throw e1; if(e2) throw e2; if(e3) throw e3; if(e4) throw e4;
+
+  GAMES = games || [];
+  CLASSIFICATION = {};
+  (cls || []).forEach(r => CLASSIFICATION[r.opponent] = r);
+  PLAYERS_RAW = players || [];
+  BOARD_ROWS = board || [];
+
+  if(IDENTITY){
+    const { data: mine, error: e5 } = await sb.rpc('get_my_picks', { p_player_id: IDENTITY.id, p_token: IDENTITY.token });
+    if(e5){
+      // stale/invalid identity — drop it
+      localStorage.removeItem(IDENTITY_KEY);
+      IDENTITY = null;
+      MY_PICKS = [];
+    } else {
+      MY_PICKS = mine || [];
+    }
+  } else {
+    MY_PICKS = [];
+  }
+}
+
+/* ---- schedule helpers (mirror the SQL logic, client-side, display-only) ---- */
+function gameFor(week, team){
+  return GAMES.find(g => g.week === week && (g.home === team || g.away === team)) || null;
+}
+function opponentOf(week, team){
+  const g = gameFor(week, team);
+  if(!g) return null;
+  return g.home === team ? g.away : g.home;
+}
+function classifyPick(week, team){
+  const opp = opponentOf(week, team);
+  if(!opp) return 'invalid';
+  if(SEC_TEAMS.includes(opp)) return 'conference';
+  const row = CLASSIFICATION[opp];
+  if(!row || !row.eligible) return 'ineligible';
+  return row.category; // 'g5' | 'not_g5'
+}
+function weekDeadline(week){
+  const weekGames = GAMES.filter(g => g.week === week);
+  if(weekGames.length === 0) return null;
+  const earliest = weekGames.reduce((a,b) => new Date(a.kickoff_at) < new Date(b.kickoff_at) ? a : b);
+  const d = new Date(earliest.kickoff_at); // UTC instant is fine for comparison purposes
+  // find the on/after Saturday in Central-time terms (approx: treat as UTC date math,
+  // good enough for display since the DB is authoritative for actual enforcement)
+  const dow = d.getUTCDay(); // 0=Sun..6=Sat
+  const add = (6 - dow + 7) % 7;
+  const sat = new Date(d); sat.setUTCDate(d.getUTCDate() + add);
+  // 10:59am Central ≈ 15:59 UTC (16:59 during CST) — close enough for display gating;
+  // the database is the source of truth for actual lock enforcement.
+  sat.setUTCHours(15, 59, 0, 0);
+  return sat;
+}
+function pickEditableUntil(week, team){
+  const g = gameFor(week, team);
+  if(!g) return null;
+  const wd = weekDeadline(week);
+  const ko = new Date(g.kickoff_at);
+  return (wd && wd < ko) ? wd : ko;
+}
+function resultFor(week, team){
+  const g = gameFor(week, team);
+  if(!g || !g.winner) return null;
+  return g.winner === team ? 1 : 0;
+}
+
+/* ======================== BUILD PLAYER MODEL ======================== */
+function buildPlayers(){
+  return PLAYERS_RAW.map(p => {
+    const rows = BOARD_ROWS.filter(r => r.player_id === p.id).sort((a,b)=>a.week-b.week);
+    const isMe = IDENTITY && IDENTITY.id === p.id;
+    const picks = [];
+    const revealed = [];
+    for(let w=1; w<=WEEKS; w++){
+      if(isMe){
+        const mine = MY_PICKS.find(m => m.week === w);
+        picks.push(mine ? mine.team : null);
+        revealed.push(true);
+      } else {
+        const row = rows.find(r => r.week === w);
+        picks.push(row ? row.team : null); // null if not picked OR not yet revealed
+        revealed.push(row ? row.revealed : false);
+      }
+    }
+    const results = picks.map((pick, i) => pick ? resultFor(i+1, pick) : null);
+    let eliminatedWeek = null;
+    for(let w=0; w<WEEKS; w++){
+      if(revealed[w] && results[w] === 0){ eliminatedWeek = w+1; break; }
+    }
+    const alive = eliminatedWeek === null;
+
+    let nonConLeft = 3, g5Left = 1;
+    picks.forEach((pick, i) => {
+      if(!pick) return;
+      const cat = classifyPick(i+1, pick);
+      if(cat === 'g5' || cat === 'not_g5') nonConLeft--;
+      if(cat === 'g5') g5Left--;
+    });
+
+    return { id: p.id, name: p.name, alive, picks, revealed, results, eliminatedWeek, nonConLeft, g5Left, isMe };
+  });
+}
+
+let ALL_PLAYERS = [];
+let CURRENT_WEEK = 1;
+
+function computeCurrentWeek(){
+  let w = 1;
+  GAMES.forEach(g => { if(g.week > w) w = g.week; });
+  return w;
+}
+
+/* ======================== RENDER: GRID ======================== */
+function renderGrid(){
+  const alive = ALL_PLAYERS.filter(p=>p.alive);
+  const dead = ALL_PLAYERS.filter(p=>!p.alive).sort((a,b)=>(b.eliminatedWeek||0)-(a.eliminatedWeek||0));
+  const ordered = [...alive, ...dead];
+  const shownWeeks = Math.max(CURRENT_WEEK, 1);
+
+  let head = '<th class="corner">Player</th>';
+  for(let w=1; w<=shownWeeks; w++) head += `<th data-week="${w}">Wk ${w}</th>`;
+
+  const bodyRows = ordered.map(p => {
+    let cells = '';
+    for(let w=0; w<shownWeeks; w++){
+      const wk = w+1;
+      const pastElim = !p.alive && p.eliminatedWeek && wk > p.eliminatedWeek;
+      const pick = p.picks[w];
+      const result = p.results[w];
+      const isRevealed = p.revealed[w];
+      if(pastElim){
+        cells += `<td class="pick dead-week">—</td>`;
+      } else if(!isRevealed && wk === CURRENT_WEEK){
+        cells += `<td class="pick hidden-pick" title="Hidden until Sat 11am CT">•</td>`;
+      } else if(!pick){
+        cells += `<td class="pick empty">–</td>`;
+      } else if(result === 0){
+        cells += `<td class="pick loss" title="${pick}">${teamAbbr(pick)}</td>`;
+      } else if(result === 1){
+        cells += `<td class="pick win" title="${pick}">${teamAbbr(pick)}</td>`;
+      } else {
+        cells += `<td class="pick neutral" title="${pick}">${teamAbbr(pick)}</td>`;
+      }
+    }
+    return `<tr class="${p.alive?'alive':'dead'}"><td class="name-cell" data-id="${p.id}">
+      <div class="name-inner"><div class="team-dot" style="--tc:${teamColor('')}"></div>
+      <div class="name-text">${p.name}${p.isMe ? ' (you)' : ''}</div></div></td>${cells}</tr>`;
+  }).join('');
+
+  document.getElementById('view-grid').innerHTML = ordered.length
+    ? `<div class="grid-wrap"><table class="grid"><thead><tr>${head}</tr></thead><tbody>${bodyRows}</tbody></table></div>`
+    : `<div class="empty">Nobody has signed up yet — be the first on the "My Pick" tab.</div>`;
+
+  document.querySelectorAll('#view-grid td.name-cell').forEach(cell => {
+    cell.addEventListener('click', () => openPlayerSheet(cell.dataset.id));
+  });
+}
+
+/* ======================== RENDER: PLAYERS ======================== */
+function renderPlayers(){
+  const sorted = [...ALL_PLAYERS].sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById('playersList').innerHTML = sorted.map(p => {
+    const lastRevealedWeek = p.revealed.map((r,i)=>r && p.picks[i] ? i+1 : null).filter(Boolean).pop();
+    const sub = p.alive
+      ? (lastRevealedWeek ? `Week ${lastRevealedWeek}: ${p.picks[lastRevealedWeek-1]}` : 'No revealed picks yet')
+      : `Out — Week ${p.eliminatedWeek}`;
+    return `<div class="card ${p.alive?'alive':'dead'}" data-id="${p.id}">
+      <div class="avatar"></div>
+      <div class="info"><div class="name">${p.name}${p.isMe?' (you)':''}</div><div class="sub">${sub}</div></div>
+      <div class="badge ${p.alive?'alive':'dead'}">${p.alive?'ALIVE':'OUT'}</div>
+      <div class="chev">›</div>
+    </div>`;
+  }).join('') || `<div class="empty">No players yet.</div>`;
+
+  document.querySelectorAll('#playersList .card').forEach(card => {
+    card.addEventListener('click', () => openPlayerSheet(card.dataset.id));
+  });
+}
+
+/* ======================== SHEET: player detail ======================== */
+function openPlayerSheet(id){
+  const p = ALL_PLAYERS.find(x => x.id === id);
+  if(!p) return;
+  const statRow = `<div class="stat-row">
+    <div class="stat"><div class="v ${p.alive?'':'out-status'}">${p.alive?'ALIVE':'OUT'}</div><div class="l">Status</div></div>
+    <div class="stat"><div class="v">${p.isMe ? p.nonConLeft : '—'}</div><div class="l">Non-Con Left</div></div>
+    <div class="stat"><div class="v">${p.isMe ? p.g5Left : '—'}</div><div class="l">G5 Left</div></div>
+  </div>`;
+  const banner = p.alive
+    ? `<div class="alive-banner">STILL STANDING</div>`
+    : `<div class="out-banner">ELIMINATED — WEEK ${p.eliminatedWeek}</div>`;
+
+  const lastRow = !p.alive ? p.eliminatedWeek : CURRENT_WEEK;
+  let timeline = '<div class="timeline">';
+  for(let w=0; w<lastRow; w++){
+    const pick = p.picks[w];
+    const revealed = p.revealed[w];
+    const result = p.results[w];
+    const opp = pick ? opponentOf(w+1, pick) : null;
+    let icon = '';
+    if(revealed && pick){
+      icon = result === 1 ? `<div class="result-icon win">✓</div>`
+           : result === 0 ? `<div class="result-icon loss">✕</div>`
+           : `<div class="result-icon pending">·</div>`;
+    } else if(!revealed && w+1 === CURRENT_WEEK){
+      icon = `<div class="result-icon pending">?</div>`;
+    }
+    const label = revealed
+      ? (pick ? `${pick}${opp ? ` <span class="opp-context">(vs ${opp})</span>` : ''}` : 'No pick')
+      : 'Hidden until Sat 11am';
+    const lost = revealed && result === 0;
+    timeline += `<div class="week-row"><div class="wk">W${w+1}</div>
+      <div class="team-chip">${revealed && pick ? `<div class="team-dot" style="background:${teamColor(pick)}"></div>`:''}
+      <div class="team-name ${!revealed || !pick ? 'empty':''} ${lost?'lost':''}">${label}</div></div>${icon}</div>`;
+  }
+  timeline += '</div>';
+
+  document.getElementById('sheetContent').innerHTML =
+    `<div class="sheet-head"><div class="name">${p.name}</div></div>${statRow}${banner}${timeline}`;
+  showSheet();
+}
+
+/* ======================== MY PICK TAB ======================== */
+function renderMyPick(){
+  const el = document.getElementById('myPickPanel');
+  if(!IDENTITY){
+    el.innerHTML = renderSignupForm();
+    wireSignupForm();
+    return;
+  }
+  const me = ALL_PLAYERS.find(p => p.id === IDENTITY.id);
+  const nonConLeft = me ? me.nonConLeft : 3;
+  const g5Left = me ? me.g5Left : 1;
+  const usedTeams = new Set((me ? me.picks : []).filter(Boolean));
+
+  const weeksWithGames = [...new Set(GAMES.map(g=>g.week))].sort((a,b)=>a-b);
+  let targetWeek = weeksWithGames.find(w => {
+    const mine = MY_PICKS.find(m => m.week === w);
+    if(!mine) return true;
+    return mine.editable_until && new Date(mine.editable_until) > new Date();
+  });
+  if(targetWeek === undefined) targetWeek = weeksWithGames[weeksWithGames.length-1] || 1;
+
+  el.innerHTML = `
+    <div class="panel">
+      <h3>Week ${targetWeek}</h3>
+      <p class="hint">Signed in as <strong>${IDENTITY.name || 'you'}</strong></p>
+      <div class="allowance-row">
+        <div class="allowance"><div class="v">${nonConLeft}</div><div class="l">Non-Con Left</div></div>
+        <div class="allowance"><div class="v">${g5Left}</div><div class="l">G5 Left</div></div>
+      </div>
+      <div id="pickOptions"></div>
+      <div id="pickMsg"></div>
+    </div>`;
+
+  renderPickOptionsFor(targetWeek, usedTeams, nonConLeft, g5Left);
+}
+
+function renderPickOptionsFor(week, usedTeams, nonConLeft, g5Left){
+  const container = document.getElementById('pickOptions');
+  const existing = MY_PICKS.find(m => m.week === week);
+  const now = new Date();
+
+  if(existing){
+    const until = existing.editable_until ? new Date(existing.editable_until) : null;
+    const locked = until && until <= now;
+    container.insertAdjacentHTML('afterbegin',
+      `<div class="current-pick-banner ${locked?'locked':''}">
+        ${locked ? `Locked on ${existing.team}` : `Currently: ${existing.team} — editable until ${until ? until.toLocaleString() : '—'}`}
+      </div>`);
+  }
+
+  const weekGames = GAMES.filter(g => g.week === week);
+  const options = [];
+  weekGames.forEach(g => {
+    [g.home, g.away].forEach(team => {
+      if(!SEC_TEAMS.includes(team)) return;
+      if(usedTeams.has(team) && !(existing && existing.team === team)) return;
+      const cat = classifyPick(week, team);
+      if(cat === 'ineligible' || cat === 'invalid') return;
+      if((cat === 'g5' || cat === 'not_g5') && nonConLeft <= 0 && !(existing && existing.team === team)) return;
+      if(cat === 'g5' && g5Left <= 0 && !(existing && existing.team === team)) return;
+      const editableUntil = pickEditableUntil(week, team);
+      if(editableUntil && editableUntil <= now) return;
+      options.push({ team, opp: opponentOf(week, team), cat, editableUntil });
+    });
+  });
+
+  if(options.length === 0){
+    container.insertAdjacentHTML('beforeend', `<div class="empty">No eligible, open picks remain for this week.</div>`);
+    return;
+  }
+
+  container.insertAdjacentHTML('beforeend', options.map(o => `
+    <label class="pick-option ${existing && existing.team===o.team ? 'selected':''}">
+      <input type="radio" name="pickteam" value="${o.team}" ${existing && existing.team===o.team ? 'checked':''}>
+      <div class="team-dot" style="background:${teamColor(o.team)}"></div>
+      <div class="opt-name">${o.team} <span class="opt-meta">vs ${o.opp}</span></div>
+      ${o.cat==='g5' ? '<span class="opt-tag g5">G5</span>' : ''}
+      ${o.cat==='not_g5' ? '<span class="opt-tag nc">Non-Con</span>' : ''}
+    </label>`).join('') +
+    `<button class="btn" id="submitPickBtn" style="margin-top:8px;">Save Pick</button>`);
+
+  document.getElementById('submitPickBtn').addEventListener('click', async () => {
+    const chosen = container.querySelector('input[name="pickteam"]:checked');
+    const msg = document.getElementById('pickMsg');
+    if(!chosen){ msg.innerHTML = `<div class="msg error-msg">Pick a team first.</div>`; return; }
+    try{
+      const { error } = await sb.rpc('submit_pick', { p_player_id: IDENTITY.id, p_token: IDENTITY.token, p_week: week, p_team: chosen.value });
+      if(error) throw error;
+      msg.innerHTML = `<div class="msg ok-msg">Pick saved: ${chosen.value}.</div>`;
+      await refreshAll();
+    } catch(err){
+      msg.innerHTML = `<div class="msg error-msg">${err.message || err}</div>`;
+    }
+  });
+}
+
+function renderSignupForm(){
+  const deadline = weekDeadline(1);
+  const closed = deadline && new Date() >= deadline;
+  if(closed){
+    return `<div class="panel"><h3>Signups are closed</h3><p class="hint">Week 1 has locked. If you're a returning player who lost your link, use recovery below.</p>${recoveryFormHTML()}</div>`;
+  }
+  const week1Games = GAMES.filter(g => g.week === 1);
+  const options = week1Games.filter(g => SEC_TEAMS.includes(g.home) || SEC_TEAMS.includes(g.away))
+    .flatMap(g => [g.home, g.away].filter(t => SEC_TEAMS.includes(t)).map(t => ({ team: t, opp: opponentOf(1, t) })))
+    .filter(o => { const c = classifyPick(1, o.team); return c !== 'ineligible' && c !== 'invalid'; });
+
+  return `<div class="panel">
+    <h3>Join the Pool</h3>
+    <p class="hint">Pick a name and your Week 1 team to get started. This creates your personal access — bookmark this page on this device, or use the link we give you to open it elsewhere.</p>
+    <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Jordan Smith"></div>
+    <div class="field"><label>Recovery Word (optional, lets you regain access if you lose your link)</label><input type="text" id="suRecovery" placeholder="e.g. a memorable word"></div>
+    <div class="field"><label>Week 1 Pick</label>
+      <select id="suTeam" style="width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--hair); border-radius:8px; color:var(--text); font-size:14.5px;">
+        <option value="">Choose a team…</option>
+        ${options.map(o => `<option value="${o.team}">${o.team} (vs ${o.opp})</option>`).join('')}
+      </select>
+    </div>
+    <button class="btn" id="signupBtn">Sign Up & Submit Pick</button>
+    <div id="signupMsg"></div>
+    <div style="margin-top:18px; border-top:1px solid var(--hair); padding-top:14px;">
+      <p class="hint">Already signed up on another device?</p>
+      ${recoveryFormHTML()}
+    </div>
+  </div>`;
+}
+
+function recoveryFormHTML(){
+  return `<div class="field"><label>Name</label><input type="text" id="recName"></div>
+    <div class="field"><label>Recovery Word</label><input type="text" id="recWord"></div>
+    <button class="btn secondary" id="recoverBtn">Recover My Access</button>
+    <div id="recoverMsg"></div>`;
+}
+
+function wireSignupForm(){
+  const signupBtn = document.getElementById('signupBtn');
+  if(signupBtn){
+    signupBtn.addEventListener('click', async () => {
+      const name = document.getElementById('suName').value.trim();
+      const recovery = document.getElementById('suRecovery').value.trim();
+      const team = document.getElementById('suTeam').value;
+      const msg = document.getElementById('signupMsg');
+      if(!name || !team){ msg.innerHTML = `<div class="msg error-msg">Name and a Week 1 pick are both required.</div>`; return; }
+      try{
+        const token = randomToken();
+        const { data, error } = await sb.rpc('signup', { p_name: name, p_token: token, p_recovery: recovery || null, p_week1_team: team });
+        if(error) throw error;
+        IDENTITY = { id: data, token, name };
+        saveIdentity(IDENTITY);
+        msg.innerHTML = `<div class="msg ok-msg">Welcome, ${name}! Your pick is in.</div>`;
+        await refreshAll();
+      } catch(err){
+        msg.innerHTML = `<div class="msg error-msg">${err.message || err}</div>`;
+      }
+    });
+  }
+  const recoverBtn = document.getElementById('recoverBtn');
+  if(recoverBtn){
+    recoverBtn.addEventListener('click', async () => {
+      const name = document.getElementById('recName').value.trim();
+      const word = document.getElementById('recWord').value.trim();
+      const msg = document.getElementById('recoverMsg');
+      try{
+        const token = randomToken();
+        const { data, error } = await sb.rpc('recover_player', { p_name: name, p_recovery: word, p_new_token: token });
+        if(error) throw error;
+        IDENTITY = { id: data, token, name };
+        saveIdentity(IDENTITY);
+        msg.innerHTML = `<div class="msg ok-msg">Access restored.</div>`;
+        await refreshAll();
+      } catch(err){
+        msg.innerHTML = `<div class="msg error-msg">${err.message || err}</div>`;
+      }
+    });
+  }
+}
+
+/* ======================== SHEET open/close ======================== */
+function showSheet(){
+  document.getElementById('sheetScroll').scrollTop = 0;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('sheet').classList.add('open');
+  document.documentElement.classList.add('lock-scroll');
+  document.body.classList.add('lock-scroll');
+}
+function closeSheet(){
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('sheet').classList.remove('open');
+  document.documentElement.classList.remove('lock-scroll');
+  document.body.classList.remove('lock-scroll');
+}
+document.getElementById('overlay').addEventListener('click', closeSheet);
+document.getElementById('closeSheet').addEventListener('click', closeSheet);
+
+/* ======================== COMMISSIONER MODE ======================== */
+document.getElementById('commishLink').addEventListener('click', async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if(session){ openAdminSheet(); return; }
+  const email = prompt('Commissioner email:');
+  if(!email) return;
+  const password = prompt('Password:');
+  if(!password) return;
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if(error){ alert('Sign-in failed: ' + error.message); return; }
+  openAdminSheet();
+});
+
+async function openAdminSheet(){
+  const { data, error } = await sb.rpc('admin_get_all_picks');
+  if(error){ alert('Not authorized as commissioner: ' + error.message); return; }
+  const rows = data || [];
+  const allTeams = SEC_TEAMS;
+  document.getElementById('sheetContent').innerHTML = `
+    <div class="sheet-head"><div class="name">Commissioner</div></div>
+    <div class="week-section"><h3>All Picks</h3>
+      ${rows.map(r => `<div class="admin-row">
+        <div class="an">${r.player_name} — Wk ${r.week}</div>
+        <select data-pid="${r.player_id}" data-week="${r.week}" class="admin-team-select">
+          ${allTeams.map(t => `<option value="${t}" ${t===r.team?'selected':''}>${t}</option>`).join('')}
+        </select>
+        <button class="admin-del" data-pid="${r.player_id}" data-week="${r.week}">Delete</button>
+      </div>`).join('') || '<div class="empty">No picks yet.</div>'}
+    </div>`;
+  showSheet();
+
+  document.querySelectorAll('.admin-team-select').forEach(sel => {
+    sel.addEventListener('change', async () => {
+      const { error } = await sb.rpc('admin_set_pick', { p_player_id: sel.dataset.pid, p_week: Number(sel.dataset.week), p_team: sel.value, p_note: 'edited by commissioner' });
+      if(error) alert(error.message); else await refreshAll();
+    });
+  });
+  document.querySelectorAll('.admin-del').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if(!confirm('Delete this pick?')) return;
+      const { error } = await sb.rpc('admin_delete_pick', { p_player_id: btn.dataset.pid, p_week: Number(btn.dataset.week) });
+      if(error) alert(error.message); else { await refreshAll(); openAdminSheet(); }
+    });
+  });
+}
+
+/* ======================== TABS ======================== */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('view-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+/* ======================== MAIN ======================== */
+async function refreshAll(){
+  await loadAll();
+  CURRENT_WEEK = computeCurrentWeek();
+  ALL_PLAYERS = buildPlayers();
+  const aliveCount = ALL_PLAYERS.filter(p=>p.alive).length;
+  document.getElementById('aliveCount').textContent = ALL_PLAYERS.length ? aliveCount : '–';
+  document.getElementById('totalCount').textContent = '/ ' + ALL_PLAYERS.length;
+  renderGrid();
+  renderPlayers();
+  renderMyPick();
+}
+
+(async function init(){
+  try{
+    await refreshAll();
+    document.getElementById('loadingMsg').style.display = 'none';
+  } catch(err){
+    console.error(err);
+    document.getElementById('loadingMsg').style.display = 'none';
+    const el = document.getElementById('errorMsg');
+    el.style.display = 'block';
+    el.textContent = 'Could not load the pool: ' + (err.message || err);
+  }
+})();
+</script>
+</body>
+</html>

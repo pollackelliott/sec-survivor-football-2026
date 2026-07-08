@@ -1,0 +1,49 @@
+name: Update SEC Survivor scores
+
+on:
+  # Runs periodically on game days. Cron is UTC.
+  # 15:00–01:00 UTC covers roughly 9am–7pm Central, every 30 min, Thu–Sun.
+  schedule:
+    - cron: '*/30 15-23 * * 4,5,6,0'
+    - cron: '*/30 0-1 * * 5,6,0,1'
+  # Manual trigger, e.g. to backfill or force a specific week.
+  workflow_dispatch:
+    inputs:
+      week:
+        description: 'Week number to update (leave blank to auto-detect from today\'s date)'
+        required: false
+        default: ''
+
+jobs:
+  update-scores:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install requests
+
+      - name: Determine week
+        id: week
+        run: |
+          if [ -n "${{ github.event.inputs.week }}" ]; then
+            echo "week=${{ github.event.inputs.week }}" >> "$GITHUB_OUTPUT"
+          else
+            # Season kicks off Sept 5, 2026 (Week 1's Saturday). Adjust WEEK1_DATE
+            # if the season-opening date ever changes.
+            WEEK1_DATE="2026-09-05"
+            TODAY=$(date -u +%Y-%m-%d)
+            DAYS=$(( ( $(date -u -d "$TODAY" +%s) - $(date -u -d "$WEEK1_DATE" +%s) ) / 86400 ))
+            WEEK=$(( DAYS / 7 + 1 ))
+            if [ $WEEK -lt 1 ]; then WEEK=1; fi
+            echo "week=$WEEK" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run scraper
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python scripts/update_scores.py --week ${{ steps.week.outputs.week }} --year 2026
