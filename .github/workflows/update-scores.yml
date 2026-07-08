@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       week:
-        description: 'Week number to update (leave blank to auto-detect from today\'s date)'
+        description: "Week number to update (leave blank to auto-detect from today's date)"
         required: false
         default: ''
 
