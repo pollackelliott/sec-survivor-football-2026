@@ -706,10 +706,10 @@ function renderSignupForm(){
 
   return `<div class="panel">
     <h3>Join the Pool</h3>
-    <p class="hint">Pick a name and your Week 1 team to get started. This creates your personal access — bookmark this page on this device, or use the link we give you to open it elsewhere.</p>
-    <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Jordan Smith"></div>
-    <div class="field"><label>Password (required — this is how you'll get back in if you switch devices)</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
-    <div class="field"><label>Fan of… (optional, just for fun — shown next to your name all season)</label>
+    <p class="hint">Enter your name and your Week 1 pick to get started. This creates your personal access — bookmark this page on this device, or use the link we give you to open it elsewhere.</p>
+    <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Luther Burden"></div>
+    <div class="field"><label>Password (required)</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
+    <div class="field"><label>Favorite School (optional)</label>
       <select id="suFanOf" style="width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--hair); border-radius:8px; color:var(--text); font-size:14.5px;">
         <option value="">No favorite</option>
         ${SEC_TEAMS.map(t => `<option value="${t}">${t}</option>`).join('')}
