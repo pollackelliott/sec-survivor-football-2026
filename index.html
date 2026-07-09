@@ -119,6 +119,7 @@
   .sheet-handle{width:36px; height:4px; border-radius:99px; background:var(--hair); margin:10px auto 4px;}
   .sheet-head{padding:14px 20px 16px; border-bottom:1px solid var(--hair);}
   .sheet-head .name{font-family:var(--disp); font-size:26px; text-transform:uppercase;}
+  .fan-chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--text-dim); background:color-mix(in srgb, var(--tc, var(--hair)) 20%, var(--panel-2)); border:1px solid var(--tc, var(--hair)); padding:4px 10px; border-radius:999px; margin-top:8px;}
   .stat-row{display:flex; gap:8px; padding:14px 20px 4px; flex-wrap:wrap;}
   .stat{flex:1; min-width:88px; background:var(--panel); border:1px solid var(--hair); border-radius:10px; padding:9px 10px; text-align:center;}
   .stat .v{font-size:16px; font-weight:600; color:var(--gold);}
@@ -188,8 +189,8 @@
 
 <script>
 /* ======================== CONFIG ======================== */
-const SUPABASE_URL = 'https://zdifdapuotcxlhdglmwu.supabase.co';   // <-- fill in
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkaWZkYXB1b3RjeGxoZGdsbXd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1Mzg5NjQsImV4cCI6MjA5OTExNDk2NH0.hV5WgR3Fug6oib6DE6MgAG_iSsKz-qLTu_DBmoepk_s';                 // <-- fill in
+const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';   // <-- fill in
+const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';                 // <-- fill in
 const SEASON_YEAR = 2026;
 const WEEKS = 14;
 
@@ -343,7 +344,7 @@ function buildPlayers(){
       if(cat === 'g5') g5Left--;
     });
 
-    return { id: p.id, name: p.name, alive, picks, revealed, results, eliminatedWeek, nonConLeft, g5Left, isMe };
+    return { id: p.id, name: p.name, fanOf: p.fan_of, alive, picks, revealed, results, eliminatedWeek, nonConLeft, g5Left, isMe };
   });
 }
 
@@ -389,7 +390,7 @@ function renderGrid(){
       }
     }
     return `<tr class="${p.alive?'alive':'dead'}"><td class="name-cell" data-id="${p.id}">
-      <div class="name-inner"><div class="team-dot" style="--tc:${teamColor('')}"></div>
+      <div class="name-inner"><div class="team-dot" style="--tc:${teamColor(p.fanOf)}"></div>
       <div class="name-text">${p.name}${p.isMe ? ' (you)' : ''}</div></div></td>${cells}</tr>`;
   }).join('');
 
@@ -410,7 +411,7 @@ function renderPlayers(){
     const sub = p.alive
       ? (lastRevealedWeek ? `Week ${lastRevealedWeek}: ${p.picks[lastRevealedWeek-1]}` : 'No revealed picks yet')
       : `Out — Week ${p.eliminatedWeek}`;
-    return `<div class="card ${p.alive?'alive':'dead'}" data-id="${p.id}">
+    return `<div class="card ${p.alive?'alive':'dead'}" data-id="${p.id}" style="--tc:${teamColor(p.fanOf)}">
       <div class="avatar"></div>
       <div class="info"><div class="name">${p.name}${p.isMe?' (you)':''}</div><div class="sub">${sub}</div></div>
       <div class="badge ${p.alive?'alive':'dead'}">${p.alive?'ALIVE':'OUT'}</div>
@@ -462,7 +463,7 @@ function openPlayerSheet(id){
   timeline += '</div>';
 
   document.getElementById('sheetContent').innerHTML =
-    `<div class="sheet-head"><div class="name">${p.name}</div></div>${statRow}${banner}${timeline}`;
+    `<div class="sheet-head"><div class="name">${p.name}</div>${p.fanOf ? `<div class="fan-chip" style="--tc:${teamColor(p.fanOf)}">Fan of ${p.fanOf}</div>` : ''}</div>${statRow}${banner}${timeline}`;
   showSheet();
 }
 
@@ -566,7 +567,7 @@ function renderSignupForm(){
   const deadline = weekDeadline(1);
   const closed = deadline && new Date() >= deadline;
   if(closed){
-    return `<div class="panel"><h3>Signups are closed</h3><p class="hint">Week 1 has locked. If you're a returning player who lost your link, use recovery below.</p>${recoveryFormHTML()}</div>`;
+    return `<div class="panel"><h3>Signups are closed</h3><p class="hint">Week 1 has locked. If you're a returning player on a new device, log in below.</p>${recoveryFormHTML()}</div>`;
   }
   const week1Games = GAMES.filter(g => g.week === 1);
   const options = week1Games.filter(g => SEC_TEAMS.includes(g.home) || SEC_TEAMS.includes(g.away))
@@ -577,7 +578,13 @@ function renderSignupForm(){
     <h3>Join the Pool</h3>
     <p class="hint">Pick a name and your Week 1 team to get started. This creates your personal access — bookmark this page on this device, or use the link we give you to open it elsewhere.</p>
     <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Jordan Smith"></div>
-    <div class="field"><label>Recovery Word (optional, lets you regain access if you lose your link)</label><input type="text" id="suRecovery" placeholder="e.g. a memorable word"></div>
+    <div class="field"><label>Password (required — this is how you'll get back in if you switch devices)</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
+    <div class="field"><label>Fan of… (optional, just for fun — shown next to your name all season)</label>
+      <select id="suFanOf" style="width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--hair); border-radius:8px; color:var(--text); font-size:14.5px;">
+        <option value="">No favorite</option>
+        ${SEC_TEAMS.map(t => `<option value="${t}">${t}</option>`).join('')}
+      </select>
+    </div>
     <div class="field"><label>Week 1 Pick</label>
       <select id="suTeam" style="width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--hair); border-radius:8px; color:var(--text); font-size:14.5px;">
         <option value="">Choose a team…</option>
@@ -595,8 +602,8 @@ function renderSignupForm(){
 
 function recoveryFormHTML(){
   return `<div class="field"><label>Name</label><input type="text" id="recName"></div>
-    <div class="field"><label>Recovery Word</label><input type="text" id="recWord"></div>
-    <button class="btn secondary" id="recoverBtn">Recover My Access</button>
+    <div class="field"><label>Password</label><input type="password" id="recPassword"></div>
+    <button class="btn secondary" id="recoverBtn">Log In</button>
     <div id="recoverMsg"></div>`;
 }
 
@@ -605,13 +612,17 @@ function wireSignupForm(){
   if(signupBtn){
     signupBtn.addEventListener('click', async () => {
       const name = document.getElementById('suName').value.trim();
-      const recovery = document.getElementById('suRecovery').value.trim();
+      const password = document.getElementById('suPassword').value;
+      const fanOf = document.getElementById('suFanOf').value;
       const team = document.getElementById('suTeam').value;
       const msg = document.getElementById('signupMsg');
-      if(!name || !team){ msg.innerHTML = `<div class="msg error-msg">Name and a Week 1 pick are both required.</div>`; return; }
+      if(!name || !team || !password){
+        msg.innerHTML = `<div class="msg error-msg">Name, a password, and a Week 1 pick are all required.</div>`;
+        return;
+      }
       try{
         const token = randomToken();
-        const { data, error } = await sb.rpc('signup', { p_name: name, p_token: token, p_recovery: recovery || null, p_week1_team: team });
+        const { data, error } = await sb.rpc('signup', { p_name: name, p_token: token, p_password: password, p_week1_team: team, p_fan_of: fanOf || null });
         if(error) throw error;
         IDENTITY = { id: data, token, name };
         saveIdentity(IDENTITY);
@@ -626,15 +637,15 @@ function wireSignupForm(){
   if(recoverBtn){
     recoverBtn.addEventListener('click', async () => {
       const name = document.getElementById('recName').value.trim();
-      const word = document.getElementById('recWord').value.trim();
+      const password = document.getElementById('recPassword').value;
       const msg = document.getElementById('recoverMsg');
       try{
         const token = randomToken();
-        const { data, error } = await sb.rpc('recover_player', { p_name: name, p_recovery: word, p_new_token: token });
+        const { data, error } = await sb.rpc('recover_player', { p_name: name, p_password: password, p_new_token: token });
         if(error) throw error;
         IDENTITY = { id: data, token, name };
         saveIdentity(IDENTITY);
-        msg.innerHTML = `<div class="msg ok-msg">Access restored.</div>`;
+        msg.innerHTML = `<div class="msg ok-msg">You're logged in on this device now.</div>`;
         await refreshAll();
       } catch(err){
         msg.innerHTML = `<div class="msg error-msg">${err.message || err}</div>`;
