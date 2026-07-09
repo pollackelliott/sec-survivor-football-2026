@@ -127,6 +127,23 @@
   .stat .l{font-size:9.5px; letter-spacing:.06em; color:var(--text-faint); text-transform:uppercase; margin-top:2px;}
   .week-section{padding:16px 20px 4px;}
   .week-section h3{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); margin:0 0 10px; font-weight:700;}
+  .pickstat-row{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--hair);}
+  .pickstat-row:last-child{border-bottom:none;}
+  .pickstat-row .team-dot{width:11px;height:11px;border-radius:50%;flex:none;}
+  .pickstat-name{flex:1; min-width:0; font-weight:700; font-size:14px; color:var(--text);}
+  .opponent-context{color:var(--text-faint); opacity:.82; font-weight:600;}
+  .pickstat-name .opponent-context{margin-left:4px;}
+  .pickstat-count{font-size:12px; color:var(--text-dim); font-weight:600;}
+  .game-row{display:flex; align-items:center; gap:10px; padding:9px 10px; border-bottom:1px solid var(--hair); font-size:13.5px; border-radius:8px; transition:opacity .15s ease;}
+  .game-row:last-child{border-bottom:none;}
+  .game-row.unpicked{opacity:0.5;}
+  .game-team{flex:1; min-width:0; color:var(--text-dim); font-weight:600;}
+  .game-team-name{color:inherit;}
+  .game-team.winner .game-team-name{color:var(--text); font-weight:800;}
+  .game-team.pick-hit .game-team-name{color:var(--green); font-weight:800;}
+  .game-team.pick-miss .game-team-name{color:var(--red); font-weight:800; text-decoration:line-through; text-decoration-color:rgba(226,104,92,0.6);}
+  .game-score{font-family:var(--body); color:var(--gold); font-weight:700; margin-left:4px;}
+  .game-at{color:var(--text-faint); font-size:11px; flex:none;}
   .timeline{padding:16px 20px 4px;}
   .week-row{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--hair);}
   .week-row:last-child{border-bottom:none;}
@@ -189,8 +206,8 @@
 
 <script>
 /* ======================== CONFIG ======================== */
-const SUPABASE_URL = 'https://zdifdapuotcxlhdglmwu.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkaWZkYXB1b3RjeGxoZGdsbXd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1Mzg5NjQsImV4cCI6MjA5OTExNDk2NH0.hV5WgR3Fug6oib6DE6MgAG_iSsKz-qLTu_DBmoepk_s';
+const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';   // <-- fill in
+const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';                 // <-- fill in
 const SEASON_YEAR = 2026;
 const WEEKS = 14;
 
@@ -208,7 +225,13 @@ const TEAM_COLORS = {
   'Tennessee':'#FF8200','Texas':'#BF5700','Texas A&M':'#500000','Vanderbilt':'#866D4B'
 };
 function teamColor(name){ return TEAM_COLORS[name] || '#5d636e'; }
-function teamAbbr(name){ return name ? name.slice(0,4).toUpperCase() : ''; }
+const TEAM_ABBR = {
+  'Alabama':'ALA','Arkansas':'ARK','Auburn':'AUB','Florida':'UF',
+  'Georgia':'UGA','Kentucky':'UK','LSU':'LSU','Mississippi State':'MSU',
+  'Missouri':'MIZ','Oklahoma':'OU','Ole Miss':'MISS','South Carolina':'USC',
+  'Tennessee':'TENN','Texas':'TEX','Texas A&M':'A&M','Vanderbilt':'VU'
+};
+function teamAbbr(name){ return TEAM_ABBR[name] || (name ? name.slice(0,4).toUpperCase() : ''); }
 
 /* ======================== IDENTITY ======================== */
 const IDENTITY_KEY = 'secsurv2026_identity';
@@ -310,6 +333,13 @@ function resultFor(week, team){
   if(!g || !g.winner) return null;
   return g.winner === team ? 1 : 0;
 }
+function opponentContextHTML(week, team){
+  const g = gameFor(week, team);
+  if(!g) return '';
+  const isAway = g.away === team;
+  const opponent = isAway ? g.home : g.away;
+  return `<span class="opponent-context">(${isAway ? '@' : 'vs.'} ${opponent})</span>`;
+}
 
 /* ======================== BUILD PLAYER MODEL ======================== */
 function buildPlayers(){
@@ -362,10 +392,10 @@ function renderGrid(){
   const alive = ALL_PLAYERS.filter(p=>p.alive);
   const dead = ALL_PLAYERS.filter(p=>!p.alive).sort((a,b)=>(b.eliminatedWeek||0)-(a.eliminatedWeek||0));
   const ordered = [...alive, ...dead];
-  const shownWeeks = Math.max(CURRENT_WEEK, 1);
+  const shownWeeks = WEEKS; // show the full season — future weeks are just empty/clickable for the schedule
 
   let head = '<th class="corner">Player</th>';
-  for(let w=1; w<=shownWeeks; w++) head += `<th data-week="${w}">Wk ${w}</th>`;
+  for(let w=1; w<=shownWeeks; w++) head += `<th class="wk-head" data-week="${w}">Wk ${w}</th>`;
 
   const bodyRows = ordered.map(p => {
     let cells = '';
@@ -376,22 +406,22 @@ function renderGrid(){
       const result = p.results[w];
       const isRevealed = p.revealed[w];
       if(pastElim){
-        cells += `<td class="pick dead-week">—</td>`;
+        cells += `<td class="pick dead-week" data-week="${wk}">—</td>`;
       } else if(!isRevealed && wk === CURRENT_WEEK){
-        cells += `<td class="pick hidden-pick" title="Hidden until Sat 11am CT">•</td>`;
+        cells += `<td class="pick hidden-pick" data-week="${wk}" title="Hidden until Sat 11am CT">•</td>`;
       } else if(!pick){
-        cells += `<td class="pick empty">–</td>`;
+        cells += `<td class="pick empty" data-week="${wk}">–</td>`;
       } else if(result === 0){
-        cells += `<td class="pick loss" title="${pick}">${teamAbbr(pick)}</td>`;
+        cells += `<td class="pick loss" data-week="${wk}" title="${pick}">${teamAbbr(pick)}</td>`;
       } else if(result === 1){
-        cells += `<td class="pick win" title="${pick}">${teamAbbr(pick)}</td>`;
+        cells += `<td class="pick win" data-week="${wk}" title="${pick}">${teamAbbr(pick)}</td>`;
       } else {
-        cells += `<td class="pick neutral" title="${pick}">${teamAbbr(pick)}</td>`;
+        cells += `<td class="pick neutral" data-week="${wk}" title="${pick}">${teamAbbr(pick)}</td>`;
       }
     }
     return `<tr class="${p.alive?'alive':'dead'}"><td class="name-cell" data-id="${p.id}">
       <div class="name-inner"><div class="team-dot" style="--tc:${teamColor(p.fanOf)}"></div>
-      <div class="name-text">${p.name}${p.isMe ? ' (you)' : ''}</div></div></td>${cells}</tr>`;
+      <div class="name-text">${p.name}</div></div></td>${cells}</tr>`;
   }).join('');
 
   document.getElementById('view-grid').innerHTML = ordered.length
@@ -400,6 +430,12 @@ function renderGrid(){
 
   document.querySelectorAll('#view-grid td.name-cell').forEach(cell => {
     cell.addEventListener('click', () => openPlayerSheet(cell.dataset.id));
+  });
+  document.querySelectorAll('#view-grid td.pick').forEach(cell => {
+    cell.addEventListener('click', () => openWeekSheet(Number(cell.dataset.week)));
+  });
+  document.querySelectorAll('#view-grid th.wk-head').forEach(th => {
+    th.addEventListener('click', () => openWeekSheet(Number(th.dataset.week)));
   });
 }
 
@@ -413,7 +449,7 @@ function renderPlayers(){
       : `Out — Week ${p.eliminatedWeek}`;
     return `<div class="card ${p.alive?'alive':'dead'}" data-id="${p.id}" style="--tc:${teamColor(p.fanOf)}">
       <div class="avatar"></div>
-      <div class="info"><div class="name">${p.name}${p.isMe?' (you)':''}</div><div class="sub">${sub}</div></div>
+      <div class="info"><div class="name">${p.name}</div><div class="sub">${sub}</div></div>
       <div class="badge ${p.alive?'alive':'dead'}">${p.alive?'ALIVE':'OUT'}</div>
       <div class="chev">›</div>
     </div>`;
@@ -434,7 +470,7 @@ function openPlayerSheet(id){
     <div class="stat"><div class="v">${p.isMe ? p.g5Left : '—'}</div><div class="l">G5 Left</div></div>
   </div>`;
   const banner = p.alive
-    ? `<div class="alive-banner">STILL STANDING</div>`
+    ? ''
     : `<div class="out-banner">ELIMINATED — WEEK ${p.eliminatedWeek}</div>`;
 
   const lastRow = !p.alive ? p.eliminatedWeek : CURRENT_WEEK;
@@ -467,6 +503,83 @@ function openPlayerSheet(id){
   showSheet();
 }
 
+/* ======================== SHEET: week detail ======================== */
+function openWeekSheet(week){
+  const weekGames = GAMES.filter(g => g.week === week);
+  const deadline = weekDeadline(week);
+  const revealed = deadline ? (new Date() >= deadline) : false;
+
+  const tally = {};
+  if(revealed){
+    ALL_PLAYERS.forEach(p => {
+      const pick = p.picks[week-1];
+      if(!pick) return;
+      if(!tally[pick]) tally[pick] = { count: 0, result: p.results[week-1] };
+      tally[pick].count++;
+    });
+  }
+  const pickCount = team => (tally[team] ? tally[team].count : 0);
+
+  let picksHTML = '';
+  if(revealed){
+    const tallyRows = Object.entries(tally).sort((a,b)=>b[1].count-a[1].count);
+    picksHTML = '<div class="week-section"><h3>Picks This Week</h3>';
+    if(tallyRows.length === 0){
+      picksHTML += `<div class="empty">No picks recorded for this week.</div>`;
+    } else {
+      tallyRows.forEach(([team, info]) => {
+        let cls = 'neutral';
+        if(info.result === 1) cls = 'win'; else if(info.result === 0) cls = 'loss';
+        picksHTML += `<div class="pickstat-row">
+          <div class="team-dot" style="background:${teamColor(team)}"></div>
+          <div class="pickstat-name">${team}${opponentContextHTML(week, team)}</div>
+          <div class="pickstat-count">${info.count} pick${info.count===1?'':'s'}</div>
+          <div class="result-icon ${cls}">${cls==='win'?'✓':cls==='loss'?'✕':'·'}</div>
+        </div>`;
+      });
+    }
+    picksHTML += '</div>';
+  }
+
+  const gamesSorted = revealed
+    ? [...weekGames].sort((a,b) => Math.max(pickCount(a.away),pickCount(a.home)) - Math.max(pickCount(b.away),pickCount(b.home))).reverse()
+    : [...weekGames].sort((a,b) => new Date(a.kickoff_at) - new Date(b.kickoff_at));
+
+  let gamesHTML = '<div class="week-section"><h3>Scores</h3>';
+  if(gamesSorted.length === 0){
+    gamesHTML += `<div class="empty">No schedule entered for this week yet.</div>`;
+  } else {
+    gamesSorted.forEach(g => {
+      const played = g.away_score !== null && g.home_score !== null;
+      const awayWon = g.winner === g.away;
+      const homeWon = g.winner === g.home;
+      const awayPicked = revealed && pickCount(g.away) > 0;
+      const homePicked = revealed && pickCount(g.home) > 0;
+      const unpicked = revealed && !awayPicked && !homePicked;
+      const teamClass = (isWinner, isPicked) => {
+        const classes = ['game-team'];
+        if(isWinner) classes.push('winner');
+        if(isPicked && played) classes.push(isWinner ? 'pick-hit' : 'pick-miss');
+        return classes.join(' ');
+      };
+      gamesHTML += `<div class="game-row ${unpicked ? 'unpicked' : ''}">
+        <div class="${teamClass(awayWon, awayPicked)}"><span class="game-team-name">${g.away}</span>${played ? ` <span class="game-score">${g.away_score}</span>` : ''}</div>
+        <div class="game-at">@</div>
+        <div class="${teamClass(homeWon, homePicked)}"><span class="game-team-name">${g.home}</span>${played ? ` <span class="game-score">${g.home_score}</span>` : ''}</div>
+      </div>`;
+    });
+  }
+  gamesHTML += '</div>';
+
+  const revealNote = !revealed
+    ? `<div class="empty" style="padding:10px 0 4px;">Picks reveal Saturday at 11:00am CT — schedule and scores are shown now, picks aren't yet.</div>`
+    : '';
+
+  document.getElementById('sheetContent').innerHTML =
+    `<div class="sheet-head"><div class="name">Week ${week}</div></div>${picksHTML}${gamesHTML}${revealNote}`;
+  showSheet();
+}
+
 /* ======================== MY PICK TAB ======================== */
 function renderMyPick(){
   const el = document.getElementById('myPickPanel');
@@ -476,8 +589,6 @@ function renderMyPick(){
     return;
   }
   const me = ALL_PLAYERS.find(p => p.id === IDENTITY.id);
-  const nonConLeft = me ? me.nonConLeft : 3;
-  const g5Left = me ? me.g5Left : 1;
   const usedTeams = new Set((me ? me.picks : []).filter(Boolean));
 
   const weeksWithGames = [...new Set(GAMES.map(g=>g.week))].sort((a,b)=>a-b);
@@ -488,6 +599,18 @@ function renderMyPick(){
   });
   if(targetWeek === undefined) targetWeek = weeksWithGames[weeksWithGames.length-1] || 1;
 
+  // Allowance available FOR THIS WEEK's menu excludes whatever's currently
+  // picked for this same week — otherwise editing your own G5/non-con pick
+  // would wrongly count it against itself and hide its sibling options.
+  // (Mirrors submit_pick's own `week <> p_week` exclusion in the database.)
+  let nonConLeft = 3, g5Left = 1;
+  (me ? me.picks : []).forEach((pick, i) => {
+    if(i === targetWeek - 1 || !pick) return;
+    const cat = classifyPick(i+1, pick);
+    if(cat === 'g5' || cat === 'not_g5') nonConLeft--;
+    if(cat === 'g5') g5Left--;
+  });
+
   el.innerHTML = `
     <div class="panel">
       <h3>Week ${targetWeek}</h3>
@@ -496,6 +619,8 @@ function renderMyPick(){
         <div class="allowance"><div class="v">${nonConLeft}</div><div class="l">Non-Con Left</div></div>
         <div class="allowance"><div class="v">${g5Left}</div><div class="l">G5 Left</div></div>
       </div>
+      <p class="hint" style="margin:-6px 0 12px;">These reflect what's available for Week ${targetWeek} specifically.</p>
+      
       <div id="pickOptions"></div>
       <div id="pickMsg"></div>
     </div>`;
@@ -578,8 +703,8 @@ function renderSignupForm(){
     <h3>Join the Pool</h3>
     <p class="hint">Pick a name and your Week 1 team to get started. This creates your personal access — bookmark this page on this device, or use the link we give you to open it elsewhere.</p>
     <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Jordan Smith"></div>
-    <div class="field"><label>Password (required)</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
-    <div class="field"><label>Favorite SEC Team (optional)</label>
+    <div class="field"><label>Password (required — this is how you'll get back in if you switch devices)</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
+    <div class="field"><label>Fan of… (optional, just for fun — shown next to your name all season)</label>
       <select id="suFanOf" style="width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--hair); border-radius:8px; color:var(--text); font-size:14.5px;">
         <option value="">No favorite</option>
         ${SEC_TEAMS.map(t => `<option value="${t}">${t}</option>`).join('')}
