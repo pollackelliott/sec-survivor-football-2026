@@ -77,6 +77,9 @@
   .allowance .l{font-size:9.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-faint); margin-top:2px;}
   .current-pick-banner{padding:11px 14px; border-radius:10px; background:var(--gold-dim); border:1px solid rgba(242,194,48,.4); color:var(--gold); font-size:12.5px; font-weight:700; margin-bottom:14px; text-align:center;}
   .current-pick-banner.locked{background:var(--red-dim); color:#f0a29c; border-color:rgba(226,104,92,.4);}
+  .mypick-status{padding:16px; border-radius:10px; text-align:center; font-size:13.5px; font-weight:700;}
+  .mypick-status.eliminated{background:var(--red-dim); color:#f0a29c; border:1px solid rgba(226,104,92,.4);}
+  .mypick-status.waiting{background:var(--panel-2); color:var(--text-dim); border:1px solid var(--hair); font-weight:600;}
 
   .card{position:relative; display:flex; align-items:center; gap:12px; padding:13px 14px; background:var(--panel); border:1px solid var(--hair); border-radius:var(--radius); margin-bottom:8px; cursor:pointer;}
   .card.alive{border-color:rgba(242,194,48,0.35);}
@@ -206,8 +209,8 @@
 
 <script>
 /* ======================== CONFIG ======================== */
-const SUPABASE_URL = 'https://zdifdapuotcxlhdglmwu.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkaWZkYXB1b3RjeGxoZGdsbXd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1Mzg5NjQsImV4cCI6MjA5OTExNDk2NH0.hV5WgR3Fug6oib6DE6MgAG_iSsKz-qLTu_DBmoepk_s';
+const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';   // <-- fill in
+const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';                 // <-- fill in
 const SEASON_YEAR = 2026;
 const WEEKS = 13;
 
@@ -321,6 +324,16 @@ function weekDeadline(week){
   sat.setUTCHours(15, 59, 0, 0);
   return sat;
 }
+// Mirrors week_reopen_time() in the DB: the Sunday 5:00am Central following
+// a week's own Saturday deadline — when the NEXT week's picks open.
+function weekReopenTime(week){
+  const wd = weekDeadline(week);
+  if(!wd) return null;
+  const next = new Date(wd);
+  next.setUTCDate(next.getUTCDate() + 1);
+  next.setUTCHours(10, 0, 0, 0); // approx 5:00am Central; DB is authoritative
+  return next;
+}
 function pickEditableUntil(week, team){
   const g = gameFor(week, team);
   if(!g) return null;
@@ -382,13 +395,17 @@ let ALL_PLAYERS = [];
 let CURRENT_WEEK = 1;
 
 function computeCurrentWeek(){
+  // "Current" means the latest week that has actually STARTED (its earliest
+  // kickoff has already passed) — not merely the latest week we happen to
+  // have schedule data for. Backfilling future weeks' schedules shouldn't
+  // make the app think the season is further along than it really is.
   let w = 1;
   const now = new Date();
   const weeksWithGames = [...new Set(GAMES.map(g=>g.week))];
   weeksWithGames.forEach(wk => {
     const weekGames = GAMES.filter(g => g.week === wk);
     const earliest = weekGames.reduce((a,b) => new Date(a.kickoff_at) < new Date(b.kickoff_at) ? a : b);
-    if (new Date(earliest.kickoff_at) <= now) w = Math.max(w, wk);
+    if(new Date(earliest.kickoff_at) <= now) w = Math.max(w, wk);
   });
   return w;
 }
@@ -578,7 +595,7 @@ function openWeekSheet(week){
   gamesHTML += '</div>';
 
   const revealNote = !revealed
-    ? `<div class="empty" style="padding:10px 0 4px;">Picks reveal Saturday at 11:00</div>`
+    ? `<div class="empty" style="padding:10px 0 4px;">Picks reveal Saturday at 11:00.</div>`
     : '';
 
   document.getElementById('sheetContent').innerHTML =
@@ -587,6 +604,69 @@ function openWeekSheet(week){
 }
 
 /* ======================== MY PICK TAB ======================== */
+
+// Mirrors the database's own gating (submit_pick's checks 1a/1b/1c) so the
+// UI never shows something the server would then reject. The database
+// remains the actual authority — this is display logic only.
+function computeMyPickState(){
+  const now = new Date();
+  const picksByWeek = {};
+  MY_PICKS.forEach(m => picksByWeek[m.week] = m);
+  const weeksWithGames = [...new Set(GAMES.map(g=>g.week))].sort((a,b)=>a-b);
+
+  for(let i=0; i<weeksWithGames.length; i++){
+    const w = weeksWithGames[i];
+    const mine = picksByWeek[w];
+
+    if(!mine){
+      // nothing picked for week w yet — is it actually open?
+      const prevWeek = weeksWithGames[i-1];
+      if(prevWeek !== undefined){
+        const prevPick = picksByWeek[prevWeek];
+        const prevResult = prevPick ? resultFor(prevWeek, prevPick.team) : null;
+        if(prevPick && prevResult === 0){
+          return { state:'eliminated', eliminatedWeek: prevWeek };
+        }
+        if(!prevPick || prevResult === null){
+          return { state:'pending', pendingWeek: prevWeek };
+        }
+        const reopen = weekReopenTime(prevWeek);
+        if(reopen && now < reopen){
+          return { state:'frozen', frozenWeek: prevWeek, reopensAt: reopen };
+        }
+      }
+      return { state:'open', targetWeek: w };
+    }
+
+    // week w has a pick — still within its own edit window?
+    const editableUntil = mine.editable_until ? new Date(mine.editable_until) : null;
+    if(editableUntil && editableUntil > now){
+      return { state:'open', targetWeek: w };
+    }
+
+    // locked — decided yet?
+    const result = resultFor(w, mine.team);
+    if(result === 0){
+      return { state:'eliminated', eliminatedWeek: w };
+    }
+    if(result === null){
+      return { state:'pending', pendingWeek: w };
+    }
+    const reopen = weekReopenTime(w);
+    if(reopen && now < reopen){
+      return { state:'frozen', frozenWeek: w, reopensAt: reopen };
+    }
+    // decided win, reopened — move on and check the next week
+  }
+
+  const lastWeek = weeksWithGames[weeksWithGames.length - 1];
+  const nextWeek = (lastWeek || 0) + 1;
+  if(nextWeek <= WEEKS && GAMES.some(g => g.week === nextWeek)){
+    return { state:'open', targetWeek: nextWeek };
+  }
+  return { state:'done' };
+}
+
 function renderMyPick(){
   const el = document.getElementById('myPickPanel');
   if(!IDENTITY){
@@ -594,16 +674,41 @@ function renderMyPick(){
     wireSignupForm();
     return;
   }
-  const me = ALL_PLAYERS.find(p => p.id === IDENTITY.id);
-  const usedTeams = new Set((me ? me.picks : []).filter(Boolean));
 
-  const weeksWithGames = [...new Set(GAMES.map(g=>g.week))].sort((a,b)=>a-b);
-  let targetWeek = weeksWithGames.find(w => {
-    const mine = MY_PICKS.find(m => m.week === w);
-    if(!mine) return true;
-    return mine.editable_until && new Date(mine.editable_until) > new Date();
-  });
-  if(targetWeek === undefined) targetWeek = weeksWithGames[weeksWithGames.length-1] || 1;
+  const me = ALL_PLAYERS.find(p => p.id === IDENTITY.id);
+  const status = computeMyPickState();
+
+  if(status.state === 'eliminated'){
+    const pick = MY_PICKS.find(m => m.week === status.eliminatedWeek);
+    el.innerHTML = `<div class="panel"><div class="mypick-status eliminated">
+      You're eliminated — Week ${status.eliminatedWeek}${pick ? ` (${pick.team})` : ''}.
+    </div></div>`;
+    return;
+  }
+
+  if(status.state === 'done'){
+    el.innerHTML = `<div class="panel"><div class="mypick-status waiting">Season complete — nice run!</div></div>`;
+    return;
+  }
+
+  if(status.state === 'pending' || status.state === 'frozen'){
+    const week = status.pendingWeek ?? status.frozenWeek;
+    const pick = MY_PICKS.find(m => m.week === week);
+    const note = status.state === 'pending'
+      ? `Waiting on your Week ${week} result before Week ${week + 1} opens.`
+      : `Next week opens Sunday at 5:00am.`;
+    el.innerHTML = `<div class="panel">
+      <h3>Week ${week}</h3>
+      <p class="hint">Signed in as <strong>${IDENTITY.name || 'you'}</strong></p>
+      <div class="current-pick-banner locked">Current Pick: ${pick ? pick.team : '—'}</div>
+      <div class="mypick-status waiting">${note}</div>
+    </div>`;
+    return;
+  }
+
+  // state === 'open'
+  const targetWeek = status.targetWeek;
+  const usedTeams = new Set((me ? me.picks : []).filter(Boolean));
 
   // Allowance available FOR THIS WEEK's menu excludes whatever's currently
   // picked for this same week — otherwise editing your own G5/non-con pick
@@ -625,7 +730,6 @@ function renderMyPick(){
         <div class="allowance"><div class="v">${nonConLeft}</div><div class="l">Non-Con Left</div></div>
         <div class="allowance"><div class="v">${g5Left}</div><div class="l">G5 Left</div></div>
       </div>
-      
       <div id="pickOptions"></div>
       <div id="pickMsg"></div>
     </div>`;
@@ -706,10 +810,10 @@ function renderSignupForm(){
 
   return `<div class="panel">
     <h3>Join the Pool</h3>
-    <p class="hint">Enter your name and your Week 1 pick to get started. This creates your personal access — bookmark this page on this device, or use the link we give you to open it elsewhere.</p>
-    <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Luther Burden"></div>
-    <div class="field"><label>Password (required)</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
-    <div class="field"><label>Favorite School (optional)</label>
+    <p class="hint">Pick a name and your Week 1 team to get started. This creates your personal access — bookmark this page on this device, or use the link we give you to open it elsewhere.</p>
+    <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Jordan Smith"></div>
+    <div class="field"><label>Password (required — this is how you'll get back in if you switch devices)</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
+    <div class="field"><label>Fan of… (optional, just for fun — shown next to your name all season)</label>
       <select id="suFanOf" style="width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--hair); border-radius:8px; color:var(--text); font-size:14.5px;">
         <option value="">No favorite</option>
         ${SEC_TEAMS.map(t => `<option value="${t}">${t}</option>`).join('')}
