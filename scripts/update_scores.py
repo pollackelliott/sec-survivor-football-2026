@@ -93,7 +93,7 @@ def upsert_games(rows: list[dict], base_url: str, service_key: str) -> None:
         print("  no rows to upsert")
         return
     resp = requests.post(
-        f"{base_url}/rest/v1/games",
+        f"{base_url}/rest/v1/games?on_conflict=week,away,home",
         headers={
             "apikey": service_key,
             "Authorization": f"Bearer {service_key}",
