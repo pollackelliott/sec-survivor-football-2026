@@ -383,7 +383,13 @@ let CURRENT_WEEK = 1;
 
 function computeCurrentWeek(){
   let w = 1;
-  GAMES.forEach(g => { if(g.week > w) w = g.week; });
+  const now = new Date();
+  const weeksWithGames = [...new Set(GAMES.map(g=>g.week))];
+  weeksWithGames.forEach(wk => {
+    const weekGames = GAMES.filter(g => g.week === wk);
+    const earliest = weekGames.reduce(a,b) => new Date(a.kickoff_at) < new Date(b.kickoff_at) ? a : b);
+    if (new Date(earliest.kickoff_at) <= now w = Math.max(w, wk);
+  });
   return w;
 }
 
@@ -572,7 +578,7 @@ function openWeekSheet(week){
   gamesHTML += '</div>';
 
   const revealNote = !revealed
-    ? `<div class="empty" style="padding:10px 0 4px;">Picks reveal Saturday at 11:00.</div>`
+    ? `<div class="empty" style="padding:10px 0 4px;">Picks reveal Saturday at 11:00</div>`
     : '';
 
   document.getElementById('sheetContent').innerHTML =
