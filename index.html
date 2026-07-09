@@ -387,8 +387,8 @@ function computeCurrentWeek(){
   const weeksWithGames = [...new Set(GAMES.map(g=>g.week))];
   weeksWithGames.forEach(wk => {
     const weekGames = GAMES.filter(g => g.week === wk);
-    const earliest = weekGames.reduce(a,b) => new Date(a.kickoff_at) < new Date(b.kickoff_at) ? a : b);
-    if (new Date(earliest.kickoff_at) <= now w = Math.max(w, wk);
+    const earliest = weekGames.reduce((a,b) => new Date(a.kickoff_at) < new Date(b.kickoff_at) ? a : b);
+    if (new Date(earliest.kickoff_at) <= now) w = Math.max(w, wk);
   });
   return w;
 }
