@@ -4,8 +4,8 @@ on:
   # Runs periodically on game days. Cron is UTC.
   # 15:00–01:00 UTC covers roughly 9am–7pm Central, every 30 min, Thu–Sun.
   schedule:
-    - cron: '*/30 15-23 * * 4,5,6,0'
-    - cron: '*/30 0-1 * * 5,6,0,1'
+    - cron: '*/30 17-23 * * *'
+    - cron: '*/30 0-5 * * *'
   # Manual trigger, e.g. to backfill or force a specific week.
   workflow_dispatch:
     inputs:
