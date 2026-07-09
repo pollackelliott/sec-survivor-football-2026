@@ -206,8 +206,8 @@
 
 <script>
 /* ======================== CONFIG ======================== */
-const SUPABASE_URL = 'https://zdifdapuotcxlhdglmwu.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkaWZkYXB1b3RjeGxoZGdsbXd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1Mzg5NjQsImV4cCI6MjA5OTExNDk2NH0.hV5WgR3Fug6oib6DE6MgAG_iSsKz-qLTu_DBmoepk_s';
+const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';   // <-- fill in
+const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';                 // <-- fill in
 const SEASON_YEAR = 2026;
 const WEEKS = 14;
 
@@ -572,7 +572,7 @@ function openWeekSheet(week){
   gamesHTML += '</div>';
 
   const revealNote = !revealed
-    ? `<div class="empty" style="padding:10px 0 4px;">Picks reveal Saturday at 11:00am CT — schedule and scores are shown now, picks aren't yet.</div>`
+    ? `<div class="empty" style="padding:10px 0 4px;">Picks reveal Saturday at 11:00.</div>`
     : '';
 
   document.getElementById('sheetContent').innerHTML =
@@ -619,7 +619,6 @@ function renderMyPick(){
         <div class="allowance"><div class="v">${nonConLeft}</div><div class="l">Non-Con Left</div></div>
         <div class="allowance"><div class="v">${g5Left}</div><div class="l">G5 Left</div></div>
       </div>
-      <p class="hint" style="margin:-6px 0 12px;">These reflect what's available for Week ${targetWeek} specifically.</p>
       
       <div id="pickOptions"></div>
       <div id="pickMsg"></div>
@@ -638,7 +637,7 @@ function renderPickOptionsFor(week, usedTeams, nonConLeft, g5Left){
     const locked = until && until <= now;
     container.insertAdjacentHTML('afterbegin',
       `<div class="current-pick-banner ${locked?'locked':''}">
-        ${locked ? `Locked on ${existing.team}` : `Currently: ${existing.team} — editable until ${until ? until.toLocaleString() : '—'}`}
+        Current Pick: ${existing.team}
       </div>`);
   }
 
