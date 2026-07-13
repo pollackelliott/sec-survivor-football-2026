@@ -142,6 +142,11 @@
   .game-row.unpicked{opacity:0.5;}
   .game-team{flex:1; min-width:0; color:var(--text-dim); font-weight:600;}
   .game-team-name{color:inherit;}
+  .game-team-name.opp-sec{color:var(--text);}
+  .game-team-name.opp-g5{color:#E2A16C;}
+  .game-team-name.opp-notg5{color:#7FB8D9;}
+  .game-team-name.opp-ineligible{color:var(--text-faint);}
+  .game-row.ineligible-game{opacity:0.45;}
   .game-team.winner .game-team-name{color:var(--text); font-weight:800;}
   .game-team.pick-hit .game-team-name{color:var(--green); font-weight:800;}
   .game-team.pick-miss .game-team-name{color:var(--red); font-weight:800; text-decoration:line-through; text-decoration-color:rgba(226,104,92,0.6);}
@@ -209,8 +214,8 @@
 
 <script>
 /* ======================== CONFIG ======================== */
-const SUPABASE_URL = 'https://zdifdapuotcxlhdglmwu.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpkaWZkYXB1b3RjeGxoZGdsbXd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1Mzg5NjQsImV4cCI6MjA5OTExNDk2NH0.hV5WgR3Fug6oib6DE6MgAG_iSsKz-qLTu_DBmoepk_s';
+const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';   // <-- fill in
+const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';                 // <-- fill in
 const SEASON_YEAR = 2026;
 const WEEKS = 13;
 
@@ -237,22 +242,21 @@ const TEAM_ABBR = {
 function teamAbbr(name){ return TEAM_ABBR[name] || (name ? name.slice(0,4).toUpperCase() : ''); }
 
 /* ======================== IDENTITY ======================== */
-const IDENTITY_KEY = 'secsurv2026_identity';
-function loadIdentity(){ try{ return JSON.parse(localStorage.getItem(IDENTITY_KEY)); }catch(e){ return null; } }
-function saveIdentity(obj){ localStorage.setItem(IDENTITY_KEY, JSON.stringify(obj)); }
+// Identity is now a real Supabase Auth session — no homegrown tokens, no
+// localStorage bookkeeping. Supabase's client keeps the session persisted
+// and refreshed on its own; we just read `IDENTITY` off of it.
+let IDENTITY = null; // { id } once logged in, else null
 
-(function adoptLinkIdentity(){
-  const params = new URLSearchParams(location.search);
-  if(params.get('pid') && params.get('tok')){
-    saveIdentity({ id: params.get('pid'), token: params.get('tok'), name: params.get('name') || '' });
-    history.replaceState({}, '', location.pathname);
+sb.auth.onAuthStateChange((event, session) => {
+  if(event === 'PASSWORD_RECOVERY'){
+    showPasswordResetPanel();
+    return;
   }
-})();
-let IDENTITY = loadIdentity();
-
-function randomToken(){
-  return (crypto.randomUUID() + crypto.randomUUID()).replace(/-/g, '');
-}
+  IDENTITY = session ? { id: session.user.id } : null;
+  if(event !== 'INITIAL_SESSION'){
+    refreshAll();
+  }
+});
 
 /* ======================== DATA LOADING ======================== */
 let GAMES = [];           // all rows from `games`
@@ -262,6 +266,9 @@ let BOARD_ROWS = [];      // from get_public_board(): {player_id, player_name, w
 let MY_PICKS = [];        // from get_my_picks(), only if IDENTITY set
 
 async function loadAll(){
+  const { data: { session } } = await sb.auth.getSession();
+  IDENTITY = session ? { id: session.user.id } : null;
+
   const [{ data: games, error: e1 }, { data: cls, error: e2 }, { data: players, error: e3 }, { data: board, error: e4 }] =
     await Promise.all([
       sb.from('games').select('*'),
@@ -278,11 +285,8 @@ async function loadAll(){
   BOARD_ROWS = board || [];
 
   if(IDENTITY){
-    const { data: mine, error: e5 } = await sb.rpc('get_my_picks', { p_player_id: IDENTITY.id, p_token: IDENTITY.token });
+    const { data: mine, error: e5 } = await sb.rpc('get_my_picks');
     if(e5){
-      // stale/invalid identity — drop it
-      localStorage.removeItem(IDENTITY_KEY);
-      IDENTITY = null;
       MY_PICKS = [];
     } else {
       MY_PICKS = mine || [];
@@ -352,6 +356,16 @@ function opponentContextHTML(week, team){
   const isAway = g.away === team;
   const opponent = isAway ? g.home : g.away;
   return `<span class="opponent-context">(${isAway ? '@' : 'vs.'} ${opponent})</span>`;
+}
+// 'opp-sec' | 'opp-g5' | 'opp-notg5' | 'opp-ineligible' — purely a display
+// designation for the week schedule view (SEC teams white, G5 opponents one
+// subtle color, other non-conference opponents another, non-FBS opponents
+// flagged so their whole game row can be dimmed).
+function teamCategoryClass(team){
+  if(SEC_TEAMS.includes(team)) return 'opp-sec';
+  const row = CLASSIFICATION[team];
+  if(!row || !row.eligible) return 'opp-ineligible';
+  return row.category === 'g5' ? 'opp-g5' : 'opp-notg5';
 }
 
 /* ======================== BUILD PLAYER MODEL ======================== */
@@ -579,16 +593,17 @@ function openWeekSheet(week){
       const awayPicked = revealed && pickCount(g.away) > 0;
       const homePicked = revealed && pickCount(g.home) > 0;
       const unpicked = revealed && !awayPicked && !homePicked;
-      const teamClass = (isWinner, isPicked) => {
+      const ineligibleGame = teamCategoryClass(g.away) === 'opp-ineligible' || teamCategoryClass(g.home) === 'opp-ineligible';
+      const teamClass = (isWinner, isPicked, team) => {
         const classes = ['game-team'];
         if(isWinner) classes.push('winner');
         if(isPicked && played) classes.push(isWinner ? 'pick-hit' : 'pick-miss');
         return classes.join(' ');
       };
-      gamesHTML += `<div class="game-row ${unpicked ? 'unpicked' : ''}">
-        <div class="${teamClass(awayWon, awayPicked)}"><span class="game-team-name">${g.away}</span>${played ? ` <span class="game-score">${g.away_score}</span>` : ''}</div>
+      gamesHTML += `<div class="game-row ${unpicked ? 'unpicked' : ''} ${ineligibleGame ? 'ineligible-game' : ''}">
+        <div class="${teamClass(awayWon, awayPicked, g.away)}"><span class="game-team-name ${teamCategoryClass(g.away)}">${g.away}</span>${played ? ` <span class="game-score">${g.away_score}</span>` : ''}</div>
         <div class="game-at">@</div>
-        <div class="${teamClass(homeWon, homePicked)}"><span class="game-team-name">${g.home}</span>${played ? ` <span class="game-score">${g.home_score}</span>` : ''}</div>
+        <div class="${teamClass(homeWon, homePicked, g.home)}"><span class="game-team-name ${teamCategoryClass(g.home)}">${g.home}</span>${played ? ` <span class="game-score">${g.home_score}</span>` : ''}</div>
       </div>`;
     });
   }
@@ -682,7 +697,8 @@ function renderMyPick(){
     const pick = MY_PICKS.find(m => m.week === status.eliminatedWeek);
     el.innerHTML = `<div class="panel"><div class="mypick-status eliminated">
       You're eliminated — Week ${status.eliminatedWeek}${pick ? ` (${pick.team})` : ''}.
-    </div></div>`;
+    </div><p class="hint" style="text-align:center; margin-top:10px;"><span id="logoutLink" style="text-decoration:underline; cursor:pointer;">Log out</span></p></div>`;
+    wireLogoutLink();
     return;
   }
 
@@ -699,10 +715,11 @@ function renderMyPick(){
       : `Next week opens Sunday at 5:00am.`;
     el.innerHTML = `<div class="panel">
       <h3>Week ${week}</h3>
-      <p class="hint">Signed in as <strong>${IDENTITY.name || 'you'}</strong></p>
+      <p class="hint">Signed in as <strong>${me ? me.name : 'you'}</strong> &middot; <span id="logoutLink" style="text-decoration:underline; cursor:pointer;">Log out</span></p>
       <div class="current-pick-banner locked">Current Pick: ${pick ? pick.team : '—'}</div>
       <div class="mypick-status waiting">${note}</div>
     </div>`;
+    wireLogoutLink();
     return;
   }
 
@@ -725,7 +742,7 @@ function renderMyPick(){
   el.innerHTML = `
     <div class="panel">
       <h3>Week ${targetWeek}</h3>
-      <p class="hint">Signed in as <strong>${IDENTITY.name || 'you'}</strong></p>
+      <p class="hint">Signed in as <strong>${me ? me.name : 'you'}</strong> &middot; <span id="logoutLink" style="text-decoration:underline; cursor:pointer;">Log out</span></p>
       <div class="allowance-row">
         <div class="allowance"><div class="v">${nonConLeft}</div><div class="l">Non-Con Left</div></div>
         <div class="allowance"><div class="v">${g5Left}</div><div class="l">G5 Left</div></div>
@@ -733,6 +750,7 @@ function renderMyPick(){
       <div id="pickOptions"></div>
       <div id="pickMsg"></div>
     </div>`;
+  wireLogoutLink();
 
   renderPickOptionsFor(targetWeek, usedTeams, nonConLeft, g5Left);
 }
@@ -787,7 +805,7 @@ function renderPickOptionsFor(week, usedTeams, nonConLeft, g5Left){
     const msg = document.getElementById('pickMsg');
     if(!chosen){ msg.innerHTML = `<div class="msg error-msg">Pick a team first.</div>`; return; }
     try{
-      const { error } = await sb.rpc('submit_pick', { p_player_id: IDENTITY.id, p_token: IDENTITY.token, p_week: week, p_team: chosen.value });
+      const { error } = await sb.rpc('submit_pick', { p_week: week, p_team: chosen.value });
       if(error) throw error;
       msg.innerHTML = `<div class="msg ok-msg">Pick saved: ${chosen.value}.</div>`;
       await refreshAll();
@@ -801,7 +819,7 @@ function renderSignupForm(){
   const deadline = weekDeadline(1);
   const closed = deadline && new Date() >= deadline;
   if(closed){
-    return `<div class="panel"><h3>Signups are closed</h3><p class="hint">Week 1 has locked. If you're a returning player on a new device, log in below.</p>${recoveryFormHTML()}</div>`;
+    return `<div class="panel"><h3>Signups are closed</h3><p class="hint">Week 1 has locked. If you're a returning player, log in below.</p>${loginFormHTML()}</div>`;
   }
   const week1Games = GAMES.filter(g => g.week === 1);
   const options = week1Games.filter(g => SEC_TEAMS.includes(g.home) || SEC_TEAMS.includes(g.away))
@@ -810,10 +828,11 @@ function renderSignupForm(){
 
   return `<div class="panel">
     <h3>Join the Pool</h3>
-    <p class="hint">Pick a name and your Week 1 team to get started. This creates your personal access — bookmark this page on this device, or use the link we give you to open it elsewhere.</p>
-    <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Luther Burden"></div>
-    <div class="field"><label>Password (required)</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
-    <div class="field"><label>Favorite SEC School (optional)</label>
+    <p class="hint">Create your account and submit your Week 1 team to get started.</p>
+    <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Jordan Smith"></div>
+    <div class="field"><label>Email</label><input type="email" id="suEmail" placeholder="you@example.com"></div>
+    <div class="field"><label>Password</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
+    <div class="field"><label>Fan of… (optional, just for fun — shown next to your name all season)</label>
       <select id="suFanOf" style="width:100%; padding:10px 12px; background:var(--panel-2); border:1px solid var(--hair); border-radius:8px; color:var(--text); font-size:14.5px;">
         <option value="">No favorite</option>
         ${SEC_TEAMS.map(t => `<option value="${t}">${t}</option>`).join('')}
@@ -828,17 +847,23 @@ function renderSignupForm(){
     <button class="btn" id="signupBtn">Sign Up & Submit Pick</button>
     <div id="signupMsg"></div>
     <div style="margin-top:18px; border-top:1px solid var(--hair); padding-top:14px;">
-      <p class="hint">Already signed up on another device?</p>
-      ${recoveryFormHTML()}
+      <p class="hint">Already have an account?</p>
+      ${loginFormHTML()}
     </div>
   </div>`;
 }
 
-function recoveryFormHTML(){
-  return `<div class="field"><label>Name</label><input type="text" id="recName"></div>
-    <div class="field"><label>Password</label><input type="password" id="recPassword"></div>
-    <button class="btn secondary" id="recoverBtn">Log In</button>
-    <div id="recoverMsg"></div>`;
+function loginFormHTML(){
+  return `<div class="field"><label>Email</label><input type="email" id="logEmail"></div>
+    <div class="field"><label>Password</label><input type="password" id="logPassword"></div>
+    <button class="btn secondary" id="loginBtn">Log In</button>
+    <p class="hint" style="margin-top:8px;"><span id="forgotLink" style="text-decoration:underline; cursor:pointer;">Forgot your password?</span></p>
+    <div id="loginMsg"></div>
+    <div id="forgotPanel" style="display:none; margin-top:10px; border-top:1px solid var(--hair); padding-top:10px;">
+      <div class="field"><label>Email to send a reset link to</label><input type="email" id="forgotEmail"></div>
+      <button class="btn secondary" id="forgotBtn">Send Reset Link</button>
+      <div id="forgotMsg"></div>
+    </div>`;
 }
 
 function wireSignupForm(){
@@ -846,46 +871,115 @@ function wireSignupForm(){
   if(signupBtn){
     signupBtn.addEventListener('click', async () => {
       const name = document.getElementById('suName').value.trim();
+      const email = document.getElementById('suEmail').value.trim();
       const password = document.getElementById('suPassword').value;
       const fanOf = document.getElementById('suFanOf').value;
       const team = document.getElementById('suTeam').value;
       const msg = document.getElementById('signupMsg');
-      if(!name || !team || !password){
-        msg.innerHTML = `<div class="msg error-msg">Name, a password, and a Week 1 pick are all required.</div>`;
+      if(!name || !email || !password || !team){
+        msg.innerHTML = `<div class="msg error-msg">Name, email, password, and a Week 1 pick are all required.</div>`;
         return;
       }
       try{
-        const token = randomToken();
-        const { data, error } = await sb.rpc('signup', { p_name: name, p_token: token, p_password: password, p_week1_team: team, p_fan_of: fanOf || null });
+        const { data, error } = await sb.auth.signUp({
+          email, password,
+          options: { data: { name, fan_of: fanOf || '' } }
+        });
         if(error) throw error;
-        IDENTITY = { id: data, token, name };
-        saveIdentity(IDENTITY);
-        msg.innerHTML = `<div class="msg ok-msg">Welcome, ${name}! Your pick is in.</div>`;
+        if(!data.session){
+          msg.innerHTML = `<div class="msg error-msg">Account created, but no active session came back — check your Supabase project's email-confirmation setting.</div>`;
+          return;
+        }
+        IDENTITY = { id: data.user.id };
+        try{
+          const { error: pickErr } = await sb.rpc('submit_pick', { p_week: 1, p_team: team });
+          if(pickErr) throw pickErr;
+          msg.innerHTML = `<div class="msg ok-msg">Welcome, ${name}! Your pick is in.</div>`;
+        } catch(pickErr){
+          msg.innerHTML = `<div class="msg error-msg">Account created, but your Week 1 pick couldn't be submitted: ${pickErr.message || pickErr}. You can try again from the My Pick tab.</div>`;
+        }
         await refreshAll();
       } catch(err){
         msg.innerHTML = `<div class="msg error-msg">${err.message || err}</div>`;
       }
     });
   }
-  const recoverBtn = document.getElementById('recoverBtn');
-  if(recoverBtn){
-    recoverBtn.addEventListener('click', async () => {
-      const name = document.getElementById('recName').value.trim();
-      const password = document.getElementById('recPassword').value;
-      const msg = document.getElementById('recoverMsg');
+  wireLoginForm();
+}
+
+function wireLoginForm(){
+  const loginBtn = document.getElementById('loginBtn');
+  if(loginBtn){
+    loginBtn.addEventListener('click', async () => {
+      const email = document.getElementById('logEmail').value.trim();
+      const password = document.getElementById('logPassword').value;
+      const msg = document.getElementById('loginMsg');
       try{
-        const token = randomToken();
-        const { data, error } = await sb.rpc('recover_player', { p_name: name, p_password: password, p_new_token: token });
+        const { error } = await sb.auth.signInWithPassword({ email, password });
         if(error) throw error;
-        IDENTITY = { id: data, token, name };
-        saveIdentity(IDENTITY);
-        msg.innerHTML = `<div class="msg ok-msg">You're logged in on this device now.</div>`;
+        msg.innerHTML = `<div class="msg ok-msg">You're logged in.</div>`;
         await refreshAll();
       } catch(err){
         msg.innerHTML = `<div class="msg error-msg">${err.message || err}</div>`;
       }
     });
   }
+  const forgotLink = document.getElementById('forgotLink');
+  if(forgotLink){
+    forgotLink.addEventListener('click', () => {
+      document.getElementById('forgotPanel').style.display = 'block';
+      forgotLink.style.display = 'none';
+    });
+  }
+  const forgotBtn = document.getElementById('forgotBtn');
+  if(forgotBtn){
+    forgotBtn.addEventListener('click', async () => {
+      const email = document.getElementById('forgotEmail').value.trim();
+      const msg = document.getElementById('forgotMsg');
+      try{
+        const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+        if(error) throw error;
+        msg.innerHTML = `<div class="msg ok-msg">Check your email for a reset link.</div>`;
+      } catch(err){
+        msg.innerHTML = `<div class="msg error-msg">${err.message || err}</div>`;
+      }
+    });
+  }
+}
+
+function wireLogoutLink(){
+  const link = document.getElementById('logoutLink');
+  if(link){
+    link.addEventListener('click', async () => {
+      await sb.auth.signOut();
+      await refreshAll();
+    });
+  }
+}
+
+// Supabase redirects here with a recovery token after the user clicks the
+// reset-password email link; onAuthStateChange fires PASSWORD_RECOVERY and
+// we take over the whole My Pick panel with a simple "set a new password" form.
+function showPasswordResetPanel(){
+  document.querySelector('.tab[data-tab="mypick"]').click();
+  document.getElementById('myPickPanel').innerHTML = `<div class="panel">
+    <h3>Set a New Password</h3>
+    <div class="field"><label>New Password</label><input type="password" id="newPassword"></div>
+    <button class="btn" id="setNewPasswordBtn">Save New Password</button>
+    <div id="resetMsg"></div>
+  </div>`;
+  document.getElementById('setNewPasswordBtn').addEventListener('click', async () => {
+    const password = document.getElementById('newPassword').value;
+    const msg = document.getElementById('resetMsg');
+    try{
+      const { error } = await sb.auth.updateUser({ password });
+      if(error) throw error;
+      msg.innerHTML = `<div class="msg ok-msg">Password updated. You're logged in.</div>`;
+      await refreshAll();
+    } catch(err){
+      msg.innerHTML = `<div class="msg error-msg">${err.message || err}</div>`;
+    }
+  });
 }
 
 /* ======================== SHEET open/close ======================== */
