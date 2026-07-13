@@ -272,6 +272,11 @@ const TEAM_ABBR = {
   'Tennessee':'TENN','Texas':'TEX','Texas A&M':'A&M','Vanderbilt':'VU'
 };
 function teamAbbr(name){ return TEAM_ABBR[name] || (name ? name.slice(0,4).toUpperCase() : ''); }
+// Display-only shorthand for names too long to fit a single line in a chip —
+// every lookup/match elsewhere (classify_pick, TEAM_COLORS, GAMES rows, the
+// scraper) still uses the real "Mississippi State", only rendered text uses this.
+const TEAM_DISPLAY = { 'Mississippi State': 'Miss. State', 'South Carolina': 'S. Carolina' };
+function teamDisplay(name){ return TEAM_DISPLAY[name] || name; }
 
 /* ======================== IDENTITY ======================== */
 // Identity is now a real Supabase Auth session — no homegrown tokens, no
@@ -666,7 +671,7 @@ function openWeekSheet(week){
           return `<span class="game-team-name">${team}</span>`;
         }
         if(SEC_TEAMS.includes(team)){
-          return `<span class="game-team-name sec-chip" style="background:${teamColor(team)}; color:${teamSecondaryColor(team)}">${team}</span>`;
+          return `<span class="game-team-name sec-chip" style="background:${teamColor(team)}; color:${teamSecondaryColor(team)}">${teamDisplay(team)}</span>`;
         }
         return `<span class="game-team-name ${teamCategoryClass(team)}">${team}</span>`;
       };
@@ -787,7 +792,7 @@ function renderMyPick(){
     el.innerHTML = `<div class="panel">
       <h3>Week ${week}</h3>
       <p class="hint">Signed in as <strong>${me ? me.name : 'you'}</strong> &middot; <span id="logoutLink" style="text-decoration:underline; cursor:pointer;">Log out</span></p>
-      <div class="current-pick-banner locked">Current Pick: ${pick ? pick.team : '—'}</div>
+      <div class="current-pick-banner locked">Current Pick: ${pick ? teamDisplay(pick.team) : '—'}</div>
       <div class="mypick-status waiting">${note}</div>
     </div>`;
     wireLogoutLink();
@@ -836,7 +841,7 @@ function renderPickOptionsFor(week, usedTeams, nonConLeft, g5Left){
     const locked = until && until <= now;
     container.insertAdjacentHTML('afterbegin',
       `<div class="current-pick-banner ${locked?'locked':''}">
-        Current Pick: ${existing.team}
+        Current Pick: ${teamDisplay(existing.team)}
       </div>`);
   }
 
@@ -864,7 +869,7 @@ function renderPickOptionsFor(week, usedTeams, nonConLeft, g5Left){
   container.insertAdjacentHTML('beforeend', options.map(o => `
     <label class="pick-option ${existing && existing.team===o.team ? 'selected':''}">
       <input type="radio" name="pickteam" value="${o.team}" ${existing && existing.team===o.team ? 'checked':''}>
-      <div class="opt-name"><span class="game-team-name sec-chip" style="background:${teamColor(o.team)}; color:${teamSecondaryColor(o.team)}">${o.team}</span> <span class="opt-meta">vs ${o.opp}</span></div>
+      <div class="opt-name"><span class="game-team-name sec-chip" style="background:${teamColor(o.team)}; color:${teamSecondaryColor(o.team)}">${teamDisplay(o.team)}</span> <span class="opt-meta">vs ${o.opp}</span></div>
       ${o.cat==='g5' ? '<span class="opt-tag g5">G5</span>' : ''}
       ${o.cat==='not_g5' ? '<span class="opt-tag nc">Non-Con</span>' : ''}
     </label>`).join('') +
