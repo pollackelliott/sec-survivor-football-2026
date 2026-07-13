@@ -65,7 +65,7 @@
   .pick-option{display:flex; align-items:center; gap:10px; padding:11px 12px; border:1px solid var(--hair); border-radius:10px; margin-bottom:7px; cursor:pointer; background:var(--panel-2);}
   .pick-option.selected{border-color:var(--gold); background:rgba(242,194,48,.08);}
   .pick-option input{accent-color:var(--gold); width:16px; height:16px; flex:none;}
-  .pick-option .team-dot{width:11px; height:11px; border-radius:50%; flex:none;}
+  .pick-option .team-dot{width:11px; height:11px; border-radius:50%; flex:none; background:var(--tc, var(--text-faint)); box-shadow:0 0 0 2px var(--tc2, transparent);}
   .pick-option .opt-name{flex:1; font-weight:700; font-size:14px;}
   .pick-option .opt-meta{font-size:11px; color:var(--text-faint); font-weight:600;}
   .opt-tag{font-size:9.5px; font-weight:800; letter-spacing:.05em; padding:2px 7px; border-radius:999px; text-transform:uppercase; flex:none;}
@@ -83,7 +83,7 @@
 
   .card{position:relative; display:flex; align-items:center; gap:12px; padding:13px 14px; background:var(--panel); border:1px solid var(--hair); border-radius:var(--radius); margin-bottom:8px; cursor:pointer;}
   .card.alive{border-color:rgba(242,194,48,0.35);}
-  .card .avatar{flex:none; width:14px;height:14px; border-radius:50%; background:var(--tc, var(--text-faint));}
+  .card .avatar{flex:none; width:14px;height:14px; border-radius:50%; background:var(--tc, var(--text-faint)); box-shadow:0 0 0 2px var(--tc2, transparent);}
   .card.dead .avatar{opacity:0.5;}
   .card .info{flex:1; min-width:0;}
   .card .name{font-weight:700; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
@@ -101,7 +101,7 @@
   table.grid td.name-cell{position:sticky; left:0; z-index:2; background:var(--panel); border-right:1px solid rgba(255,255,255,0.14); padding:8px 10px; text-align:left; min-width:122px; max-width:122px; cursor:pointer;}
   table.grid tr.dead td.name-cell{background:var(--bg-2);}
   .name-cell .name-inner{display:flex; align-items:center; gap:7px; min-width:0;}
-  .name-cell .team-dot{flex:none; width:9px;height:9px; border-radius:50%; background:var(--tc, var(--text-faint));}
+  .name-cell .team-dot{flex:none; width:9px;height:9px; border-radius:50%; background:var(--tc, var(--text-faint)); box-shadow:0 0 0 2px var(--tc2, transparent);}
   .name-cell .name-text{flex:1; min-width:0; font-weight:700; font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   tr.dead .name-cell .name-text{color:var(--text-faint); text-decoration:line-through; text-decoration-color:var(--red); font-weight:600;}
   table.grid tbody tr{background:var(--panel);} table.grid tbody tr.dead{background:var(--bg-2);}
@@ -122,7 +122,7 @@
   .sheet-handle{width:36px; height:4px; border-radius:99px; background:var(--hair); margin:10px auto 4px;}
   .sheet-head{padding:14px 20px 16px; border-bottom:1px solid var(--hair);}
   .sheet-head .name{font-family:var(--disp); font-size:26px; text-transform:uppercase;}
-  .fan-chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--text-dim); background:color-mix(in srgb, var(--tc, var(--hair)) 20%, var(--panel-2)); border:1px solid var(--tc, var(--hair)); padding:4px 10px; border-radius:999px; margin-top:8px;}
+  .fan-chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--text-dim); background:color-mix(in srgb, var(--tc, var(--hair)) 20%, var(--panel-2)); border:1px solid var(--tc2, var(--hair)); padding:4px 10px; border-radius:999px; margin-top:8px;}
   .stat-row{display:flex; gap:8px; padding:14px 20px 4px; flex-wrap:wrap;}
   .stat{flex:1; min-width:88px; background:var(--panel); border:1px solid var(--hair); border-radius:10px; padding:9px 10px; text-align:center;}
   .stat .v{font-size:16px; font-weight:600; color:var(--gold);}
@@ -132,7 +132,7 @@
   .week-section h3{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint); margin:0 0 10px; font-weight:700;}
   .pickstat-row{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--hair);}
   .pickstat-row:last-child{border-bottom:none;}
-  .pickstat-row .team-dot{width:11px;height:11px;border-radius:50%;flex:none;}
+  .pickstat-row .team-dot{width:11px;height:11px;border-radius:50%;flex:none; background:var(--tc, var(--text-faint)); box-shadow:0 0 0 2px var(--tc2, transparent);}
   .pickstat-name{flex:1; min-width:0; font-weight:700; font-size:14px; color:var(--text);}
   .opponent-context{color:var(--text-faint); opacity:.82; font-weight:600;}
   .pickstat-name .opponent-context{margin-left:4px;}
@@ -145,6 +145,8 @@
   .game-team-name.opp-sec{color:var(--text);}
   .game-team-name.opp-noncon{color:var(--text);}
   .game-team-name.opp-ineligible{color:var(--text-faint);}
+  .game-team-name.sec-chip{display:inline-block; padding:1px 8px; border-radius:6px; font-weight:800;}
+  .game-pill-slot{flex:none; width:66px; display:flex; justify-content:flex-end;}
   .game-row.ineligible-game{opacity:0.45;}
   .game-team.winner .game-team-name{color:var(--text); font-weight:800;}
   .game-team.pick-hit .game-team-name{color:var(--green); font-weight:800;}
@@ -156,7 +158,7 @@
   .week-row:last-child{border-bottom:none;}
   .week-row .wk{flex:none; width:34px; font-size:11px; color:var(--text-faint);}
   .team-chip{flex:1; display:flex; align-items:center; gap:9px; min-width:0;}
-  .team-dot{width:10px;height:10px;border-radius:3px; flex:none;}
+  .team-dot{width:10px;height:10px;border-radius:3px; flex:none; background:var(--tc, var(--text-faint)); box-shadow:0 0 0 2px var(--tc2, transparent);}
   .team-name{font-weight:600; font-size:14.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   .team-name .opp-context{font-weight:400; color:var(--text-faint); font-size:12.5px;}
   .team-name.empty{color:var(--text-faint); font-weight:400; font-style:italic;}
@@ -218,9 +220,9 @@
         </ul>
         <div class="field"><label>Deadlines</label></div>
         <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.6;">
-          <li>Picks lock every Saturday at <strong>10:59am Central</strong></li>
-          <li><strong>Exception:</strong> if your pick plays Thursday or Friday, that pick locks the moment it kicks off</li>
-          <li>You can change your pick freely as many times as you like until it locks</li>
+          <li>Picks lock every Saturday at <strong>10:59am Central</strong>.</li>
+          <li><strong>Exception:</strong> if your pick plays Thursday or Friday, that pick locks the moment it kicks off instead.</li>
+          <li>You can change your pick freely before it locks — swap teams as many times as you like.</li>
         </ul>
       </div>
     </div>
@@ -250,12 +252,19 @@ const SEC_TEAMS = [
   'Tennessee','Texas','Texas A&M','Vanderbilt'
 ];
 const TEAM_COLORS = {
-  'Alabama':'#9E1B32','Arkansas':'#9D2235','Auburn':'#DD550C','Florida':'#0021A5',
+  'Alabama':'#9E1B32','Arkansas':'#9D2235','Auburn':'#0C2340','Florida':'#0021A5',
   'Georgia':'#BA0C2F','Kentucky':'#0033A0','LSU':'#461D7C','Mississippi State':'#660000',
-  'Missouri':'#F1B82D','Oklahoma':'#841617','Ole Miss':'#CE1126','South Carolina':'#73000A',
+  'Missouri':'#000000','Oklahoma':'#841617','Ole Miss':'#14213D','South Carolina':'#73000A',
   'Tennessee':'#FF8200','Texas':'#BF5700','Texas A&M':'#500000','Vanderbilt':'#866D4B'
 };
+const TEAM_SECONDARY_COLORS = {
+  'Alabama':'#FFFFFF','Arkansas':'#FFFFFF','Auburn':'#E87722','Florida':'#FA4616',
+  'Georgia':'#000000','Kentucky':'#FFFFFF','LSU':'#FDD023','Mississippi State':'#FFFFFF',
+  'Missouri':'#F1B82D','Oklahoma':'#FDF9D8','Ole Miss':'#CE1126','South Carolina':'#000000',
+  'Tennessee':'#FFFFFF','Texas':'#FFFFFF','Texas A&M':'#FFFFFF','Vanderbilt':'#000000'
+};
 function teamColor(name){ return TEAM_COLORS[name] || '#5d636e'; }
+function teamSecondaryColor(name){ return TEAM_SECONDARY_COLORS[name] || '#F5F7FB'; }
 const TEAM_ABBR = {
   'Alabama':'ALA','Arkansas':'ARK','Auburn':'AUB','Florida':'UF',
   'Georgia':'UGA','Kentucky':'UK','LSU':'LSU','Mississippi State':'MSU',
@@ -501,7 +510,7 @@ function renderGrid(){
       }
     }
     return `<tr class="${p.alive?'alive':'dead'}"><td class="name-cell" data-id="${p.id}">
-      <div class="name-inner"><div class="team-dot" style="--tc:${teamColor(p.fanOf)}"></div>
+      <div class="name-inner"><div class="team-dot" style="--tc:${teamColor(p.fanOf)}; --tc2:${teamSecondaryColor(p.fanOf)}"></div>
       <div class="name-text">${p.name}</div></div></td>${cells}</tr>`;
   }).join('');
 
@@ -528,7 +537,7 @@ function renderPlayers(){
     const sub = p.alive
       ? (lastRevealedWeek ? `Week ${lastRevealedWeek}: ${p.picks[lastRevealedWeek-1]}` : 'No revealed picks yet')
       : `Out — Week ${p.eliminatedWeek}`;
-    return `<div class="card ${p.alive?'alive':'dead'}" data-id="${p.id}" style="--tc:${teamColor(p.fanOf)}">
+    return `<div class="card ${p.alive?'alive':'dead'}" data-id="${p.id}" style="--tc:${teamColor(p.fanOf)}; --tc2:${teamSecondaryColor(p.fanOf)}">
       <div class="avatar"></div>
       <div class="info"><div class="name">${p.name}</div><div class="sub">${sub}</div></div>
       <div class="badge ${p.alive?'alive':'dead'}">${p.alive?'ALIVE':'OUT'}</div>
@@ -574,13 +583,13 @@ function openPlayerSheet(id){
       : 'Hidden until Sat 11am';
     const lost = revealed && result === 0;
     timeline += `<div class="week-row"><div class="wk">W${w+1}</div>
-      <div class="team-chip">${revealed && pick ? `<div class="team-dot" style="background:${teamColor(pick)}"></div>`:''}
+      <div class="team-chip">${revealed && pick ? `<div class="team-dot" style="--tc:${teamColor(pick)}; --tc2:${teamSecondaryColor(pick)}"></div>`:''}
       <div class="team-name ${!revealed || !pick ? 'empty':''} ${lost?'lost':''}">${label}</div></div>${icon}</div>`;
   }
   timeline += '</div>';
 
   document.getElementById('sheetContent').innerHTML =
-    `<div class="sheet-head"><div class="name">${p.name}</div>${p.fanOf ? `<div class="fan-chip" style="--tc:${teamColor(p.fanOf)}">Fan of ${p.fanOf}</div>` : ''}</div>${statRow}${banner}${timeline}`;
+    `<div class="sheet-head"><div class="name">${p.name}</div>${p.fanOf ? `<div class="fan-chip" style="--tc:${teamColor(p.fanOf)}; --tc2:${teamSecondaryColor(p.fanOf)}">Fan of ${p.fanOf}</div>` : ''}</div>${statRow}${banner}${timeline}`;
   showSheet();
 }
 
@@ -612,7 +621,7 @@ function openWeekSheet(week){
         let cls = 'neutral';
         if(info.result === 1) cls = 'win'; else if(info.result === 0) cls = 'loss';
         picksHTML += `<div class="pickstat-row">
-          <div class="team-dot" style="background:${teamColor(team)}"></div>
+          <div class="team-dot" style="--tc:${teamColor(team)}; --tc2:${teamSecondaryColor(team)}"></div>
           <div class="pickstat-name">${team}${opponentContextHTML(week, team)}</div>
           <div class="pickstat-count">${info.count} pick${info.count===1?'':'s'}</div>
           <div class="result-icon ${cls}">${cls==='win'?'✓':cls==='loss'?'✕':'·'}</div>
@@ -657,7 +666,7 @@ function openWeekSheet(week){
           return `<span class="game-team-name">${team}</span>`;
         }
         if(SEC_TEAMS.includes(team)){
-          return `<span class="game-team-name" style="color:${teamColor(team)}">${team}</span>`;
+          return `<span class="game-team-name sec-chip" style="background:${teamColor(team)}; color:${teamSecondaryColor(team)}">${team}</span>`;
         }
         return `<span class="game-team-name ${teamCategoryClass(team)}">${team}</span>`;
       };
@@ -665,7 +674,7 @@ function openWeekSheet(week){
         <div class="${teamClass(awayWon, awayPicked)}">${sideMarkup(g.away)}${played ? ` <span class="game-score">${g.away_score}</span>` : ''}</div>
         <div class="game-at">@</div>
         <div class="${teamClass(homeWon, homePicked)}">${sideMarkup(g.home)}${played ? ` <span class="game-score">${g.home_score}</span>` : ''}</div>
-        ${gamePillHTML(g)}
+        <div class="game-pill-slot">${gamePillHTML(g)}</div>
       </div>`;
     });
   }
@@ -855,7 +864,7 @@ function renderPickOptionsFor(week, usedTeams, nonConLeft, g5Left){
   container.insertAdjacentHTML('beforeend', options.map(o => `
     <label class="pick-option ${existing && existing.team===o.team ? 'selected':''}">
       <input type="radio" name="pickteam" value="${o.team}" ${existing && existing.team===o.team ? 'checked':''}>
-      <div class="team-dot" style="background:${teamColor(o.team)}"></div>
+      <div class="team-dot" style="--tc:${teamColor(o.team)}; --tc2:${teamSecondaryColor(o.team)}"></div>
       <div class="opt-name">${o.team} <span class="opt-meta">vs ${o.opp}</span></div>
       ${o.cat==='g5' ? '<span class="opt-tag g5">G5</span>' : ''}
       ${o.cat==='not_g5' ? '<span class="opt-tag nc">Non-Con</span>' : ''}
@@ -890,7 +899,7 @@ function renderSignupForm(){
 
   return `<div class="panel">
     <h3>Join the Pool</h3>
-    <p class="hint">Create your account and submit your Week 1 pick to get started. You can change your pick at any time.</p>
+    <p class="hint">Create your account and submit your Week 1 pick to get started.</p>
     <div class="field"><label>Your Name</label><input type="text" id="suName" placeholder="e.g. Luther Burden"></div>
     <div class="field"><label>Email</label><input type="email" id="suEmail" placeholder="trumanthetiger@gmail.com"></div>
     <div class="field"><label>Password</label><input type="password" id="suPassword" placeholder="Choose a password"></div>
