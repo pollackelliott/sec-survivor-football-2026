@@ -68,7 +68,7 @@
   .pick-option .team-dot{width:11px; height:11px; border-radius:50%; flex:none;}
   .pick-option .opt-name{flex:1; font-weight:700; font-size:14px;}
   .pick-option .opt-meta{font-size:11px; color:var(--text-faint); font-weight:600;}
-  .pick-option .opt-tag{font-size:9.5px; font-weight:800; letter-spacing:.05em; padding:2px 7px; border-radius:999px; text-transform:uppercase;}
+  .opt-tag{font-size:9.5px; font-weight:800; letter-spacing:.05em; padding:2px 7px; border-radius:999px; text-transform:uppercase; flex:none;}
   .opt-tag.g5{background:rgba(226,104,92,.14); color:var(--red);}
   .opt-tag.nc{background:rgba(242,194,48,.14); color:var(--gold);}
   .allowance-row{display:flex; gap:8px; margin-bottom:14px;}
@@ -97,8 +97,8 @@
   .grid-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid rgba(255,255,255,0.14); border-radius:12px;}
   table.grid{border-collapse:separate; border-spacing:0; width:max-content;}
   table.grid thead th{position:sticky; top:0; z-index:3; background:var(--panel-2); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--gold); padding:11px 6px; text-align:center; border-bottom:2px solid rgba(242,194,48,0.45); font-weight:800; min-width:56px;}
-  table.grid th.corner{position:sticky; left:0; top:0; z-index:5; background:var(--panel-2); text-align:left; padding:11px 10px; border-right:1px solid rgba(255,255,255,0.14); min-width:108px; color:var(--text);}
-  table.grid td.name-cell{position:sticky; left:0; z-index:2; background:var(--panel); border-right:1px solid rgba(255,255,255,0.14); padding:8px 10px; text-align:left; min-width:108px; max-width:108px; cursor:pointer;}
+  table.grid th.corner{position:sticky; left:0; top:0; z-index:5; background:var(--panel-2); text-align:left; padding:11px 10px; border-right:1px solid rgba(255,255,255,0.14); min-width:122px; color:var(--text);}
+  table.grid td.name-cell{position:sticky; left:0; z-index:2; background:var(--panel); border-right:1px solid rgba(255,255,255,0.14); padding:8px 10px; text-align:left; min-width:122px; max-width:122px; cursor:pointer;}
   table.grid tr.dead td.name-cell{background:var(--bg-2);}
   .name-cell .name-inner{display:flex; align-items:center; gap:7px; min-width:0;}
   .name-cell .team-dot{flex:none; width:9px;height:9px; border-radius:50%; background:var(--tc, var(--text-faint));}
@@ -143,8 +143,7 @@
   .game-team{flex:1; min-width:0; color:var(--text-dim); font-weight:600;}
   .game-team-name{color:inherit;}
   .game-team-name.opp-sec{color:var(--text);}
-  .game-team-name.opp-g5{color:#E2A16C;}
-  .game-team-name.opp-notg5{color:#7FB8D9;}
+  .game-team-name.opp-noncon{color:var(--text);}
   .game-team-name.opp-ineligible{color:var(--text-faint);}
   .game-row.ineligible-game{opacity:0.45;}
   .game-team.winner .game-team-name{color:var(--text); font-weight:800;}
@@ -192,6 +191,7 @@
     <div class="tab active" data-tab="grid">Picks Grid</div>
     <div class="tab" data-tab="players">Players</div>
     <div class="tab" data-tab="mypick">My Pick</div>
+    <div class="tab" data-tab="rules">Rules</div>
   </div>
 
   <main>
@@ -201,6 +201,29 @@
     <div class="view active" id="view-grid"></div>
     <div class="view" id="view-players"><div id="playersList"></div></div>
     <div class="view" id="view-mypick"><div id="myPickPanel"></div></div>
+    <div class="view" id="view-rules">
+      <div class="panel">
+        <h3>SEC Survivor - Football</h3>
+        <div class="current-pick-banner" style="text-align:center; margin-top:12px;">Buy in is $25 for the season. Winner Take All, or ties split evenly. Please venmo @elliott-pollack, and email me at pollack.elliott@gmail.com if you have any questions.</div>
+        <ul style="margin:16px 0; padding-left:18px; font-size:14px; line-height:1.6;">
+          <li>Each week, pick one SEC team to win, straight up</li>
+          <li>If your team loses, you're eliminated</li>
+          <li>You can only pick each team one time the entire season</li>
+        </ul>
+        <div class="field"><label>Non-Conference &amp; G5 Limits</label></div>
+        <ul style="margin:0 0 16px; padding-left:18px; font-size:14px; line-height:1.6;">
+          <li>You may pick a team with a non-conference opponent up to <strong>three times</strong> all season</li>
+          <li>You may only pick a team with a G5 opponent <strong>one time</strong> all season</li>
+          <li>Teams with FCS opponents cannot be picked</li>
+        </ul>
+        <div class="field"><label>Deadlines</label></div>
+        <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.6;">
+          <li>Picks lock every Saturday at <strong>10:59am Central</strong>.</li>
+          <li><strong>Exception:</strong> if your pick plays Thursday or Friday, that pick locks the moment it kicks off instead.</li>
+          <li>You can change your pick freely before it locks — swap teams as many times as you like.</li>
+        </ul>
+      </div>
+    </div>
   </main>
 
   <div class="commish-link" id="commishLink">Commissioner</div>
@@ -357,15 +380,36 @@ function opponentContextHTML(week, team){
   const opponent = isAway ? g.home : g.away;
   return `<span class="opponent-context">(${isAway ? '@' : 'vs.'} ${opponent})</span>`;
 }
-// 'opp-sec' | 'opp-g5' | 'opp-notg5' | 'opp-ineligible' — purely a display
-// designation for the week schedule view (SEC teams white, G5 opponents one
-// subtle color, other non-conference opponents another, non-FBS opponents
-// flagged so their whole game row can be dimmed).
+// 'opp-sec' | 'opp-noncon' | 'opp-ineligible' — purely a display designation
+// for the week schedule view. SEC teams get their own brand color (applied
+// separately, since it's per-team, not a shared class); any eligible
+// non-conference opponent is plain white (the G5-vs-not distinction lives
+// in the game's pill, not the team-name color); non-FBS opponents are grey,
+// and their whole game row gets dimmed.
 function teamCategoryClass(team){
   if(SEC_TEAMS.includes(team)) return 'opp-sec';
   const row = CLASSIFICATION[team];
   if(!row || !row.eligible) return 'opp-ineligible';
-  return row.category === 'g5' ? 'opp-g5' : 'opp-notg5';
+  return 'opp-noncon';
+}
+// The non-SEC side of a matchup, or null for a conference (SEC-vs-SEC) game.
+function nonSecSideOf(g){
+  const awaySec = SEC_TEAMS.includes(g.away), homeSec = SEC_TEAMS.includes(g.home);
+  if(awaySec && homeSec) return null;
+  return awaySec ? g.home : g.away;
+}
+function gameIsIneligible(g){
+  const opp = nonSecSideOf(g);
+  return opp ? (!CLASSIFICATION[opp] || !CLASSIFICATION[opp].eligible) : false;
+}
+// The pill shown to the right of a game row: G5 / Non-Con / nothing for a
+// conference or FCS matchup (mirrors the exact same pills used on the pick menu).
+function gamePillHTML(g){
+  const opp = nonSecSideOf(g);
+  if(!opp) return '';
+  const row = CLASSIFICATION[opp];
+  if(!row || !row.eligible) return '';
+  return row.category === 'g5' ? '<span class="opt-tag g5">G5</span>' : '<span class="opt-tag nc">Non-Con</span>';
 }
 
 /* ======================== BUILD PLAYER MODEL ======================== */
@@ -578,9 +622,14 @@ function openWeekSheet(week){
     picksHTML += '</div>';
   }
 
-  const gamesSorted = revealed
-    ? [...weekGames].sort((a,b) => Math.max(pickCount(a.away),pickCount(a.home)) - Math.max(pickCount(b.away),pickCount(b.home))).reverse()
-    : [...weekGames].sort((a,b) => new Date(a.kickoff_at) - new Date(b.kickoff_at));
+  const gamesSorted = [...weekGames].sort((a,b) => {
+    const aIneligible = gameIsIneligible(a) ? 1 : 0;
+    const bIneligible = gameIsIneligible(b) ? 1 : 0;
+    if(aIneligible !== bIneligible) return aIneligible - bIneligible; // eligible games first, FCS games last
+    return revealed
+      ? Math.max(pickCount(b.away),pickCount(b.home)) - Math.max(pickCount(a.away),pickCount(a.home))
+      : new Date(a.kickoff_at) - new Date(b.kickoff_at);
+  });
 
   let gamesHTML = '<div class="week-section"><h3>Scores</h3>';
   if(gamesSorted.length === 0){
@@ -593,17 +642,30 @@ function openWeekSheet(week){
       const awayPicked = revealed && pickCount(g.away) > 0;
       const homePicked = revealed && pickCount(g.home) > 0;
       const unpicked = revealed && !awayPicked && !homePicked;
-      const ineligibleGame = teamCategoryClass(g.away) === 'opp-ineligible' || teamCategoryClass(g.home) === 'opp-ineligible';
-      const teamClass = (isWinner, isPicked, team) => {
+      const ineligibleGame = gameIsIneligible(g);
+      const teamClass = (isWinner, isPicked) => {
         const classes = ['game-team'];
         if(isWinner) classes.push('winner');
         if(isPicked && played) classes.push(isWinner ? 'pick-hit' : 'pick-miss');
         return classes.join(' ');
       };
+      // Once a game is final, the win/loss coloring above always wins — team
+      // brand color (and the plain-white/grey opponent designation) is only
+      // for browsing a game that hasn't been decided yet.
+      const sideMarkup = (team) => {
+        if(played){
+          return `<span class="game-team-name">${team}</span>`;
+        }
+        if(SEC_TEAMS.includes(team)){
+          return `<span class="game-team-name" style="color:${teamColor(team)}">${team}</span>`;
+        }
+        return `<span class="game-team-name ${teamCategoryClass(team)}">${team}</span>`;
+      };
       gamesHTML += `<div class="game-row ${unpicked ? 'unpicked' : ''} ${ineligibleGame ? 'ineligible-game' : ''}">
-        <div class="${teamClass(awayWon, awayPicked, g.away)}"><span class="game-team-name ${teamCategoryClass(g.away)}">${g.away}</span>${played ? ` <span class="game-score">${g.away_score}</span>` : ''}</div>
+        <div class="${teamClass(awayWon, awayPicked)}">${sideMarkup(g.away)}${played ? ` <span class="game-score">${g.away_score}</span>` : ''}</div>
         <div class="game-at">@</div>
-        <div class="${teamClass(homeWon, homePicked, g.home)}"><span class="game-team-name ${teamCategoryClass(g.home)}">${g.home}</span>${played ? ` <span class="game-score">${g.home_score}</span>` : ''}</div>
+        <div class="${teamClass(homeWon, homePicked)}">${sideMarkup(g.home)}${played ? ` <span class="game-score">${g.home_score}</span>` : ''}</div>
+        ${gamePillHTML(g)}
       </div>`;
     });
   }
