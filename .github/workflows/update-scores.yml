@@ -1,6 +1,10 @@
 name: Update SEC Survivor scores
 
 on:
+  # Temporary branch-only push trigger for the preseason production smoke test.
+  push:
+    branches:
+      - fix/score-ingestion-hardening
   # Scheduled score refreshes. Cron is UTC. We intentionally run every day
   # during the game window so weather/reschedule oddities are still covered.
   # 17:00-08:30 UTC reaches well past the end of late Central-time games,
