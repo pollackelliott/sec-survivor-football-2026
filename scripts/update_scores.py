@@ -25,18 +25,43 @@ SEC_TEAMS = {
     "Tennessee", "Texas", "Texas A&M", "Vanderbilt",
 }
 
-# ESPN's own display names sometimes differ slightly from the ones used
-# elsewhere in this app (e.g. "Ole Miss" vs "Mississippi"). Map anything
-# that doesn't already match SEC_TEAMS / opponent_classification exactly.
+# ESPN display names that are known to differ from this app's canonical names.
+# Keep this list intentionally small: anything else is surfaced as a workflow
+# failure after valid rows are still upserted, so a new mismatch cannot remain
+# silent.
 NAME_FIXES = {
     "Mississippi": "Ole Miss",
-    "Texas A&M": "Texas A&M",
-    "Miami (OH)": "Miami (OH)",
+    "UL Monroe": "Louisiana-Monroe",
 }
 
 
 def normalize(name: str) -> str:
     return NAME_FIXES.get(name, name)
+
+
+def supabase_headers(service_key: str) -> dict[str, str]:
+    return {
+        "apikey": service_key,
+        "Authorization": f"Bearer {service_key}",
+    }
+
+
+def fetch_known_opponents(base_url: str, service_key: str) -> set[str]:
+    """Return the canonical opponent names configured in Supabase."""
+    resp = requests.get(
+        f"{base_url}/rest/v1/opponent_classification?select=opponent",
+        headers=supabase_headers(service_key),
+        timeout=20,
+    )
+    if not resp.ok:
+        print(
+            f"  ! Supabase opponent lookup failed: {resp.status_code} {resp.text}",
+            file=sys.stderr,
+        )
+        resp.raise_for_status()
+
+    rows = resp.json()
+    return {row["opponent"] for row in rows if row.get("opponent")}
 
 
 def fetch_week(week: int, year: int) -> list[dict]:
@@ -52,40 +77,73 @@ def fetch_week(week: int, year: int) -> list[dict]:
     return resp.json().get("events", [])
 
 
-def parse_event(event: dict, week: int) -> dict | None:
-    try:
-        competition = event["competitions"][0]
-        competitors = competition["competitors"]
-        home = next(c for c in competitors if c["homeAway"] == "home")
-        away = next(c for c in competitors if c["homeAway"] == "away")
+def parse_event(event: dict, week: int) -> dict:
+    competition = event["competitions"][0]
+    competitors = competition["competitors"]
+    home = next(c for c in competitors if c["homeAway"] == "home")
+    away = next(c for c in competitors if c["homeAway"] == "away")
 
-        home_name = normalize(home["team"]["location"] if home["team"].get("location") else home["team"]["displayName"])
-        away_name = normalize(away["team"]["location"] if away["team"].get("location") else away["team"]["displayName"])
+    home_name = normalize(
+        home["team"]["location"]
+        if home["team"].get("location")
+        else home["team"]["displayName"]
+    )
+    away_name = normalize(
+        away["team"]["location"]
+        if away["team"].get("location")
+        else away["team"]["displayName"]
+    )
 
-        # only keep games that actually involve an SEC team
-        if home_name not in SEC_TEAMS and away_name not in SEC_TEAMS:
-            return None
+    # groups=8 should return only SEC-involved games. If ESPN ever changes an
+    # SEC display name (or the endpoint behavior changes), do not silently drop
+    # the event: raise so the workflow is visibly marked failed.
+    if home_name not in SEC_TEAMS and away_name not in SEC_TEAMS:
+        raise ValueError(
+            f"ESPN group=8 event has no recognized SEC team: {away_name} @ {home_name}"
+        )
 
-        status = competition.get("status", {}).get("type", {}).get("state")  # "pre" | "in" | "post"
-        home_score = int(home["score"]) if status != "pre" and home.get("score") not in (None, "") else None
-        away_score = int(away["score"]) if status != "pre" and away.get("score") not in (None, "") else None
+    status = competition.get("status", {}).get("type", {}).get("state")
+    home_score = (
+        int(home["score"])
+        if status != "pre" and home.get("score") not in (None, "")
+        else None
+    )
+    away_score = (
+        int(away["score"])
+        if status != "pre" and away.get("score") not in (None, "")
+        else None
+    )
 
-        winner = None
-        if status == "post" and home_score is not None and away_score is not None and home_score != away_score:
-            winner = home_name if home_score > away_score else away_name
+    winner = None
+    if (
+        status == "post"
+        and home_score is not None
+        and away_score is not None
+        and home_score != away_score
+    ):
+        winner = home_name if home_score > away_score else away_name
 
-        return {
-            "week": week,
-            "home": home_name,
-            "away": away_name,
-            "kickoff_at": event["date"],  # ISO8601, UTC
-            "home_score": home_score,
-            "away_score": away_score,
-            "winner": winner,
+    return {
+        "week": week,
+        "home": home_name,
+        "away": away_name,
+        "kickoff_at": event["date"],  # ISO8601, UTC
+        "home_score": home_score,
+        "away_score": away_score,
+        "winner": winner,
+    }
+
+
+def find_unknown_names(rows: list[dict], known_opponents: set[str]) -> list[str]:
+    known_names = SEC_TEAMS | known_opponents
+    return sorted(
+        {
+            team
+            for row in rows
+            for team in (row["home"], row["away"])
+            if team not in known_names
         }
-    except (KeyError, StopIteration, ValueError) as e:
-        print(f"  ! skipping malformed event: {e}", file=sys.stderr)
-        return None
+    )
 
 
 def upsert_games(rows: list[dict], base_url: str, service_key: str) -> None:
@@ -95,16 +153,18 @@ def upsert_games(rows: list[dict], base_url: str, service_key: str) -> None:
     resp = requests.post(
         f"{base_url}/rest/v1/games?on_conflict=week,away,home",
         headers={
-            "apikey": service_key,
-            "Authorization": f"Bearer {service_key}",
+            **supabase_headers(service_key),
             "Content-Type": "application/json",
-            "Prefer": "resolution=merge-duplicates",  # upsert on the unique (week,away,home) constraint
+            "Prefer": "resolution=merge-duplicates",
         },
         json=rows,
         timeout=20,
     )
     if not resp.ok:
-        print(f"  ! Supabase upsert failed: {resp.status_code} {resp.text}", file=sys.stderr)
+        print(
+            f"  ! Supabase upsert failed: {resp.status_code} {resp.text}",
+            file=sys.stderr,
+        )
         resp.raise_for_status()
     print(f"  upserted {len(rows)} game(s) for week {rows[0]['week']}")
 
@@ -119,11 +179,44 @@ def main():
     service_key = os.environ["SUPABASE_SERVICE_KEY"]
 
     print(f"Fetching week {args.week}, {args.year}...")
-    events = fetch_week(args.week, args.year)
-    rows = [r for r in (parse_event(e, args.week) for e in events) if r is not None]
+    known_opponents = fetch_known_opponents(base_url, service_key)
+    print(f"  loaded {len(known_opponents)} configured opponent name(s) from Supabase")
 
-    print(f"  found {len(rows)} SEC-involved game(s)")
+    events = fetch_week(args.week, args.year)
+    rows = []
+    parse_errors = []
+
+    for event in events:
+        try:
+            rows.append(parse_event(event, args.week))
+        except (KeyError, StopIteration, TypeError, ValueError) as exc:
+            event_id = event.get("id", "unknown")
+            message = f"event {event_id}: {exc}"
+            parse_errors.append(message)
+            print(f"::error title=ESPN event parse failure::{message}", file=sys.stderr)
+
+    print(f"  found {len(rows)} recognized SEC-involved game(s)")
+
+    unknown_names = find_unknown_names(rows, known_opponents)
+    for name in unknown_names:
+        print(
+            f"::error title=Unrecognized ESPN team name::"
+            f"{name!r} is not an SEC team or opponent_classification name. "
+            f"Add a deliberate NAME_FIXES alias or correct the database seed.",
+            file=sys.stderr,
+        )
+
+    # Preserve every valid score/schedule row even when one event needs human
+    # attention. The run is marked failed *after* the upsert so ingestion is
+    # not held hostage by one naming/configuration problem.
     upsert_games(rows, base_url, service_key)
+
+    if parse_errors or unknown_names:
+        problems = len(parse_errors) + len(unknown_names)
+        raise RuntimeError(
+            f"score ingestion completed with {problems} validation problem(s); "
+            "see the annotated errors above"
+        )
 
 
 if __name__ == "__main__":
