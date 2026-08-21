@@ -32,6 +32,8 @@ SEC_TEAMS = {
 NAME_FIXES = {
     "Mississippi": "Ole Miss",
     "UL Monroe": "Louisiana-Monroe",
+    "McNeese": "McNeese State",
+    "The Citadel": "Citadel",
 }
 
 
