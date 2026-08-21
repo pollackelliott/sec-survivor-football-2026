@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Pulls every FBS game involving an SEC team for a given week from ESPN's
-public (unofficial) scoreboard endpoint, and upserts the results into the
-Supabase `games` table.
+public (unofficial) scoreboard endpoint, validates the response against the
+schedule already loaded in Supabase, and upserts safe score/result updates.
 
 Env vars required (set as GitHub Actions secrets):
   SUPABASE_URL          e.g. https://xxxxx.supabase.co
@@ -17,6 +17,7 @@ Usage:
 import argparse
 import os
 import sys
+
 import requests
 
 SEC_TEAMS = {
@@ -27,8 +28,7 @@ SEC_TEAMS = {
 
 # ESPN display names that are known to differ from this app's canonical names.
 # Keep this list intentionally small: anything else is surfaced as a workflow
-# failure after valid rows are still upserted, so a new mismatch cannot remain
-# silent.
+# failure so a new mismatch cannot remain silent.
 NAME_FIXES = {
     "Mississippi": "Ole Miss",
     "UL Monroe": "Louisiana-Monroe",
@@ -66,6 +66,29 @@ def fetch_known_opponents(base_url: str, service_key: str) -> set[str]:
     return {row["opponent"] for row in rows if row.get("opponent")}
 
 
+def fetch_expected_game_keys(
+    base_url: str, service_key: str, week: int
+) -> set[tuple[str, str]]:
+    """Return (away, home) pairs already loaded for this pool week."""
+    resp = requests.get(
+        f"{base_url}/rest/v1/games?select=away,home&week=eq.{week}",
+        headers=supabase_headers(service_key),
+        timeout=20,
+    )
+    if not resp.ok:
+        print(
+            f"  ! Supabase schedule lookup failed: {resp.status_code} {resp.text}",
+            file=sys.stderr,
+        )
+        resp.raise_for_status()
+
+    return {
+        (row["away"], row["home"])
+        for row in resp.json()
+        if row.get("away") and row.get("home")
+    }
+
+
 def fetch_week(week: int, year: int) -> list[dict]:
     """
     groups=8 is ESPN's internal id for the SEC; scoped this way the
@@ -73,7 +96,13 @@ def fetch_week(week: int, year: int) -> list[dict]:
     their non-conference matchups (not just SEC-vs-SEC games).
     """
     url = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
-    params = {"groups": 8, "week": week, "year": year, "seasontype": 2, "limit": 100}
+    params = {
+        "groups": 8,
+        "week": week,
+        "year": year,
+        "seasontype": 2,
+        "limit": 100,
+    }
     resp = requests.get(url, params=params, timeout=20)
     resp.raise_for_status()
     return resp.json().get("events", [])
@@ -97,8 +126,8 @@ def parse_event(event: dict, week: int) -> dict:
     )
 
     # groups=8 should return only SEC-involved games. If ESPN ever changes an
-    # SEC display name (or the endpoint behavior changes), do not silently drop
-    # the event: raise so the workflow is visibly marked failed.
+    # SEC display name (or the endpoint behavior changes), fail visibly rather
+    # than silently dropping the event.
     if home_name not in SEC_TEAMS and away_name not in SEC_TEAMS:
         raise ValueError(
             f"ESPN group=8 event has no recognized SEC team: {away_name} @ {home_name}"
@@ -136,6 +165,10 @@ def parse_event(event: dict, week: int) -> dict:
     }
 
 
+def game_key(row: dict) -> tuple[str, str]:
+    return row["away"], row["home"]
+
+
 def find_unknown_names(rows: list[dict], known_opponents: set[str]) -> list[str]:
     known_names = SEC_TEAMS | known_opponents
     return sorted(
@@ -150,7 +183,7 @@ def find_unknown_names(rows: list[dict], known_opponents: set[str]) -> list[str]
 
 def upsert_games(rows: list[dict], base_url: str, service_key: str) -> None:
     if not rows:
-        print("  no rows to upsert")
+        print("  no safe rows to upsert")
         return
     resp = requests.post(
         f"{base_url}/rest/v1/games?on_conflict=week,away,home",
@@ -171,7 +204,7 @@ def upsert_games(rows: list[dict], base_url: str, service_key: str) -> None:
     print(f"  upserted {len(rows)} game(s) for week {rows[0]['week']}")
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--week", type=int, required=True)
     parser.add_argument("--year", type=int, default=2026)
@@ -182,11 +215,13 @@ def main():
 
     print(f"Fetching week {args.week}, {args.year}...")
     known_opponents = fetch_known_opponents(base_url, service_key)
+    expected_keys = fetch_expected_game_keys(base_url, service_key, args.week)
     print(f"  loaded {len(known_opponents)} configured opponent name(s) from Supabase")
+    print(f"  loaded {len(expected_keys)} existing week-{args.week} game(s) from Supabase")
 
     events = fetch_week(args.week, args.year)
-    rows = []
-    parse_errors = []
+    rows: list[dict] = []
+    parse_errors: list[str] = []
 
     for event in events:
         try:
@@ -197,7 +232,7 @@ def main():
             parse_errors.append(message)
             print(f"::error title=ESPN event parse failure::{message}", file=sys.stderr)
 
-    print(f"  found {len(rows)} recognized SEC-involved game(s)")
+    print(f"  found {len(rows)} recognized SEC-involved ESPN game(s)")
 
     unknown_names = find_unknown_names(rows, known_opponents)
     for name in unknown_names:
@@ -208,17 +243,54 @@ def main():
             file=sys.stderr,
         )
 
-    # Preserve every valid score/schedule row even when one event needs human
-    # attention. The run is marked failed *after* the upsert so ingestion is
-    # not held hostage by one naming/configuration problem.
-    upsert_games(rows, base_url, service_key)
+    espn_keys = {game_key(row) for row in rows}
+    missing_expected: set[tuple[str, str]] = set()
+    unexpected_espn: set[tuple[str, str]] = set()
 
-    if parse_errors or unknown_names:
-        problems = len(parse_errors) + len(unknown_names)
+    if expected_keys:
+        missing_expected = expected_keys - espn_keys
+        unexpected_espn = espn_keys - expected_keys
+
+        for away, home in sorted(missing_expected):
+            print(
+                f"::error title=Scheduled game missing from ESPN::"
+                f"Week {args.week}: {away} @ {home} exists in Supabase but was not returned by ESPN.",
+                file=sys.stderr,
+            )
+
+        for away, home in sorted(unexpected_espn):
+            print(
+                f"::error title=Unexpected ESPN matchup::"
+                f"Week {args.week}: ESPN returned {away} @ {home}, but that matchup is not in the loaded Supabase schedule. "
+                "It was not upserted automatically; review for a schedule or naming change.",
+                file=sys.stderr,
+            )
+
+        # Once a schedule exists, only update rows that match it exactly. This
+        # prevents a changed/renamed matchup from creating a duplicate game row
+        # that could make opponent lookup ambiguous. Valid matching games still
+        # receive their score updates even when another matchup needs review.
+        safe_rows = [row for row in rows if game_key(row) in expected_keys]
+    else:
+        # Preseason/bootstrap behavior: if the week has never been loaded, ESPN
+        # is allowed to establish the initial schedule.
+        safe_rows = rows
+
+    upsert_games(safe_rows, base_url, service_key)
+
+    problems = (
+        len(parse_errors)
+        + len(unknown_names)
+        + len(missing_expected)
+        + len(unexpected_espn)
+    )
+    if problems:
         raise RuntimeError(
             f"score ingestion completed with {problems} validation problem(s); "
-            "see the annotated errors above"
+            "valid matching rows were preserved and the annotated errors above require review"
         )
+
+    print("  validation passed; ESPN response matches the configured schedule")
 
 
 if __name__ == "__main__":
