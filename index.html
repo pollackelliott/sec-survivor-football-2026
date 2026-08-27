@@ -275,12 +275,18 @@ const TEAM_ABBR = {
   'Tennessee':'TENN','Texas':'TEX','Texas A&M':'A&M','Vanderbilt':'VU'
 };
 function teamAbbr(name){ return TEAM_ABBR[name] || (name ? name.slice(0,4).toUpperCase() : ''); }
+// Display-only shorthand for names too long to fit a single line in a chip —
+// every lookup/match elsewhere (classify_pick, TEAM_COLORS, GAMES rows, the
+// scraper) still uses the real "Mississippi State", only rendered text uses this.
 const TEAM_DISPLAY = { 'Mississippi State': 'Miss. State', 'South Carolina': 'S. Carolina' };
 function teamDisplay(name){ return TEAM_DISPLAY[name] || name; }
 const COMMISSIONER_EMAIL = 'pollack.elliott@gmail.com';
 
 /* ======================== IDENTITY ======================== */
-let IDENTITY = null;
+// Identity is now a real Supabase Auth session — no homegrown tokens, no
+// localStorage bookkeeping. Supabase's client keeps the session persisted
+// and refreshed on its own; we just read `IDENTITY` off of it.
+let IDENTITY = null; // { id } once logged in, else null
 
 sb.auth.onAuthStateChange((event, session) => {
   if(event === 'PASSWORD_RECOVERY'){
@@ -294,11 +300,11 @@ sb.auth.onAuthStateChange((event, session) => {
 });
 
 /* ======================== DATA LOADING ======================== */
-let GAMES = [];
-let CLASSIFICATION = {};
-let PLAYERS_RAW = [];
-let BOARD_ROWS = [];
-let MY_PICKS = [];
+let GAMES = [];           // all rows from `games`
+let CLASSIFICATION = {};  // opponent -> {eligible, category}
+let PLAYERS_RAW = [];     // {id, name}
+let BOARD_ROWS = [];      // from get_public_board(): {player_id, player_name, week, team, revealed}
+let MY_PICKS = [];        // from get_my_picks(), only if IDENTITY set
 let WEEK_REOPEN_TIMES = {};
 let WEEK_DEADLINES = {};
 
@@ -359,6 +365,7 @@ reopenResults.forEach((result, i) => {
   }
 }
 
+/* ---- schedule helpers (mirror the SQL logic, client-side, display-only) ---- */
 function gameFor(week, team){
   return GAMES.find(g => g.week === week && (g.home === team || g.away === team)) || null;
 }
@@ -373,11 +380,13 @@ function classifyPick(week, team){
   if(SEC_TEAMS.includes(opp)) return 'conference';
   const row = CLASSIFICATION[opp];
   if(!row || !row.eligible) return 'ineligible';
-  return row.category;
+  return row.category; // 'g5' | 'not_g5'
 }
 function weekDeadline(week){
   return WEEK_DEADLINES[week] || null;
 }
+// Mirrors week_reopen_time() in the DB: the Sunday 5:00am Central following
+// a week's own Saturday deadline — when the NEXT week's picks open.
 function weekReopenTime(week){
   return WEEK_REOPEN_TIMES[week] || null;
 }
@@ -400,12 +409,19 @@ function opponentContextHTML(week, team){
   const opponent = isAway ? g.home : g.away;
   return `<span class="opponent-context">(${isAway ? '@' : 'vs.'} ${opponent})</span>`;
 }
+// 'opp-sec' | 'opp-noncon' | 'opp-ineligible' — purely a display designation
+// for the week schedule view. SEC teams get their own brand color (applied
+// separately, since it's per-team, not a shared class); any eligible
+// non-conference opponent is plain white (the G5-vs-not distinction lives
+// in the game's pill, not the team-name color); non-FBS opponents are grey,
+// and their whole game row gets dimmed.
 function teamCategoryClass(team){
   if(SEC_TEAMS.includes(team)) return 'opp-sec';
   const row = CLASSIFICATION[team];
   if(!row || !row.eligible) return 'opp-ineligible';
   return 'opp-noncon';
 }
+// The non-SEC side of a matchup, or null for a conference (SEC-vs-SEC) game.
 function nonSecSideOf(g){
   const awaySec = SEC_TEAMS.includes(g.away), homeSec = SEC_TEAMS.includes(g.home);
   if(awaySec && homeSec) return null;
@@ -415,6 +431,8 @@ function gameIsIneligible(g){
   const opp = nonSecSideOf(g);
   return opp ? (!CLASSIFICATION[opp] || !CLASSIFICATION[opp].eligible) : false;
 }
+// The pill shown to the right of a game row: G5 / Non-Con / nothing for a
+// conference or FCS matchup (mirrors the exact same pills used on the pick menu).
 function gamePillHTML(g){
   const opp = nonSecSideOf(g);
   if(!opp) return '';
@@ -437,7 +455,7 @@ function buildPlayers(){
         revealed.push(true);
       } else {
         const row = rows.find(r => r.week === w);
-        picks.push(row ? row.team : null);
+        picks.push(row ? row.team : null); // null if not picked OR not yet revealed
         revealed.push(row ? row.revealed : false);
       }
     }
@@ -493,6 +511,10 @@ function comparePlayers(a, b){
 }
 
 function computeCurrentWeek(){
+  // "Current" means the latest week that has actually STARTED (its earliest
+  // kickoff has already passed) — not merely the latest week we happen to
+  // have schedule data for. Backfilling future weeks' schedules shouldn't
+  // make the app think the season is further along than it really is.
   let w = 1;
   const now = new Date();
   const weeksWithGames = [...new Set(GAMES.map(g=>g.week))];
@@ -507,7 +529,7 @@ function computeCurrentWeek(){
 /* ======================== RENDER: GRID ======================== */
 function renderGrid(){
   const ordered = [...ALL_PLAYERS].sort(comparePlayers);
-  const shownWeeks = WEEKS;
+  const shownWeeks = WEEKS; // show the full season — future weeks are just empty/clickable for the schedule
 
   let head = '<th class="corner">Player</th>';
   for(let w=1; w<=shownWeeks; w++) head += `<th class="wk-head" data-week="${w}">Wk ${w}</th>`;
@@ -664,7 +686,7 @@ function openWeekSheet(week){
   const gamesSorted = [...weekGames].sort((a,b) => {
     const aIneligible = gameIsIneligible(a) ? 1 : 0;
     const bIneligible = gameIsIneligible(b) ? 1 : 0;
-    if(aIneligible !== bIneligible) return aIneligible - bIneligible;
+    if(aIneligible !== bIneligible) return aIneligible - bIneligible; // eligible games first, FCS games last
     return revealed
       ? Math.max(pickCount(b.away),pickCount(b.home)) - Math.max(pickCount(a.away),pickCount(a.home))
       : conferenceSortName(a).localeCompare(conferenceSortName(b));
@@ -688,6 +710,9 @@ function openWeekSheet(week){
         if(isPicked && played) classes.push(isWinner ? 'pick-hit' : 'pick-miss');
         return classes.join(' ');
       };
+      // Once a game is final, the win/loss coloring above always wins — team
+      // brand color (and the plain-white/grey opponent designation) is only
+      // for browsing a game that hasn't been decided yet.
       const sideMarkup = (team) => {
         if(played){
           return `<span class="game-team-name">${team}</span>`;
@@ -713,6 +738,10 @@ function openWeekSheet(week){
 }
 
 /* ======================== MY PICK TAB ======================== */
+
+// Mirrors the database's own gating (submit_pick's checks 1a/1b/1c) so the
+// UI never shows something the server would then reject. The database
+// remains the actual authority — this is display logic only.
 function computeMyPickState(){
   const now = new Date();
   const picksByWeek = {};
@@ -724,6 +753,7 @@ function computeMyPickState(){
     const mine = picksByWeek[w];
 
     if(!mine){
+      // nothing picked for week w yet — is it actually open?
       const prevWeek = weeksWithGames[i-1];
       if(prevWeek !== undefined){
         const prevPick = picksByWeek[prevWeek];
@@ -742,11 +772,13 @@ function computeMyPickState(){
       return { state:'open', targetWeek: w };
     }
 
+    // week w has a pick — still within its own edit window?
     const editableUntil = mine.editable_until ? new Date(mine.editable_until) : null;
     if(editableUntil && editableUntil > now){
       return { state:'open', targetWeek: w };
     }
 
+    // locked — decided yet?
     const result = resultFor(w, mine.team);
     if(result === 0){
       return { state:'eliminated', eliminatedWeek: w };
@@ -758,6 +790,7 @@ function computeMyPickState(){
     if(reopen && now < reopen){
       return { state:'frozen', frozenWeek: w, reopensAt: reopen };
     }
+    // decided win, reopened — move on and check the next week
   }
 
   const lastWeek = weeksWithGames[weeksWithGames.length - 1];
@@ -809,9 +842,14 @@ function renderMyPick(){
     return;
   }
 
+  // state === 'open'
   const targetWeek = status.targetWeek;
   const usedTeams = new Set((me ? me.picks : []).filter(Boolean));
 
+  // Allowance available FOR THIS WEEK's menu excludes whatever's currently
+  // picked for this same week — otherwise editing your own G5/non-con pick
+  // would wrongly count it against itself and hide its sibling options.
+  // (Mirrors submit_pick's own `week <> p_week` exclusion in the database.)
   let nonConLeft = 3, g5Left = 1;
   (me ? me.picks : []).forEach((pick, i) => {
     if(i === targetWeek - 1 || !pick) return;
@@ -1039,6 +1077,9 @@ function wireLogoutLink(){
   }
 }
 
+// Supabase redirects here with a recovery token after the user clicks the
+// reset-password email link; onAuthStateChange fires PASSWORD_RECOVERY and
+// we take over the whole My Pick panel with a simple "set a new password" form.
 function showPasswordResetPanel(){
   document.querySelector('.tab[data-tab="mypick"]').click();
   document.getElementById('myPickPanel').innerHTML = `<div class="panel">
