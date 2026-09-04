@@ -34,6 +34,7 @@
 
   /* final-score-clarity */
   .game-row:has(.game-team.winner) .game-team:not(.winner){opacity:.55;}
+  .game-row:has(.game-team.winner) .game-team:not(.winner) .game-score{color:var(--text-dim);}
   .game-team.winner .game-score{color:var(--text);font-weight:900;font-size:1.08em;}
   .game-row:has(.game-team.winner) > .game-at + .game-team::after{content:' F';color:var(--text-faint);font-size:10px;font-weight:900;letter-spacing:.05em;margin-left:2px;}
 </style>
