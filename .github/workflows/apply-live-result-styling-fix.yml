@@ -1,0 +1,44 @@
+name: Apply live result styling fix
+
+on:
+  push:
+    branches:
+      - ui-live-result-styling-fix
+    paths:
+      - .github/workflows/apply-live-result-styling-fix.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ui-live-result-styling-fix
+      - name: Apply final-only pick styling and Youngstown State size
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('index.html')
+          text = path.read_text()
+          old1 = "if(picked&&played)c.push(win?'pick-hit':'pick-miss');"
+          new1 = "if(picked&&g.winner)c.push(win?'pick-hit':'pick-miss');"
+          if text.count(old1) != 1:
+              raise SystemExit(f'Expected exactly one live pick-style condition, found {text.count(old1)}')
+          text = text.replace(old1, new1, 1)
+          old2 = "${team==='Arkansas-Pine Bluff'?' style=\"font-size:11px;\"':''}"
+          new2 = "${(team==='Arkansas-Pine Bluff'||team==='Youngstown State')?' style=\"font-size:11px;\"':''}"
+          if text.count(old2) != 1:
+              raise SystemExit(f'Expected exactly one Arkansas-Pine Bluff size exception, found {text.count(old2)}')
+          text = text.replace(old2, new2, 1)
+          path.write_text(text)
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Fix live pick styling and shrink Youngstown State"
+          git push origin HEAD:ui-live-result-styling-fix
