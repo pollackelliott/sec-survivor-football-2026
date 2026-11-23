@@ -1,0 +1,4146 @@
+{
+  "meta": {
+    "season": 2026,
+    "exported_at": "2026-11-23T17:29:30.630563+00:00",
+    "source": "Supabase public read interfaces",
+    "contains_private_auth_data": false,
+    "pool_end_week": 11,
+    "winner_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+    "winner_name": "Jake Weiner",
+    "survivors": 1,
+    "weeks": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ]
+  },
+  "games": [
+    {
+      "id": 1,
+      "week": 1,
+      "away": "Arkansas-Pine Bluff",
+      "home": "Missouri",
+      "kickoff_at": "2026-09-04T00:00:00+00:00",
+      "away_score": 14,
+      "home_score": 54,
+      "winner": "Missouri",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 2,
+      "week": 1,
+      "away": "UTEP",
+      "home": "Oklahoma",
+      "kickoff_at": "2026-09-05T00:00:00+00:00",
+      "away_score": 0,
+      "home_score": 51,
+      "winner": "Oklahoma",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 3,
+      "week": 1,
+      "away": "East Carolina",
+      "home": "Alabama",
+      "kickoff_at": "2026-09-05T16:00:00+00:00",
+      "away_score": 10,
+      "home_score": 48,
+      "winner": "Alabama",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 4,
+      "week": 1,
+      "away": "Kent State",
+      "home": "South Carolina",
+      "kickoff_at": "2026-09-05T16:45:00+00:00",
+      "away_score": 0,
+      "home_score": 57,
+      "winner": "South Carolina",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 5,
+      "week": 1,
+      "away": "Youngstown State",
+      "home": "Kentucky",
+      "kickoff_at": "2026-09-05T17:00:00+00:00",
+      "away_score": 13,
+      "home_score": 45,
+      "winner": "Kentucky",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 6,
+      "week": 1,
+      "away": "Tennessee State",
+      "home": "Georgia",
+      "kickoff_at": "2026-09-05T19:00:00+00:00",
+      "away_score": 3,
+      "home_score": 63,
+      "winner": "Georgia",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 9,
+      "week": 1,
+      "away": "Texas State",
+      "home": "Texas",
+      "kickoff_at": "2026-09-05T19:30:00+00:00",
+      "away_score": 7,
+      "home_score": 59,
+      "winner": "Texas",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 8,
+      "week": 1,
+      "away": "Furman",
+      "home": "Tennessee",
+      "kickoff_at": "2026-09-05T19:30:00+00:00",
+      "away_score": 9,
+      "home_score": 56,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 7,
+      "week": 1,
+      "away": "Baylor",
+      "home": "Auburn",
+      "kickoff_at": "2026-09-05T19:30:00+00:00",
+      "away_score": 16,
+      "home_score": 17,
+      "winner": "Auburn",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 10,
+      "week": 1,
+      "away": "North Alabama",
+      "home": "Arkansas",
+      "kickoff_at": "2026-09-05T20:15:00+00:00",
+      "away_score": 14,
+      "home_score": 31,
+      "winner": "Arkansas",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 11,
+      "week": 1,
+      "away": "Missouri State",
+      "home": "Texas A&M",
+      "kickoff_at": "2026-09-05T23:00:00+00:00",
+      "away_score": 0,
+      "home_score": 50,
+      "winner": "Texas A&M",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 12,
+      "week": 1,
+      "away": "Austin Peay",
+      "home": "Vanderbilt",
+      "kickoff_at": "2026-09-05T23:00:00+00:00",
+      "away_score": 9,
+      "home_score": 28,
+      "winner": "Vanderbilt",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 14,
+      "week": 1,
+      "away": "Louisiana-Monroe",
+      "home": "Mississippi State",
+      "kickoff_at": "2026-09-05T23:30:00+00:00",
+      "away_score": 13,
+      "home_score": 62,
+      "winner": "Mississippi State",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 15,
+      "week": 1,
+      "away": "Florida Atlantic",
+      "home": "Florida",
+      "kickoff_at": "2026-09-05T23:45:00+00:00",
+      "away_score": 21,
+      "home_score": 66,
+      "winner": "Florida",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 13,
+      "week": 1,
+      "away": "Clemson",
+      "home": "LSU",
+      "kickoff_at": "2026-09-06T01:40:00+00:00",
+      "away_score": 10,
+      "home_score": 51,
+      "winner": "LSU",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 16,
+      "week": 1,
+      "away": "Louisville",
+      "home": "Ole Miss",
+      "kickoff_at": "2026-09-06T23:30:00+00:00",
+      "away_score": 38,
+      "home_score": 41,
+      "winner": "Ole Miss",
+      "updated_at": "2026-07-08T21:47:46.799955+00:00"
+    },
+    {
+      "id": 17,
+      "week": 2,
+      "away": "Missouri",
+      "home": "Kansas",
+      "kickoff_at": "2026-09-12T00:00:00+00:00",
+      "away_score": 38,
+      "home_score": 21,
+      "winner": "Missouri",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 20,
+      "week": 2,
+      "away": "Arizona State",
+      "home": "Texas A&M",
+      "kickoff_at": "2026-09-12T16:00:00+00:00",
+      "away_score": 20,
+      "home_score": 48,
+      "winner": "Texas A&M",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 19,
+      "week": 2,
+      "away": "Oklahoma",
+      "home": "Michigan",
+      "kickoff_at": "2026-09-12T16:00:00+00:00",
+      "away_score": 10,
+      "home_score": 17,
+      "winner": "Michigan",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 21,
+      "week": 2,
+      "away": "Western Kentucky",
+      "home": "Georgia",
+      "kickoff_at": "2026-09-12T16:45:00+00:00",
+      "away_score": 20,
+      "home_score": 70,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 22,
+      "week": 2,
+      "away": "Alabama",
+      "home": "Kentucky",
+      "kickoff_at": "2026-09-12T19:30:00+00:00",
+      "away_score": 45,
+      "home_score": 17,
+      "winner": "Alabama",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 23,
+      "week": 2,
+      "away": "Mississippi State",
+      "home": "Minnesota",
+      "kickoff_at": "2026-09-12T19:30:00+00:00",
+      "away_score": 38,
+      "home_score": 13,
+      "winner": "Mississippi State",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 24,
+      "week": 2,
+      "away": "Delaware",
+      "home": "Vanderbilt",
+      "kickoff_at": "2026-09-12T20:15:00+00:00",
+      "away_score": 26,
+      "home_score": 35,
+      "winner": "Vanderbilt",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 25,
+      "week": 2,
+      "away": "Campbell",
+      "home": "Florida",
+      "kickoff_at": "2026-09-12T21:30:00+00:00",
+      "away_score": 3,
+      "home_score": 52,
+      "winner": "Florida",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 26,
+      "week": 2,
+      "away": "Towson",
+      "home": "South Carolina",
+      "kickoff_at": "2026-09-12T23:00:00+00:00",
+      "away_score": 9,
+      "home_score": 45,
+      "winner": "South Carolina",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 27,
+      "week": 2,
+      "away": "Tennessee",
+      "home": "Georgia Tech",
+      "kickoff_at": "2026-09-12T23:00:00+00:00",
+      "away_score": 45,
+      "home_score": 24,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 28,
+      "week": 2,
+      "away": "Ohio State",
+      "home": "Texas",
+      "kickoff_at": "2026-09-12T23:30:00+00:00",
+      "away_score": 23,
+      "home_score": 24,
+      "winner": "Texas",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 29,
+      "week": 2,
+      "away": "Louisiana Tech",
+      "home": "LSU",
+      "kickoff_at": "2026-09-12T23:30:00+00:00",
+      "away_score": 14,
+      "home_score": 45,
+      "winner": "LSU",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 30,
+      "week": 2,
+      "away": "Charlotte",
+      "home": "Ole Miss",
+      "kickoff_at": "2026-09-12T23:45:00+00:00",
+      "away_score": 9,
+      "home_score": 41,
+      "winner": "Ole Miss",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 18,
+      "week": 2,
+      "away": "Southern Miss",
+      "home": "Auburn",
+      "kickoff_at": "2026-09-13T00:50:00+00:00",
+      "away_score": 8,
+      "home_score": 43,
+      "winner": "Auburn",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 31,
+      "week": 2,
+      "away": "Arkansas",
+      "home": "Utah",
+      "kickoff_at": "2026-09-13T02:30:00+00:00",
+      "away_score": 10,
+      "home_score": 43,
+      "winner": "Utah",
+      "updated_at": "2026-07-09T16:49:06.533722+00:00"
+    },
+    {
+      "id": 32,
+      "week": 3,
+      "away": "Georgia",
+      "home": "Arkansas",
+      "kickoff_at": "2026-09-19T16:00:00+00:00",
+      "away_score": 45,
+      "home_score": 17,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 34,
+      "week": 3,
+      "away": "NC State",
+      "home": "Vanderbilt",
+      "kickoff_at": "2026-09-19T16:45:00+00:00",
+      "away_score": 31,
+      "home_score": 35,
+      "winner": "Vanderbilt",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 36,
+      "week": 3,
+      "away": "Kentucky",
+      "home": "Texas A&M",
+      "kickoff_at": "2026-09-19T19:40:00+00:00",
+      "away_score": 31,
+      "home_score": 21,
+      "winner": "Kentucky",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 35,
+      "week": 3,
+      "away": "Florida State",
+      "home": "Alabama",
+      "kickoff_at": "2026-09-19T21:15:00+00:00",
+      "away_score": 36,
+      "home_score": 50,
+      "winner": "Alabama",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 37,
+      "week": 3,
+      "away": "Mississippi State",
+      "home": "South Carolina",
+      "kickoff_at": "2026-09-19T21:35:00+00:00",
+      "away_score": 41,
+      "home_score": 34,
+      "winner": "Mississippi State",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 33,
+      "week": 3,
+      "away": "Troy",
+      "home": "Missouri",
+      "kickoff_at": "2026-09-19T23:00:00+00:00",
+      "away_score": 17,
+      "home_score": 27,
+      "winner": "Missouri",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 38,
+      "week": 3,
+      "away": "Florida",
+      "home": "Auburn",
+      "kickoff_at": "2026-09-19T23:00:00+00:00",
+      "away_score": 44,
+      "home_score": 39,
+      "winner": "Florida",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 39,
+      "week": 3,
+      "away": "LSU",
+      "home": "Ole Miss",
+      "kickoff_at": "2026-09-19T23:30:00+00:00",
+      "away_score": 24,
+      "home_score": 32,
+      "winner": "Ole Miss",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 40,
+      "week": 3,
+      "away": "New Mexico",
+      "home": "Oklahoma",
+      "kickoff_at": "2026-09-19T23:30:00+00:00",
+      "away_score": 6,
+      "home_score": 14,
+      "winner": "Oklahoma",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 41,
+      "week": 3,
+      "away": "Kennesaw State",
+      "home": "Tennessee",
+      "kickoff_at": "2026-09-19T23:45:00+00:00",
+      "away_score": 9,
+      "home_score": 42,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 42,
+      "week": 3,
+      "away": "UTSA",
+      "home": "Texas",
+      "kickoff_at": "2026-09-20T00:00:00+00:00",
+      "away_score": 6,
+      "home_score": 30,
+      "winner": "Texas",
+      "updated_at": "2026-07-09T16:49:24.200517+00:00"
+    },
+    {
+      "id": 49,
+      "week": 4,
+      "away": "Texas",
+      "home": "Tennessee",
+      "kickoff_at": "2026-09-26T16:00:00+00:00",
+      "away_score": 20,
+      "home_score": 17,
+      "winner": "Texas",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 50,
+      "week": 4,
+      "away": "South Alabama",
+      "home": "Kentucky",
+      "kickoff_at": "2026-09-26T16:45:00+00:00",
+      "away_score": 21,
+      "home_score": 45,
+      "winner": "Kentucky",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 45,
+      "week": 4,
+      "away": "Ole Miss",
+      "home": "Florida",
+      "kickoff_at": "2026-09-26T19:30:00+00:00",
+      "away_score": 28,
+      "home_score": 52,
+      "winner": "Florida",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 46,
+      "week": 4,
+      "away": "Oklahoma",
+      "home": "Georgia",
+      "kickoff_at": "2026-09-26T19:30:00+00:00",
+      "away_score": 13,
+      "home_score": 41,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 44,
+      "week": 4,
+      "away": "Vanderbilt",
+      "home": "Auburn",
+      "kickoff_at": "2026-09-26T20:15:00+00:00",
+      "away_score": 15,
+      "home_score": 21,
+      "winner": "Auburn",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 43,
+      "week": 4,
+      "away": "South Carolina",
+      "home": "Alabama",
+      "kickoff_at": "2026-09-26T23:10:00+00:00",
+      "away_score": 18,
+      "home_score": 49,
+      "winner": "Alabama",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 47,
+      "week": 4,
+      "away": "Texas A&M",
+      "home": "LSU",
+      "kickoff_at": "2026-09-26T23:30:00+00:00",
+      "away_score": 6,
+      "home_score": 35,
+      "winner": "LSU",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 48,
+      "week": 4,
+      "away": "Missouri",
+      "home": "Mississippi State",
+      "kickoff_at": "2026-09-26T23:45:00+00:00",
+      "away_score": 24,
+      "home_score": 31,
+      "winner": "Mississippi State",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 51,
+      "week": 4,
+      "away": "Tulsa",
+      "home": "Arkansas",
+      "kickoff_at": "2026-09-27T00:00:00+00:00",
+      "away_score": 6,
+      "home_score": 34,
+      "winner": "Arkansas",
+      "updated_at": "2026-07-09T17:07:22.689756+00:00"
+    },
+    {
+      "id": 53,
+      "week": 5,
+      "away": "Alabama",
+      "home": "Mississippi State",
+      "kickoff_at": "2026-10-03T16:00:00+00:00",
+      "away_score": 56,
+      "home_score": 23,
+      "winner": "Alabama",
+      "updated_at": "2026-07-09T17:07:32.700473+00:00"
+    },
+    {
+      "id": 52,
+      "week": 5,
+      "away": "Vanderbilt",
+      "home": "Georgia",
+      "kickoff_at": "2026-10-03T16:45:00+00:00",
+      "away_score": 14,
+      "home_score": 38,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T17:07:32.700473+00:00"
+    },
+    {
+      "id": 56,
+      "week": 5,
+      "away": "Auburn",
+      "home": "Tennessee",
+      "kickoff_at": "2026-10-03T19:30:00+00:00",
+      "away_score": 14,
+      "home_score": 24,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-09T17:07:32.700473+00:00"
+    },
+    {
+      "id": 54,
+      "week": 5,
+      "away": "Florida",
+      "home": "Missouri",
+      "kickoff_at": "2026-10-03T19:50:00+00:00",
+      "away_score": 17,
+      "home_score": 45,
+      "winner": "Missouri",
+      "updated_at": "2026-07-09T17:07:32.700473+00:00"
+    },
+    {
+      "id": 55,
+      "week": 5,
+      "away": "Kentucky",
+      "home": "South Carolina",
+      "kickoff_at": "2026-10-03T20:15:00+00:00",
+      "away_score": 35,
+      "home_score": 34,
+      "winner": "Kentucky",
+      "updated_at": "2026-07-09T17:07:32.700473+00:00"
+    },
+    {
+      "id": 57,
+      "week": 5,
+      "away": "Arkansas",
+      "home": "Texas A&M",
+      "kickoff_at": "2026-10-03T23:00:00+00:00",
+      "away_score": 7,
+      "home_score": 34,
+      "winner": "Texas A&M",
+      "updated_at": "2026-07-09T17:07:32.700473+00:00"
+    },
+    {
+      "id": 58,
+      "week": 5,
+      "away": "McNeese",
+      "home": "LSU",
+      "kickoff_at": "2026-10-03T23:45:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:07:32.700473+00:00"
+    },
+    {
+      "id": 108,
+      "week": 6,
+      "away": "Texas A&M",
+      "home": "Missouri",
+      "kickoff_at": "2026-10-10T16:00:00+00:00",
+      "away_score": 6,
+      "home_score": 27,
+      "winner": "Missouri",
+      "updated_at": "2026-07-09T17:08:12.190978+00:00"
+    },
+    {
+      "id": 106,
+      "week": 6,
+      "away": "South Carolina",
+      "home": "Florida",
+      "kickoff_at": "2026-10-10T16:45:00+00:00",
+      "away_score": 38,
+      "home_score": 19,
+      "winner": "South Carolina",
+      "updated_at": "2026-07-09T17:08:12.190978+00:00"
+    },
+    {
+      "id": 109,
+      "week": 6,
+      "away": "Ole Miss",
+      "home": "Vanderbilt",
+      "kickoff_at": "2026-10-10T19:30:00+00:00",
+      "away_score": 52,
+      "home_score": 17,
+      "winner": "Ole Miss",
+      "updated_at": "2026-07-09T17:08:12.190978+00:00"
+    },
+    {
+      "id": 110,
+      "week": 6,
+      "away": "Texas",
+      "home": "Oklahoma",
+      "kickoff_at": "2026-10-10T19:30:00+00:00",
+      "away_score": 24,
+      "home_score": 27,
+      "winner": "Oklahoma",
+      "updated_at": "2026-07-09T17:08:12.190978+00:00"
+    },
+    {
+      "id": 105,
+      "week": 6,
+      "away": "Tennessee",
+      "home": "Arkansas",
+      "kickoff_at": "2026-10-10T20:15:00+00:00",
+      "away_score": 24,
+      "home_score": 17,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-09T17:08:12.190978+00:00"
+    },
+    {
+      "id": 107,
+      "week": 6,
+      "away": "LSU",
+      "home": "Kentucky",
+      "kickoff_at": "2026-10-10T23:00:00+00:00",
+      "away_score": 34,
+      "home_score": 35,
+      "winner": "Kentucky",
+      "updated_at": "2026-07-09T17:08:12.190978+00:00"
+    },
+    {
+      "id": 104,
+      "week": 6,
+      "away": "Georgia",
+      "home": "Alabama",
+      "kickoff_at": "2026-10-10T23:30:00+00:00",
+      "away_score": 20,
+      "home_score": 17,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T17:08:12.190978+00:00"
+    },
+    {
+      "id": 64,
+      "week": 7,
+      "away": "Florida",
+      "home": "Texas",
+      "kickoff_at": "2026-10-17T16:00:00+00:00",
+      "away_score": 27,
+      "home_score": 24,
+      "winner": "Florida",
+      "updated_at": "2026-07-09T17:07:41.60294+00:00"
+    },
+    {
+      "id": 60,
+      "week": 7,
+      "away": "Mississippi State",
+      "home": "LSU",
+      "kickoff_at": "2026-10-17T16:00:00+00:00",
+      "away_score": 0,
+      "home_score": 31,
+      "winner": "LSU",
+      "updated_at": "2026-07-09T17:07:41.60294+00:00"
+    },
+    {
+      "id": 66,
+      "week": 7,
+      "away": "Citadel",
+      "home": "Texas A&M",
+      "kickoff_at": "2026-10-17T17:00:00+00:00",
+      "away_score": 0,
+      "home_score": 41,
+      "winner": "Texas A&M",
+      "updated_at": "2026-07-09T17:07:41.60294+00:00"
+    },
+    {
+      "id": 63,
+      "week": 7,
+      "away": "Alabama",
+      "home": "Tennessee",
+      "kickoff_at": "2026-10-17T19:30:00+00:00",
+      "away_score": 10,
+      "home_score": 26,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-09T17:07:41.60294+00:00"
+    },
+    {
+      "id": 59,
+      "week": 7,
+      "away": "Auburn",
+      "home": "Georgia",
+      "kickoff_at": "2026-10-17T19:30:00+00:00",
+      "away_score": 27,
+      "home_score": 24,
+      "winner": "Auburn",
+      "updated_at": "2026-07-09T17:07:41.60294+00:00"
+    },
+    {
+      "id": 61,
+      "week": 7,
+      "away": "Missouri",
+      "home": "Ole Miss",
+      "kickoff_at": "2026-10-17T19:30:00+00:00",
+      "away_score": 3,
+      "home_score": 31,
+      "winner": "Ole Miss",
+      "updated_at": "2026-07-09T17:07:41.60294+00:00"
+    },
+    {
+      "id": 65,
+      "week": 7,
+      "away": "Arkansas",
+      "home": "Vanderbilt",
+      "kickoff_at": "2026-10-17T23:00:00+00:00",
+      "away_score": 31,
+      "home_score": 21,
+      "winner": "Arkansas",
+      "updated_at": "2026-07-09T17:07:41.60294+00:00"
+    },
+    {
+      "id": 62,
+      "week": 7,
+      "away": "Kentucky",
+      "home": "Oklahoma",
+      "kickoff_at": "2026-10-17T23:30:00+00:00",
+      "away_score": 21,
+      "home_score": 13,
+      "winner": "Kentucky",
+      "updated_at": "2026-07-09T17:07:41.60294+00:00"
+    },
+    {
+      "id": 72,
+      "week": 8,
+      "away": "LSU",
+      "home": "Auburn",
+      "kickoff_at": "2026-10-24T16:00:00+00:00",
+      "away_score": 38,
+      "home_score": 17,
+      "winner": "LSU",
+      "updated_at": "2026-07-09T17:07:51.181493+00:00"
+    },
+    {
+      "id": 67,
+      "week": 8,
+      "away": "Texas A&M",
+      "home": "Alabama",
+      "kickoff_at": "2026-10-24T19:30:00+00:00",
+      "away_score": 20,
+      "home_score": 31,
+      "winner": "Alabama",
+      "updated_at": "2026-07-09T17:07:51.181493+00:00"
+    },
+    {
+      "id": 70,
+      "week": 8,
+      "away": "Tennessee",
+      "home": "South Carolina",
+      "kickoff_at": "2026-10-24T19:30:00+00:00",
+      "away_score": 24,
+      "home_score": 27,
+      "winner": "South Carolina",
+      "updated_at": "2026-07-09T17:07:51.181493+00:00"
+    },
+    {
+      "id": 69,
+      "week": 8,
+      "away": "Oklahoma",
+      "home": "Mississippi State",
+      "kickoff_at": "2026-10-24T19:30:00+00:00",
+      "away_score": 23,
+      "home_score": 15,
+      "winner": "Oklahoma",
+      "updated_at": "2026-07-09T17:07:51.181493+00:00"
+    },
+    {
+      "id": 68,
+      "week": 8,
+      "away": "Vanderbilt",
+      "home": "Kentucky",
+      "kickoff_at": "2026-10-24T23:30:00+00:00",
+      "away_score": 17,
+      "home_score": 34,
+      "winner": "Kentucky",
+      "updated_at": "2026-07-09T17:07:51.181493+00:00"
+    },
+    {
+      "id": 71,
+      "week": 8,
+      "away": "Ole Miss",
+      "home": "Texas",
+      "kickoff_at": "2026-10-24T23:30:00+00:00",
+      "away_score": 27,
+      "home_score": 34,
+      "winner": "Texas",
+      "updated_at": "2026-07-09T17:07:51.181493+00:00"
+    },
+    {
+      "id": 82,
+      "week": 9,
+      "away": "Auburn",
+      "home": "Ole Miss",
+      "kickoff_at": "2026-10-31T16:45:00+00:00",
+      "away_score": 15,
+      "home_score": 45,
+      "winner": "Ole Miss",
+      "updated_at": "2026-07-09T17:07:58.981421+00:00"
+    },
+    {
+      "id": 85,
+      "week": 9,
+      "away": "Florida",
+      "home": "Georgia",
+      "kickoff_at": "2026-10-31T19:30:00+00:00",
+      "away_score": 8,
+      "home_score": 27,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T17:07:58.981421+00:00"
+    },
+    {
+      "id": 83,
+      "week": 9,
+      "away": "South Carolina",
+      "home": "Oklahoma",
+      "kickoff_at": "2026-10-31T20:15:00+00:00",
+      "away_score": 42,
+      "home_score": 25,
+      "winner": "South Carolina",
+      "updated_at": "2026-07-09T17:07:58.981421+00:00"
+    },
+    {
+      "id": 84,
+      "week": 9,
+      "away": "Mississippi State",
+      "home": "Texas",
+      "kickoff_at": "2026-10-31T23:30:00+00:00",
+      "away_score": 3,
+      "home_score": 31,
+      "winner": "Texas",
+      "updated_at": "2026-07-09T17:07:58.981421+00:00"
+    },
+    {
+      "id": 81,
+      "week": 9,
+      "away": "Missouri",
+      "home": "Arkansas",
+      "kickoff_at": "2026-10-31T23:45:00+00:00",
+      "away_score": 34,
+      "home_score": 10,
+      "winner": "Missouri",
+      "updated_at": "2026-07-09T17:07:58.981421+00:00"
+    },
+    {
+      "id": 78,
+      "week": 10,
+      "away": "Texas",
+      "home": "Missouri",
+      "kickoff_at": "2026-11-07T17:00:00+00:00",
+      "away_score": 34,
+      "home_score": 20,
+      "winner": "Texas",
+      "updated_at": "2026-07-09T17:07:58.157794+00:00"
+    },
+    {
+      "id": 73,
+      "week": 10,
+      "away": "Arkansas",
+      "home": "Auburn",
+      "kickoff_at": "2026-11-07T17:45:00+00:00",
+      "away_score": 23,
+      "home_score": 26,
+      "winner": "Auburn",
+      "updated_at": "2026-07-09T17:07:58.157794+00:00"
+    },
+    {
+      "id": 79,
+      "week": 10,
+      "away": "Texas A&M",
+      "home": "South Carolina",
+      "kickoff_at": "2026-11-07T20:00:00+00:00",
+      "away_score": 9,
+      "home_score": 17,
+      "winner": "South Carolina",
+      "updated_at": "2026-07-09T17:07:58.157794+00:00"
+    },
+    {
+      "id": 75,
+      "week": 10,
+      "away": "Alabama",
+      "home": "LSU",
+      "kickoff_at": "2026-11-07T20:30:00+00:00",
+      "away_score": 31,
+      "home_score": 13,
+      "winner": "Alabama",
+      "updated_at": "2026-07-09T17:07:58.157794+00:00"
+    },
+    {
+      "id": 77,
+      "week": 10,
+      "away": "Vanderbilt",
+      "home": "Mississippi State",
+      "kickoff_at": "2026-11-07T21:15:00+00:00",
+      "away_score": 25,
+      "home_score": 23,
+      "winner": "Vanderbilt",
+      "updated_at": "2026-07-09T17:07:58.157794+00:00"
+    },
+    {
+      "id": 80,
+      "week": 10,
+      "away": "Kentucky",
+      "home": "Tennessee",
+      "kickoff_at": "2026-11-07T23:15:00+00:00",
+      "away_score": 6,
+      "home_score": 34,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-09T17:07:58.157794+00:00"
+    },
+    {
+      "id": 76,
+      "week": 10,
+      "away": "Georgia",
+      "home": "Ole Miss",
+      "kickoff_at": "2026-11-08T00:30:00+00:00",
+      "away_score": 42,
+      "home_score": 7,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T17:07:58.157794+00:00"
+    },
+    {
+      "id": 74,
+      "week": 10,
+      "away": "Oklahoma",
+      "home": "Florida",
+      "kickoff_at": "2026-11-08T00:45:00+00:00",
+      "away_score": 23,
+      "home_score": 7,
+      "winner": "Oklahoma",
+      "updated_at": "2026-07-09T17:07:58.157794+00:00"
+    },
+    {
+      "id": 93,
+      "week": 11,
+      "away": "Alabama",
+      "home": "Vanderbilt",
+      "kickoff_at": "2026-11-14T17:45:00+00:00",
+      "away_score": 21,
+      "home_score": 6,
+      "winner": "Alabama",
+      "updated_at": "2026-07-09T17:08:02.993503+00:00"
+    },
+    {
+      "id": 92,
+      "week": 11,
+      "away": "Tennessee",
+      "home": "Texas A&M",
+      "kickoff_at": "2026-11-14T20:00:00+00:00",
+      "away_score": 22,
+      "home_score": 7,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-09T17:08:02.993503+00:00"
+    },
+    {
+      "id": 87,
+      "week": 11,
+      "away": "Missouri",
+      "home": "Georgia",
+      "kickoff_at": "2026-11-14T20:30:00+00:00",
+      "away_score": 21,
+      "home_score": 48,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T17:08:02.993503+00:00"
+    },
+    {
+      "id": 90,
+      "week": 11,
+      "away": "Auburn",
+      "home": "Mississippi State",
+      "kickoff_at": "2026-11-14T21:15:00+00:00",
+      "away_score": 41,
+      "home_score": 9,
+      "winner": "Auburn",
+      "updated_at": "2026-07-09T17:08:02.993503+00:00"
+    },
+    {
+      "id": 88,
+      "week": 11,
+      "away": "Florida",
+      "home": "Kentucky",
+      "kickoff_at": "2026-11-14T23:15:00+00:00",
+      "away_score": 21,
+      "home_score": 14,
+      "winner": "Florida",
+      "updated_at": "2026-07-09T17:08:02.993503+00:00"
+    },
+    {
+      "id": 89,
+      "week": 11,
+      "away": "Texas",
+      "home": "LSU",
+      "kickoff_at": "2026-11-15T00:30:00+00:00",
+      "away_score": 22,
+      "home_score": 21,
+      "winner": "Texas",
+      "updated_at": "2026-07-09T17:08:02.993503+00:00"
+    },
+    {
+      "id": 86,
+      "week": 11,
+      "away": "South Carolina",
+      "home": "Arkansas",
+      "kickoff_at": "2026-11-15T00:45:00+00:00",
+      "away_score": 6,
+      "home_score": 34,
+      "winner": "Arkansas",
+      "updated_at": "2026-07-09T17:08:02.993503+00:00"
+    },
+    {
+      "id": 91,
+      "week": 11,
+      "away": "Ole Miss",
+      "home": "Oklahoma",
+      "kickoff_at": "2026-11-15T18:00:00+00:00",
+      "away_score": 17,
+      "home_score": 24,
+      "winner": "Oklahoma",
+      "updated_at": "2026-07-09T17:08:02.993503+00:00"
+    },
+    {
+      "id": 100,
+      "week": 12,
+      "away": "Wofford",
+      "home": "Ole Miss",
+      "kickoff_at": "2026-11-21T17:00:00+00:00",
+      "away_score": 17,
+      "home_score": 59,
+      "winner": "Ole Miss",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 94,
+      "week": 12,
+      "away": "Vanderbilt",
+      "home": "Florida",
+      "kickoff_at": "2026-11-21T17:00:00+00:00",
+      "away_score": 27,
+      "home_score": 34,
+      "winner": "Florida",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 101,
+      "week": 12,
+      "away": "Tennessee Tech",
+      "home": "Mississippi State",
+      "kickoff_at": "2026-11-21T18:00:00+00:00",
+      "away_score": 16,
+      "home_score": 34,
+      "winner": "Mississippi State",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 102,
+      "week": 12,
+      "away": "Chattanooga",
+      "home": "Alabama",
+      "kickoff_at": "2026-11-21T19:00:00+00:00",
+      "away_score": 0,
+      "home_score": 47,
+      "winner": "Alabama",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 98,
+      "week": 12,
+      "away": "LSU",
+      "home": "Tennessee",
+      "kickoff_at": "2026-11-21T20:30:00+00:00",
+      "away_score": 13,
+      "home_score": 27,
+      "winner": "Tennessee",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 99,
+      "week": 12,
+      "away": "Arkansas",
+      "home": "Texas",
+      "kickoff_at": "2026-11-21T20:30:00+00:00",
+      "away_score": 3,
+      "home_score": 45,
+      "winner": "Texas",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 103,
+      "week": 12,
+      "away": "Samford",
+      "home": "Auburn",
+      "kickoff_at": "2026-11-21T20:30:00+00:00",
+      "away_score": 17,
+      "home_score": 59,
+      "winner": "Auburn",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 96,
+      "week": 12,
+      "away": "Texas A&M",
+      "home": "Oklahoma",
+      "kickoff_at": "2026-11-21T20:45:00+00:00",
+      "away_score": 7,
+      "home_score": 28,
+      "winner": "Oklahoma",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 95,
+      "week": 12,
+      "away": "Kentucky",
+      "home": "Missouri",
+      "kickoff_at": "2026-11-22T00:30:00+00:00",
+      "away_score": 14,
+      "home_score": 28,
+      "winner": "Missouri",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 97,
+      "week": 12,
+      "away": "Georgia",
+      "home": "South Carolina",
+      "kickoff_at": "2026-11-22T00:30:00+00:00",
+      "away_score": 34,
+      "home_score": 6,
+      "winner": "Georgia",
+      "updated_at": "2026-07-09T17:08:09.526967+00:00"
+    },
+    {
+      "id": 111,
+      "week": 13,
+      "away": "Mississippi State",
+      "home": "Ole Miss",
+      "kickoff_at": "2026-11-27T17:00:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 112,
+      "week": 13,
+      "away": "Florida",
+      "home": "Florida State",
+      "kickoff_at": "2026-11-27T20:30:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 113,
+      "week": 13,
+      "away": "Texas",
+      "home": "Texas A&M",
+      "kickoff_at": "2026-11-28T00:30:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 117,
+      "week": 13,
+      "away": "Louisville",
+      "home": "Kentucky",
+      "kickoff_at": "2026-11-28T17:00:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 115,
+      "week": 13,
+      "away": "LSU",
+      "home": "Arkansas",
+      "kickoff_at": "2026-11-28T17:45:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 119,
+      "week": 13,
+      "away": "South Carolina",
+      "home": "Clemson",
+      "kickoff_at": "2026-11-28T20:00:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 116,
+      "week": 13,
+      "away": "Georgia Tech",
+      "home": "Georgia",
+      "kickoff_at": "2026-11-28T20:30:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 118,
+      "week": 13,
+      "away": "Oklahoma",
+      "home": "Missouri",
+      "kickoff_at": "2026-11-28T21:15:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 120,
+      "week": 13,
+      "away": "Tennessee",
+      "home": "Vanderbilt",
+      "kickoff_at": "2026-11-29T00:00:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    },
+    {
+      "id": 114,
+      "week": 13,
+      "away": "Auburn",
+      "home": "Alabama",
+      "kickoff_at": "2026-11-29T00:30:00+00:00",
+      "away_score": null,
+      "home_score": null,
+      "winner": null,
+      "updated_at": "2026-07-09T17:08:15.279301+00:00"
+    }
+  ],
+  "opponent_classification": [
+    {
+      "opponent": "Arizona State",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Arkansas-Pine Bluff",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Austin Peay",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Baylor",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Campbell",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Charlotte",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Chattanooga",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Citadel",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Clemson",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Delaware",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "East Carolina",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Florida Atlantic",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Florida State",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Furman",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Georgia Tech",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Kansas",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Kennesaw State",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Kent State",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Louisiana Tech",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Louisiana-Monroe",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Louisville",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "McNeese State",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Michigan",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Minnesota",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Missouri State",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "NC State",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "New Mexico",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "North Alabama",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Ohio State",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "Samford",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "South Alabama",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Southern Miss",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Tennessee State",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Tennessee Tech",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Texas State",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Towson",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Troy",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Tulsa",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "UL Monroe",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Utah",
+      "eligible": true,
+      "category": "not_g5"
+    },
+    {
+      "opponent": "UTEP",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "UTSA",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Western Kentucky",
+      "eligible": true,
+      "category": "g5"
+    },
+    {
+      "opponent": "Wofford",
+      "eligible": false,
+      "category": null
+    },
+    {
+      "opponent": "Youngstown State",
+      "eligible": false,
+      "category": null
+    }
+  ],
+  "players": [
+    {
+      "id": "30627939-1264-40d9-9e67-daca5ab8b3c7",
+      "name": "Aaron Drory",
+      "fan_of": "Alabama",
+      "created_at": "2026-09-02T13:36:02.84496+00:00"
+    },
+    {
+      "id": "17eeaab4-c0cc-485c-afea-7f8af6a9a281",
+      "name": "Andrew (random sec)",
+      "fan_of": "Arkansas",
+      "created_at": "2026-09-03T23:22:09.309491+00:00"
+    },
+    {
+      "id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "name": "Andrew Kita",
+      "fan_of": null,
+      "created_at": "2026-09-04T01:27:21.081059+00:00"
+    },
+    {
+      "id": "3c1e25d9-d597-4724-a25a-e8c516edf10d",
+      "name": "Brad Mudd",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T18:52:12.296572+00:00"
+    },
+    {
+      "id": "d069a5fe-7851-49a3-9484-f94ab3a452b0",
+      "name": "Cole Fournier",
+      "fan_of": "Georgia",
+      "created_at": "2026-09-03T18:42:56.005328+00:00"
+    },
+    {
+      "id": "f76e810d-1a01-48f3-bf78-acfa6795ebcc",
+      "name": "Connor Kraus",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-27T14:42:52.613554+00:00"
+    },
+    {
+      "id": "16218344-382f-4960-aab4-7cfd22212d58",
+      "name": "Dan Labosky",
+      "fan_of": "Georgia",
+      "created_at": "2026-08-31T21:18:01.470132+00:00"
+    },
+    {
+      "id": "d159d785-485a-462a-bba4-655c5fc6b41b",
+      "name": "Dan Thompson",
+      "fan_of": "Florida",
+      "created_at": "2026-09-01T21:25:07.779189+00:00"
+    },
+    {
+      "id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "name": "David Frelich",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T21:31:59.508659+00:00"
+    },
+    {
+      "id": "d6e3f8eb-4b42-42eb-ba37-e94caf14b7ec",
+      "name": "Elliott Pollack",
+      "fan_of": "Missouri",
+      "created_at": "2026-07-13T18:44:37.50172+00:00"
+    },
+    {
+      "id": "e7d96d3e-4eb4-4a72-a9ae-69e5e9912368",
+      "name": "Garrett Pollack",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-24T20:36:30.691479+00:00"
+    },
+    {
+      "id": "27044975-309f-40e9-9931-a31de025c5b7",
+      "name": "Jadaughter Hoffwoman",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T20:06:37.556718+00:00"
+    },
+    {
+      "id": "c8a88773-e8fa-4b7e-a83a-569e13511ddb",
+      "name": "Jake Goffstein",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-31T19:53:55.134258+00:00"
+    },
+    {
+      "id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "name": "Jake Weiner",
+      "fan_of": "Vanderbilt",
+      "created_at": "2026-09-01T19:48:45.284746+00:00"
+    },
+    {
+      "id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "name": "Jason Hoffman",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-24T16:53:45.623951+00:00"
+    },
+    {
+      "id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "name": "Jason Mudd",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-25T13:56:43.157793+00:00"
+    },
+    {
+      "id": "09384b7c-50df-453a-b73a-d05a7ab404e6",
+      "name": "Jeremy Friedman",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-01T02:33:30.736753+00:00"
+    },
+    {
+      "id": "ed0bc2f4-54d7-4f93-9ef6-2101ca4f6a46",
+      "name": "Joshua Williams",
+      "fan_of": "Tennessee",
+      "created_at": "2026-09-05T06:36:11.269731+00:00"
+    },
+    {
+      "id": "d43aec7b-f90f-4f53-8e9d-f58d55cc454f",
+      "name": "Kyle Sutton",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-27T13:14:06.468698+00:00"
+    },
+    {
+      "id": "04e37c68-a392-4145-9e49-18d6b02bed93",
+      "name": "Laura Testino",
+      "fan_of": "Alabama",
+      "created_at": "2026-09-03T19:06:35.503775+00:00"
+    },
+    {
+      "id": "e12de057-2a90-4e61-969c-edf10f45745b",
+      "name": "Marshall C Rader",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-24T18:06:41.459912+00:00"
+    },
+    {
+      "id": "9a24a869-5e68-4cfc-b1e7-ed8f6724184d",
+      "name": "Matthew Hirsh",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-01T13:03:48.170578+00:00"
+    },
+    {
+      "id": "138b1812-5644-495e-815d-8db5217b96e3",
+      "name": "Michael Drabelle",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T21:00:12.826816+00:00"
+    },
+    {
+      "id": "8d2ff0e9-ef34-4137-8e09-a79d28d19ab5",
+      "name": "Michael Weaver",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-04T15:46:55.389182+00:00"
+    },
+    {
+      "id": "2b99028f-5cd9-434f-ab20-b5b04c257a4f",
+      "name": "Michael Weinstein",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T19:29:49.603866+00:00"
+    },
+    {
+      "id": "534d74d3-508e-4f1f-978e-2cae4003d681",
+      "name": "Mike Salus",
+      "fan_of": "Ole Miss",
+      "created_at": "2026-09-04T13:26:02.045953+00:00"
+    },
+    {
+      "id": "03f7f0c7-7e19-44ca-a5b7-86a69c9278ec",
+      "name": "Nate Starr",
+      "fan_of": null,
+      "created_at": "2026-09-04T17:21:43.649064+00:00"
+    },
+    {
+      "id": "1c4e4edb-304f-4cd0-98a7-91826cc4cfa2",
+      "name": "Nathan Levy",
+      "fan_of": "Vanderbilt",
+      "created_at": "2026-08-26T21:43:04.878331+00:00"
+    },
+    {
+      "id": "0587605e-2124-4599-a80a-1a84629e1fbb",
+      "name": "Nathan Williams",
+      "fan_of": "Texas A&M",
+      "created_at": "2026-08-27T20:40:02.825265+00:00"
+    },
+    {
+      "id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "name": "Nicholas Emmick",
+      "fan_of": "Kentucky",
+      "created_at": "2026-09-04T22:35:19.345228+00:00"
+    },
+    {
+      "id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "name": "Nick Hyde",
+      "fan_of": "LSU",
+      "created_at": "2026-08-31T19:52:00.538376+00:00"
+    },
+    {
+      "id": "fede1453-aec2-44f5-bb4b-1027fcba8279",
+      "name": "Nick Politte",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T14:36:37.868851+00:00"
+    },
+    {
+      "id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "name": "Noah Prelutsky",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-02T16:38:54.10698+00:00"
+    },
+    {
+      "id": "55c7781a-6f18-4757-bec9-1fd68c8f2796",
+      "name": "Paul Kessler",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-03T12:33:50.029477+00:00"
+    },
+    {
+      "id": "bbc7d2c4-7487-4ebd-8460-b7f558b36b5f",
+      "name": "Ray Cantrell",
+      "fan_of": null,
+      "created_at": "2026-09-05T15:29:00.590463+00:00"
+    },
+    {
+      "id": "284ce38a-1806-4810-8bfc-4cb8a0d614e0",
+      "name": "Robby Templeton",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-05T10:55:09.730367+00:00"
+    },
+    {
+      "id": "6368c665-e2d2-4f0f-ab02-94e425419ad0",
+      "name": "Rocco Miller",
+      "fan_of": null,
+      "created_at": "2026-08-24T20:50:23.105978+00:00"
+    },
+    {
+      "id": "aa2ba1fc-50b8-4d40-8287-78eb82ece5dc",
+      "name": "Sam Friedman",
+      "fan_of": null,
+      "created_at": "2026-09-01T21:58:43.185734+00:00"
+    },
+    {
+      "id": "7c1975c5-343a-45d6-b9c9-d8b06ceb4385",
+      "name": "Sam Hardiman",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T23:41:11.260223+00:00"
+    },
+    {
+      "id": "0cd29ebb-0a07-4021-b36b-19f5b1653f6b",
+      "name": "Sam Muzik",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-02T16:38:04.56332+00:00"
+    },
+    {
+      "id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "name": "Scott Albrecht",
+      "fan_of": null,
+      "created_at": "2026-09-03T21:44:09.206758+00:00"
+    },
+    {
+      "id": "ca23261b-6254-491e-930e-175fead9bf71",
+      "name": "Susanne Bylund",
+      "fan_of": null,
+      "created_at": "2026-09-02T19:05:02.005765+00:00"
+    },
+    {
+      "id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "name": "Tim Pugh",
+      "fan_of": "Florida",
+      "created_at": "2026-09-04T00:03:23.970557+00:00"
+    },
+    {
+      "id": "5de6224c-9881-4026-9205-1ba109399341",
+      "name": "TJ Doherty",
+      "fan_of": "Texas",
+      "created_at": "2026-09-04T22:46:51.123644+00:00"
+    },
+    {
+      "id": "25ed3746-eb14-48ef-902c-2b95ed3c8b8e",
+      "name": "Todd Saltzberg",
+      "fan_of": null,
+      "created_at": "2026-08-24T17:55:06.825836+00:00"
+    },
+    {
+      "id": "9c55eb4b-027f-4428-a275-fc5264975c49",
+      "name": "Tom Drabelle",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-31T23:22:44.575035+00:00"
+    },
+    {
+      "id": "81b0e14d-416d-4316-9e74-78e9631974c9",
+      "name": "Trevor Kraus",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-02T19:41:06.02085+00:00"
+    },
+    {
+      "id": "e2f2ad05-629f-4d92-844e-7f64be705710",
+      "name": "Werner Gunn",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-27T14:12:37.778822+00:00"
+    },
+    {
+      "id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "name": "Zach Greenspan",
+      "fan_of": null,
+      "created_at": "2026-09-05T14:07:07.953459+00:00"
+    }
+  ],
+  "board": [
+    {
+      "player_id": "30627939-1264-40d9-9e67-daca5ab8b3c7",
+      "player_name": "Aaron Drory",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "17eeaab4-c0cc-485c-afea-7f8af6a9a281",
+      "player_name": "Andrew (random sec)",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "player_name": "Andrew Kita",
+      "week": 1,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "3c1e25d9-d597-4724-a25a-e8c516edf10d",
+      "player_name": "Brad Mudd",
+      "week": 1,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "d069a5fe-7851-49a3-9484-f94ab3a452b0",
+      "player_name": "Cole Fournier",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "f76e810d-1a01-48f3-bf78-acfa6795ebcc",
+      "player_name": "Connor Kraus",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "16218344-382f-4960-aab4-7cfd22212d58",
+      "player_name": "Dan Labosky",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "d159d785-485a-462a-bba4-655c5fc6b41b",
+      "player_name": "Dan Thompson",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "player_name": "David Frelich",
+      "week": 1,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "d6e3f8eb-4b42-42eb-ba37-e94caf14b7ec",
+      "player_name": "Elliott Pollack",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "e7d96d3e-4eb4-4a72-a9ae-69e5e9912368",
+      "player_name": "Garrett Pollack",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "27044975-309f-40e9-9931-a31de025c5b7",
+      "player_name": "Jadaughter Hoffwoman",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "c8a88773-e8fa-4b7e-a83a-569e13511ddb",
+      "player_name": "Jake Goffstein",
+      "week": 1,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "player_name": "Jason Mudd",
+      "week": 1,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "09384b7c-50df-453a-b73a-d05a7ab404e6",
+      "player_name": "Jeremy Friedman",
+      "week": 1,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "ed0bc2f4-54d7-4f93-9ef6-2101ca4f6a46",
+      "player_name": "Joshua Williams",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "d43aec7b-f90f-4f53-8e9d-f58d55cc454f",
+      "player_name": "Kyle Sutton",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "04e37c68-a392-4145-9e49-18d6b02bed93",
+      "player_name": "Laura Testino",
+      "week": 1,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "e12de057-2a90-4e61-969c-edf10f45745b",
+      "player_name": "Marshall C Rader",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "9a24a869-5e68-4cfc-b1e7-ed8f6724184d",
+      "player_name": "Matthew Hirsh",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "138b1812-5644-495e-815d-8db5217b96e3",
+      "player_name": "Michael Drabelle",
+      "week": 1,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "8d2ff0e9-ef34-4137-8e09-a79d28d19ab5",
+      "player_name": "Michael Weaver",
+      "week": 1,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "2b99028f-5cd9-434f-ab20-b5b04c257a4f",
+      "player_name": "Michael Weinstein",
+      "week": 1,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "534d74d3-508e-4f1f-978e-2cae4003d681",
+      "player_name": "Mike Salus",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "03f7f0c7-7e19-44ca-a5b7-86a69c9278ec",
+      "player_name": "Nate Starr",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "1c4e4edb-304f-4cd0-98a7-91826cc4cfa2",
+      "player_name": "Nathan Levy",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "0587605e-2124-4599-a80a-1a84629e1fbb",
+      "player_name": "Nathan Williams",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "player_name": "Nick Hyde",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "fede1453-aec2-44f5-bb4b-1027fcba8279",
+      "player_name": "Nick Politte",
+      "week": 1,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "55c7781a-6f18-4757-bec9-1fd68c8f2796",
+      "player_name": "Paul Kessler",
+      "week": 1,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "bbc7d2c4-7487-4ebd-8460-b7f558b36b5f",
+      "player_name": "Ray Cantrell",
+      "week": 1,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "284ce38a-1806-4810-8bfc-4cb8a0d614e0",
+      "player_name": "Robby Templeton",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "6368c665-e2d2-4f0f-ab02-94e425419ad0",
+      "player_name": "Rocco Miller",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "aa2ba1fc-50b8-4d40-8287-78eb82ece5dc",
+      "player_name": "Sam Friedman",
+      "week": 1,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "7c1975c5-343a-45d6-b9c9-d8b06ceb4385",
+      "player_name": "Sam Hardiman",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "0cd29ebb-0a07-4021-b36b-19f5b1653f6b",
+      "player_name": "Sam Muzik",
+      "week": 1,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "player_name": "Scott Albrecht",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "ca23261b-6254-491e-930e-175fead9bf71",
+      "player_name": "Susanne Bylund",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "5de6224c-9881-4026-9205-1ba109399341",
+      "player_name": "TJ Doherty",
+      "week": 1,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "25ed3746-eb14-48ef-902c-2b95ed3c8b8e",
+      "player_name": "Todd Saltzberg",
+      "week": 1,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "9c55eb4b-027f-4428-a275-fc5264975c49",
+      "player_name": "Tom Drabelle",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "81b0e14d-416d-4316-9e74-78e9631974c9",
+      "player_name": "Trevor Kraus",
+      "week": 1,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "e2f2ad05-629f-4d92-844e-7f64be705710",
+      "player_name": "Werner Gunn",
+      "week": 1,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 1,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "30627939-1264-40d9-9e67-daca5ab8b3c7",
+      "player_name": "Aaron Drory",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "17eeaab4-c0cc-485c-afea-7f8af6a9a281",
+      "player_name": "Andrew (random sec)",
+      "week": 2,
+      "team": "Oklahoma",
+      "revealed": true
+    },
+    {
+      "player_id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "player_name": "Andrew Kita",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "3c1e25d9-d597-4724-a25a-e8c516edf10d",
+      "player_name": "Brad Mudd",
+      "week": 2,
+      "team": "Vanderbilt",
+      "revealed": true
+    },
+    {
+      "player_id": "f76e810d-1a01-48f3-bf78-acfa6795ebcc",
+      "player_name": "Connor Kraus",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "16218344-382f-4960-aab4-7cfd22212d58",
+      "player_name": "Dan Labosky",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "d159d785-485a-462a-bba4-655c5fc6b41b",
+      "player_name": "Dan Thompson",
+      "week": 2,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "player_name": "David Frelich",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "d6e3f8eb-4b42-42eb-ba37-e94caf14b7ec",
+      "player_name": "Elliott Pollack",
+      "week": 2,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "e7d96d3e-4eb4-4a72-a9ae-69e5e9912368",
+      "player_name": "Garrett Pollack",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "27044975-309f-40e9-9931-a31de025c5b7",
+      "player_name": "Jadaughter Hoffwoman",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "c8a88773-e8fa-4b7e-a83a-569e13511ddb",
+      "player_name": "Jake Goffstein",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "player_name": "Jason Mudd",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "09384b7c-50df-453a-b73a-d05a7ab404e6",
+      "player_name": "Jeremy Friedman",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "ed0bc2f4-54d7-4f93-9ef6-2101ca4f6a46",
+      "player_name": "Joshua Williams",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "d43aec7b-f90f-4f53-8e9d-f58d55cc454f",
+      "player_name": "Kyle Sutton",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "04e37c68-a392-4145-9e49-18d6b02bed93",
+      "player_name": "Laura Testino",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "e12de057-2a90-4e61-969c-edf10f45745b",
+      "player_name": "Marshall C Rader",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "9a24a869-5e68-4cfc-b1e7-ed8f6724184d",
+      "player_name": "Matthew Hirsh",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "138b1812-5644-495e-815d-8db5217b96e3",
+      "player_name": "Michael Drabelle",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "8d2ff0e9-ef34-4137-8e09-a79d28d19ab5",
+      "player_name": "Michael Weaver",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "2b99028f-5cd9-434f-ab20-b5b04c257a4f",
+      "player_name": "Michael Weinstein",
+      "week": 2,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "534d74d3-508e-4f1f-978e-2cae4003d681",
+      "player_name": "Mike Salus",
+      "week": 2,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "03f7f0c7-7e19-44ca-a5b7-86a69c9278ec",
+      "player_name": "Nate Starr",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "1c4e4edb-304f-4cd0-98a7-91826cc4cfa2",
+      "player_name": "Nathan Levy",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "0587605e-2124-4599-a80a-1a84629e1fbb",
+      "player_name": "Nathan Williams",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "player_name": "Nick Hyde",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "fede1453-aec2-44f5-bb4b-1027fcba8279",
+      "player_name": "Nick Politte",
+      "week": 2,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "55c7781a-6f18-4757-bec9-1fd68c8f2796",
+      "player_name": "Paul Kessler",
+      "week": 2,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "bbc7d2c4-7487-4ebd-8460-b7f558b36b5f",
+      "player_name": "Ray Cantrell",
+      "week": 2,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "284ce38a-1806-4810-8bfc-4cb8a0d614e0",
+      "player_name": "Robby Templeton",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "6368c665-e2d2-4f0f-ab02-94e425419ad0",
+      "player_name": "Rocco Miller",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "aa2ba1fc-50b8-4d40-8287-78eb82ece5dc",
+      "player_name": "Sam Friedman",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "7c1975c5-343a-45d6-b9c9-d8b06ceb4385",
+      "player_name": "Sam Hardiman",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "0cd29ebb-0a07-4021-b36b-19f5b1653f6b",
+      "player_name": "Sam Muzik",
+      "week": 2,
+      "team": "Mississippi State",
+      "revealed": true
+    },
+    {
+      "player_id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "player_name": "Scott Albrecht",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "ca23261b-6254-491e-930e-175fead9bf71",
+      "player_name": "Susanne Bylund",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "5de6224c-9881-4026-9205-1ba109399341",
+      "player_name": "TJ Doherty",
+      "week": 2,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "25ed3746-eb14-48ef-902c-2b95ed3c8b8e",
+      "player_name": "Todd Saltzberg",
+      "week": 2,
+      "team": "Vanderbilt",
+      "revealed": true
+    },
+    {
+      "player_id": "9c55eb4b-027f-4428-a275-fc5264975c49",
+      "player_name": "Tom Drabelle",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "81b0e14d-416d-4316-9e74-78e9631974c9",
+      "player_name": "Trevor Kraus",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "e2f2ad05-629f-4d92-844e-7f64be705710",
+      "player_name": "Werner Gunn",
+      "week": 2,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 2,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "30627939-1264-40d9-9e67-daca5ab8b3c7",
+      "player_name": "Aaron Drory",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "player_name": "Andrew Kita",
+      "week": 3,
+      "team": "Kentucky",
+      "revealed": true
+    },
+    {
+      "player_id": "3c1e25d9-d597-4724-a25a-e8c516edf10d",
+      "player_name": "Brad Mudd",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "f76e810d-1a01-48f3-bf78-acfa6795ebcc",
+      "player_name": "Connor Kraus",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "16218344-382f-4960-aab4-7cfd22212d58",
+      "player_name": "Dan Labosky",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "d159d785-485a-462a-bba4-655c5fc6b41b",
+      "player_name": "Dan Thompson",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "player_name": "David Frelich",
+      "week": 3,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "d6e3f8eb-4b42-42eb-ba37-e94caf14b7ec",
+      "player_name": "Elliott Pollack",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "e7d96d3e-4eb4-4a72-a9ae-69e5e9912368",
+      "player_name": "Garrett Pollack",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "27044975-309f-40e9-9931-a31de025c5b7",
+      "player_name": "Jadaughter Hoffwoman",
+      "week": 3,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "c8a88773-e8fa-4b7e-a83a-569e13511ddb",
+      "player_name": "Jake Goffstein",
+      "week": 3,
+      "team": "Vanderbilt",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "player_name": "Jason Mudd",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "09384b7c-50df-453a-b73a-d05a7ab404e6",
+      "player_name": "Jeremy Friedman",
+      "week": 3,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "ed0bc2f4-54d7-4f93-9ef6-2101ca4f6a46",
+      "player_name": "Joshua Williams",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "d43aec7b-f90f-4f53-8e9d-f58d55cc454f",
+      "player_name": "Kyle Sutton",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "04e37c68-a392-4145-9e49-18d6b02bed93",
+      "player_name": "Laura Testino",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "e12de057-2a90-4e61-969c-edf10f45745b",
+      "player_name": "Marshall C Rader",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "9a24a869-5e68-4cfc-b1e7-ed8f6724184d",
+      "player_name": "Matthew Hirsh",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "138b1812-5644-495e-815d-8db5217b96e3",
+      "player_name": "Michael Drabelle",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "8d2ff0e9-ef34-4137-8e09-a79d28d19ab5",
+      "player_name": "Michael Weaver",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "2b99028f-5cd9-434f-ab20-b5b04c257a4f",
+      "player_name": "Michael Weinstein",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "534d74d3-508e-4f1f-978e-2cae4003d681",
+      "player_name": "Mike Salus",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "03f7f0c7-7e19-44ca-a5b7-86a69c9278ec",
+      "player_name": "Nate Starr",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "1c4e4edb-304f-4cd0-98a7-91826cc4cfa2",
+      "player_name": "Nathan Levy",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "0587605e-2124-4599-a80a-1a84629e1fbb",
+      "player_name": "Nathan Williams",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "player_name": "Nick Hyde",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "fede1453-aec2-44f5-bb4b-1027fcba8279",
+      "player_name": "Nick Politte",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 3,
+      "team": "Vanderbilt",
+      "revealed": true
+    },
+    {
+      "player_id": "55c7781a-6f18-4757-bec9-1fd68c8f2796",
+      "player_name": "Paul Kessler",
+      "week": 3,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "bbc7d2c4-7487-4ebd-8460-b7f558b36b5f",
+      "player_name": "Ray Cantrell",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "284ce38a-1806-4810-8bfc-4cb8a0d614e0",
+      "player_name": "Robby Templeton",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "6368c665-e2d2-4f0f-ab02-94e425419ad0",
+      "player_name": "Rocco Miller",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "aa2ba1fc-50b8-4d40-8287-78eb82ece5dc",
+      "player_name": "Sam Friedman",
+      "week": 3,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "7c1975c5-343a-45d6-b9c9-d8b06ceb4385",
+      "player_name": "Sam Hardiman",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "0cd29ebb-0a07-4021-b36b-19f5b1653f6b",
+      "player_name": "Sam Muzik",
+      "week": 3,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "player_name": "Scott Albrecht",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "ca23261b-6254-491e-930e-175fead9bf71",
+      "player_name": "Susanne Bylund",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "5de6224c-9881-4026-9205-1ba109399341",
+      "player_name": "TJ Doherty",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "25ed3746-eb14-48ef-902c-2b95ed3c8b8e",
+      "player_name": "Todd Saltzberg",
+      "week": 3,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "9c55eb4b-027f-4428-a275-fc5264975c49",
+      "player_name": "Tom Drabelle",
+      "week": 3,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "81b0e14d-416d-4316-9e74-78e9631974c9",
+      "player_name": "Trevor Kraus",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "e2f2ad05-629f-4d92-844e-7f64be705710",
+      "player_name": "Werner Gunn",
+      "week": 3,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 3,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "30627939-1264-40d9-9e67-daca5ab8b3c7",
+      "player_name": "Aaron Drory",
+      "week": 4,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "player_name": "Andrew Kita",
+      "week": 4,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "f76e810d-1a01-48f3-bf78-acfa6795ebcc",
+      "player_name": "Connor Kraus",
+      "week": 4,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "16218344-382f-4960-aab4-7cfd22212d58",
+      "player_name": "Dan Labosky",
+      "week": 4,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "d159d785-485a-462a-bba4-655c5fc6b41b",
+      "player_name": "Dan Thompson",
+      "week": 4,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "player_name": "David Frelich",
+      "week": 4,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "e7d96d3e-4eb4-4a72-a9ae-69e5e9912368",
+      "player_name": "Garrett Pollack",
+      "week": 4,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "c8a88773-e8fa-4b7e-a83a-569e13511ddb",
+      "player_name": "Jake Goffstein",
+      "week": 4,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 4,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "player_name": "Jason Mudd",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "09384b7c-50df-453a-b73a-d05a7ab404e6",
+      "player_name": "Jeremy Friedman",
+      "week": 4,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "04e37c68-a392-4145-9e49-18d6b02bed93",
+      "player_name": "Laura Testino",
+      "week": 4,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "e12de057-2a90-4e61-969c-edf10f45745b",
+      "player_name": "Marshall C Rader",
+      "week": 4,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "9a24a869-5e68-4cfc-b1e7-ed8f6724184d",
+      "player_name": "Matthew Hirsh",
+      "week": 4,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "8d2ff0e9-ef34-4137-8e09-a79d28d19ab5",
+      "player_name": "Michael Weaver",
+      "week": 4,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "2b99028f-5cd9-434f-ab20-b5b04c257a4f",
+      "player_name": "Michael Weinstein",
+      "week": 4,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "534d74d3-508e-4f1f-978e-2cae4003d681",
+      "player_name": "Mike Salus",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "03f7f0c7-7e19-44ca-a5b7-86a69c9278ec",
+      "player_name": "Nate Starr",
+      "week": 4,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "1c4e4edb-304f-4cd0-98a7-91826cc4cfa2",
+      "player_name": "Nathan Levy",
+      "week": 4,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "0587605e-2124-4599-a80a-1a84629e1fbb",
+      "player_name": "Nathan Williams",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "player_name": "Nick Hyde",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "6368c665-e2d2-4f0f-ab02-94e425419ad0",
+      "player_name": "Rocco Miller",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "0cd29ebb-0a07-4021-b36b-19f5b1653f6b",
+      "player_name": "Sam Muzik",
+      "week": 4,
+      "team": "Alabama",
+      "revealed": true
+    },
+    {
+      "player_id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "player_name": "Scott Albrecht",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "ca23261b-6254-491e-930e-175fead9bf71",
+      "player_name": "Susanne Bylund",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "9c55eb4b-027f-4428-a275-fc5264975c49",
+      "player_name": "Tom Drabelle",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 4,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "30627939-1264-40d9-9e67-daca5ab8b3c7",
+      "player_name": "Aaron Drory",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "player_name": "Andrew Kita",
+      "week": 5,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "f76e810d-1a01-48f3-bf78-acfa6795ebcc",
+      "player_name": "Connor Kraus",
+      "week": 5,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "16218344-382f-4960-aab4-7cfd22212d58",
+      "player_name": "Dan Labosky",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "d159d785-485a-462a-bba4-655c5fc6b41b",
+      "player_name": "Dan Thompson",
+      "week": 5,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "player_name": "David Frelich",
+      "week": 5,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "e7d96d3e-4eb4-4a72-a9ae-69e5e9912368",
+      "player_name": "Garrett Pollack",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "c8a88773-e8fa-4b7e-a83a-569e13511ddb",
+      "player_name": "Jake Goffstein",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 5,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "player_name": "Jason Mudd",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "09384b7c-50df-453a-b73a-d05a7ab404e6",
+      "player_name": "Jeremy Friedman",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "04e37c68-a392-4145-9e49-18d6b02bed93",
+      "player_name": "Laura Testino",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "e12de057-2a90-4e61-969c-edf10f45745b",
+      "player_name": "Marshall C Rader",
+      "week": 5,
+      "team": "South Carolina",
+      "revealed": true
+    },
+    {
+      "player_id": "9a24a869-5e68-4cfc-b1e7-ed8f6724184d",
+      "player_name": "Matthew Hirsh",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "8d2ff0e9-ef34-4137-8e09-a79d28d19ab5",
+      "player_name": "Michael Weaver",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "534d74d3-508e-4f1f-978e-2cae4003d681",
+      "player_name": "Mike Salus",
+      "week": 5,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "03f7f0c7-7e19-44ca-a5b7-86a69c9278ec",
+      "player_name": "Nate Starr",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "1c4e4edb-304f-4cd0-98a7-91826cc4cfa2",
+      "player_name": "Nathan Levy",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "0587605e-2124-4599-a80a-1a84629e1fbb",
+      "player_name": "Nathan Williams",
+      "week": 5,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 5,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "player_name": "Nick Hyde",
+      "week": 5,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 5,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "6368c665-e2d2-4f0f-ab02-94e425419ad0",
+      "player_name": "Rocco Miller",
+      "week": 5,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "0cd29ebb-0a07-4021-b36b-19f5b1653f6b",
+      "player_name": "Sam Muzik",
+      "week": 5,
+      "team": "Texas A&M",
+      "revealed": true
+    },
+    {
+      "player_id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "player_name": "Scott Albrecht",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "ca23261b-6254-491e-930e-175fead9bf71",
+      "player_name": "Susanne Bylund",
+      "week": 5,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 5,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "9c55eb4b-027f-4428-a275-fc5264975c49",
+      "player_name": "Tom Drabelle",
+      "week": 5,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 5,
+      "team": "Georgia",
+      "revealed": true
+    },
+    {
+      "player_id": "30627939-1264-40d9-9e67-daca5ab8b3c7",
+      "player_name": "Aaron Drory",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "player_name": "Andrew Kita",
+      "week": 6,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "f76e810d-1a01-48f3-bf78-acfa6795ebcc",
+      "player_name": "Connor Kraus",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "16218344-382f-4960-aab4-7cfd22212d58",
+      "player_name": "Dan Labosky",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "player_name": "David Frelich",
+      "week": 6,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "e7d96d3e-4eb4-4a72-a9ae-69e5e9912368",
+      "player_name": "Garrett Pollack",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "c8a88773-e8fa-4b7e-a83a-569e13511ddb",
+      "player_name": "Jake Goffstein",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 6,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 6,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "player_name": "Jason Mudd",
+      "week": 6,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "09384b7c-50df-453a-b73a-d05a7ab404e6",
+      "player_name": "Jeremy Friedman",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "04e37c68-a392-4145-9e49-18d6b02bed93",
+      "player_name": "Laura Testino",
+      "week": 6,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "9a24a869-5e68-4cfc-b1e7-ed8f6724184d",
+      "player_name": "Matthew Hirsh",
+      "week": 6,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "8d2ff0e9-ef34-4137-8e09-a79d28d19ab5",
+      "player_name": "Michael Weaver",
+      "week": 6,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "03f7f0c7-7e19-44ca-a5b7-86a69c9278ec",
+      "player_name": "Nate Starr",
+      "week": 6,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "1c4e4edb-304f-4cd0-98a7-91826cc4cfa2",
+      "player_name": "Nathan Levy",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "0587605e-2124-4599-a80a-1a84629e1fbb",
+      "player_name": "Nathan Williams",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 6,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "player_name": "Nick Hyde",
+      "week": 6,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 6,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "6368c665-e2d2-4f0f-ab02-94e425419ad0",
+      "player_name": "Rocco Miller",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "0cd29ebb-0a07-4021-b36b-19f5b1653f6b",
+      "player_name": "Sam Muzik",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "player_name": "Scott Albrecht",
+      "week": 6,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "ca23261b-6254-491e-930e-175fead9bf71",
+      "player_name": "Susanne Bylund",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 6,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "9c55eb4b-027f-4428-a275-fc5264975c49",
+      "player_name": "Tom Drabelle",
+      "week": 6,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 6,
+      "team": "Ole Miss",
+      "revealed": true
+    },
+    {
+      "player_id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "player_name": "Andrew Kita",
+      "week": 7,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "player_name": "David Frelich",
+      "week": 7,
+      "team": "Vanderbilt",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 7,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 7,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "player_name": "Jason Mudd",
+      "week": 7,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 7,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "player_name": "Nick Hyde",
+      "week": 7,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 7,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "player_name": "Scott Albrecht",
+      "week": 7,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 7,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 7,
+      "team": "LSU",
+      "revealed": true
+    },
+    {
+      "player_id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "player_name": "Andrew Kita",
+      "week": 8,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 8,
+      "team": "Kentucky",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 8,
+      "team": "Kentucky",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 8,
+      "team": "Kentucky",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 8,
+      "team": "Kentucky",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 8,
+      "team": "Kentucky",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 8,
+      "team": "Kentucky",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 9,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 9,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 9,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 9,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 9,
+      "team": "Texas",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 9,
+      "team": "Missouri",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 10,
+      "team": "Auburn",
+      "revealed": true
+    },
+    {
+      "player_id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "player_name": "Jason Hoffman",
+      "week": 10,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "player_name": "Nicholas Emmick",
+      "week": 10,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "player_name": "Noah Prelutsky",
+      "week": 10,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 10,
+      "team": "Tennessee",
+      "revealed": true
+    },
+    {
+      "player_id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "player_name": "Zach Greenspan",
+      "week": 10,
+      "team": "Florida",
+      "revealed": true
+    },
+    {
+      "player_id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "player_name": "Jake Weiner",
+      "week": 11,
+      "team": "Oklahoma",
+      "revealed": true
+    },
+    {
+      "player_id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "player_name": "Tim Pugh",
+      "week": 11,
+      "team": "South Carolina",
+      "revealed": true
+    }
+  ],
+  "week_deadlines": {
+    "1": "2026-09-05T15:59:00+00:00",
+    "2": "2026-09-12T15:59:00+00:00",
+    "3": "2026-09-19T15:59:00+00:00",
+    "4": "2026-09-26T15:59:00+00:00",
+    "5": "2026-10-03T15:59:00+00:00",
+    "6": "2026-10-10T15:59:00+00:00",
+    "7": "2026-10-17T15:59:00+00:00",
+    "8": "2026-10-24T15:59:00+00:00",
+    "9": "2026-10-31T15:59:00+00:00",
+    "10": "2026-11-07T16:59:00+00:00",
+    "11": "2026-11-14T16:59:00+00:00",
+    "12": "2026-11-21T16:59:00+00:00",
+    "13": "2026-11-28T16:59:00+00:00"
+  },
+  "week_reopen_times": {
+    "1": "2026-09-06T10:00:00+00:00",
+    "2": "2026-09-13T10:00:00+00:00",
+    "3": "2026-09-20T10:00:00+00:00",
+    "4": "2026-09-27T10:00:00+00:00",
+    "5": "2026-10-04T10:00:00+00:00",
+    "6": "2026-10-11T10:00:00+00:00",
+    "7": "2026-10-18T10:00:00+00:00",
+    "8": "2026-10-25T10:00:00+00:00",
+    "9": "2026-11-01T11:00:00+00:00",
+    "10": "2026-11-08T11:00:00+00:00",
+    "11": "2026-11-15T11:00:00+00:00",
+    "12": "2026-11-22T11:00:00+00:00",
+    "13": "2026-11-29T11:00:00+00:00"
+  },
+  "final_player_state": [
+    {
+      "id": "30627939-1264-40d9-9e67-daca5ab8b3c7",
+      "name": "Aaron Drory",
+      "fan_of": "Alabama",
+      "created_at": "2026-09-02T13:36:02.84496+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "17eeaab4-c0cc-485c-afea-7f8af6a9a281",
+      "name": "Andrew (random sec)",
+      "fan_of": "Arkansas",
+      "created_at": "2026-09-03T23:22:09.309491+00:00",
+      "alive": false,
+      "eliminated_week": 2
+    },
+    {
+      "id": "b770a8d4-dcdf-4264-a449-d347d14c1c9c",
+      "name": "Andrew Kita",
+      "fan_of": null,
+      "created_at": "2026-09-04T01:27:21.081059+00:00",
+      "alive": false,
+      "eliminated_week": 8
+    },
+    {
+      "id": "3c1e25d9-d597-4724-a25a-e8c516edf10d",
+      "name": "Brad Mudd",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T18:52:12.296572+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "d069a5fe-7851-49a3-9484-f94ab3a452b0",
+      "name": "Cole Fournier",
+      "fan_of": "Georgia",
+      "created_at": "2026-09-03T18:42:56.005328+00:00",
+      "alive": false,
+      "eliminated_week": 2
+    },
+    {
+      "id": "f76e810d-1a01-48f3-bf78-acfa6795ebcc",
+      "name": "Connor Kraus",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-27T14:42:52.613554+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "16218344-382f-4960-aab4-7cfd22212d58",
+      "name": "Dan Labosky",
+      "fan_of": "Georgia",
+      "created_at": "2026-08-31T21:18:01.470132+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "d159d785-485a-462a-bba4-655c5fc6b41b",
+      "name": "Dan Thompson",
+      "fan_of": "Florida",
+      "created_at": "2026-09-01T21:25:07.779189+00:00",
+      "alive": false,
+      "eliminated_week": 5
+    },
+    {
+      "id": "eaadf07b-bc5d-49ea-959c-6bd4c01cb5be",
+      "name": "David Frelich",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T21:31:59.508659+00:00",
+      "alive": false,
+      "eliminated_week": 7
+    },
+    {
+      "id": "d6e3f8eb-4b42-42eb-ba37-e94caf14b7ec",
+      "name": "Elliott Pollack",
+      "fan_of": "Missouri",
+      "created_at": "2026-07-13T18:44:37.50172+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "e7d96d3e-4eb4-4a72-a9ae-69e5e9912368",
+      "name": "Garrett Pollack",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-24T20:36:30.691479+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "27044975-309f-40e9-9931-a31de025c5b7",
+      "name": "Jadaughter Hoffwoman",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T20:06:37.556718+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "c8a88773-e8fa-4b7e-a83a-569e13511ddb",
+      "name": "Jake Goffstein",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-31T19:53:55.134258+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "7324a499-ba6b-4b91-87f7-da125af4193b",
+      "name": "Jake Weiner",
+      "fan_of": "Vanderbilt",
+      "created_at": "2026-09-01T19:48:45.284746+00:00",
+      "alive": true,
+      "eliminated_week": null
+    },
+    {
+      "id": "6e8cd6c5-65f6-4d21-a2f7-06ba4d5fd729",
+      "name": "Jason Hoffman",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-24T16:53:45.623951+00:00",
+      "alive": false,
+      "eliminated_week": 10
+    },
+    {
+      "id": "d5858c97-e87e-45c9-aea6-1f3ad0f84374",
+      "name": "Jason Mudd",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-25T13:56:43.157793+00:00",
+      "alive": false,
+      "eliminated_week": 7
+    },
+    {
+      "id": "09384b7c-50df-453a-b73a-d05a7ab404e6",
+      "name": "Jeremy Friedman",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-01T02:33:30.736753+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "ed0bc2f4-54d7-4f93-9ef6-2101ca4f6a46",
+      "name": "Joshua Williams",
+      "fan_of": "Tennessee",
+      "created_at": "2026-09-05T06:36:11.269731+00:00",
+      "alive": false,
+      "eliminated_week": 4
+    },
+    {
+      "id": "d43aec7b-f90f-4f53-8e9d-f58d55cc454f",
+      "name": "Kyle Sutton",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-27T13:14:06.468698+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "04e37c68-a392-4145-9e49-18d6b02bed93",
+      "name": "Laura Testino",
+      "fan_of": "Alabama",
+      "created_at": "2026-09-03T19:06:35.503775+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "e12de057-2a90-4e61-969c-edf10f45745b",
+      "name": "Marshall C Rader",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-24T18:06:41.459912+00:00",
+      "alive": false,
+      "eliminated_week": 5
+    },
+    {
+      "id": "9a24a869-5e68-4cfc-b1e7-ed8f6724184d",
+      "name": "Matthew Hirsh",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-01T13:03:48.170578+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "138b1812-5644-495e-815d-8db5217b96e3",
+      "name": "Michael Drabelle",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T21:00:12.826816+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "8d2ff0e9-ef34-4137-8e09-a79d28d19ab5",
+      "name": "Michael Weaver",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-04T15:46:55.389182+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "2b99028f-5cd9-434f-ab20-b5b04c257a4f",
+      "name": "Michael Weinstein",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T19:29:49.603866+00:00",
+      "alive": false,
+      "eliminated_week": 4
+    },
+    {
+      "id": "534d74d3-508e-4f1f-978e-2cae4003d681",
+      "name": "Mike Salus",
+      "fan_of": "Ole Miss",
+      "created_at": "2026-09-04T13:26:02.045953+00:00",
+      "alive": false,
+      "eliminated_week": 5
+    },
+    {
+      "id": "03f7f0c7-7e19-44ca-a5b7-86a69c9278ec",
+      "name": "Nate Starr",
+      "fan_of": null,
+      "created_at": "2026-09-04T17:21:43.649064+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "1c4e4edb-304f-4cd0-98a7-91826cc4cfa2",
+      "name": "Nathan Levy",
+      "fan_of": "Vanderbilt",
+      "created_at": "2026-08-26T21:43:04.878331+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "0587605e-2124-4599-a80a-1a84629e1fbb",
+      "name": "Nathan Williams",
+      "fan_of": "Texas A&M",
+      "created_at": "2026-08-27T20:40:02.825265+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "ccbecd4d-7943-4737-9c44-ea34e72959fc",
+      "name": "Nicholas Emmick",
+      "fan_of": "Kentucky",
+      "created_at": "2026-09-04T22:35:19.345228+00:00",
+      "alive": false,
+      "eliminated_week": 10
+    },
+    {
+      "id": "f0c319e9-3670-4cc7-903b-a03d33acb97a",
+      "name": "Nick Hyde",
+      "fan_of": "LSU",
+      "created_at": "2026-08-31T19:52:00.538376+00:00",
+      "alive": false,
+      "eliminated_week": 7
+    },
+    {
+      "id": "fede1453-aec2-44f5-bb4b-1027fcba8279",
+      "name": "Nick Politte",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T14:36:37.868851+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "47a51b2a-5947-4121-b0a8-e7873d812947",
+      "name": "Noah Prelutsky",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-02T16:38:54.10698+00:00",
+      "alive": false,
+      "eliminated_week": 10
+    },
+    {
+      "id": "55c7781a-6f18-4757-bec9-1fd68c8f2796",
+      "name": "Paul Kessler",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-03T12:33:50.029477+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "bbc7d2c4-7487-4ebd-8460-b7f558b36b5f",
+      "name": "Ray Cantrell",
+      "fan_of": null,
+      "created_at": "2026-09-05T15:29:00.590463+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "284ce38a-1806-4810-8bfc-4cb8a0d614e0",
+      "name": "Robby Templeton",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-05T10:55:09.730367+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "6368c665-e2d2-4f0f-ab02-94e425419ad0",
+      "name": "Rocco Miller",
+      "fan_of": null,
+      "created_at": "2026-08-24T20:50:23.105978+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "aa2ba1fc-50b8-4d40-8287-78eb82ece5dc",
+      "name": "Sam Friedman",
+      "fan_of": null,
+      "created_at": "2026-09-01T21:58:43.185734+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "7c1975c5-343a-45d6-b9c9-d8b06ceb4385",
+      "name": "Sam Hardiman",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-03T23:41:11.260223+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "0cd29ebb-0a07-4021-b36b-19f5b1653f6b",
+      "name": "Sam Muzik",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-02T16:38:04.56332+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "a792381a-cf9f-4a5d-b264-ccd070ed1de4",
+      "name": "Scott Albrecht",
+      "fan_of": null,
+      "created_at": "2026-09-03T21:44:09.206758+00:00",
+      "alive": false,
+      "eliminated_week": 7
+    },
+    {
+      "id": "ca23261b-6254-491e-930e-175fead9bf71",
+      "name": "Susanne Bylund",
+      "fan_of": null,
+      "created_at": "2026-09-02T19:05:02.005765+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "0d73e2d7-fdfa-4b88-b4f3-0ec2e8f1da8e",
+      "name": "Tim Pugh",
+      "fan_of": "Florida",
+      "created_at": "2026-09-04T00:03:23.970557+00:00",
+      "alive": false,
+      "eliminated_week": 11
+    },
+    {
+      "id": "5de6224c-9881-4026-9205-1ba109399341",
+      "name": "TJ Doherty",
+      "fan_of": "Texas",
+      "created_at": "2026-09-04T22:46:51.123644+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "25ed3746-eb14-48ef-902c-2b95ed3c8b8e",
+      "name": "Todd Saltzberg",
+      "fan_of": null,
+      "created_at": "2026-08-24T17:55:06.825836+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "9c55eb4b-027f-4428-a275-fc5264975c49",
+      "name": "Tom Drabelle",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-31T23:22:44.575035+00:00",
+      "alive": false,
+      "eliminated_week": 6
+    },
+    {
+      "id": "81b0e14d-416d-4316-9e74-78e9631974c9",
+      "name": "Trevor Kraus",
+      "fan_of": "Missouri",
+      "created_at": "2026-09-02T19:41:06.02085+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "e2f2ad05-629f-4d92-844e-7f64be705710",
+      "name": "Werner Gunn",
+      "fan_of": "Missouri",
+      "created_at": "2026-08-27T14:12:37.778822+00:00",
+      "alive": false,
+      "eliminated_week": 3
+    },
+    {
+      "id": "033f28ee-cbd5-4e2e-857d-ba87cb30a9c0",
+      "name": "Zach Greenspan",
+      "fan_of": null,
+      "created_at": "2026-09-05T14:07:07.953459+00:00",
+      "alive": false,
+      "eliminated_week": 10
+    }
+  ]
+}
