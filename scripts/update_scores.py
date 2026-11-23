@@ -11,14 +11,27 @@ Env vars required (set as GitHub Actions secrets):
 
 Usage:
   python update_scores.py --week 3
-  python update_scores.py --week 3 --year 2026
+  python update_scores.py --week 3 --year YEAR
 """
 
 import argparse
+import json
 import os
+from pathlib import Path
 import sys
 
 import requests
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def load_season_config() -> dict:
+    path = ROOT / "season.json"
+    config = json.loads(path.read_text(encoding="utf-8"))
+    if not config.get("year"):
+        raise RuntimeError("season.json has not been initialized")
+    return config
+
 
 SEC_TEAMS = {
     "Alabama", "Arkansas", "Auburn", "Florida", "Georgia", "Kentucky", "LSU",
@@ -207,19 +220,22 @@ def upsert_games(rows: list[dict], base_url: str, service_key: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--week", type=int, required=True)
-    parser.add_argument("--year", type=int, default=2026)
+    parser.add_argument("--year", type=int, default=None)
     args = parser.parse_args()
+
+    season = load_season_config()
+    year = year or int(season["year"])
 
     base_url = os.environ["SUPABASE_URL"].rstrip("/")
     service_key = os.environ["SUPABASE_SERVICE_KEY"]
 
-    print(f"Fetching week {args.week}, {args.year}...")
+    print(f"Fetching week {args.week}, {year}...")
     known_opponents = fetch_known_opponents(base_url, service_key)
     expected_keys = fetch_expected_game_keys(base_url, service_key, args.week)
     print(f"  loaded {len(known_opponents)} configured opponent name(s) from Supabase")
     print(f"  loaded {len(expected_keys)} existing week-{args.week} game(s) from Supabase")
 
-    events = fetch_week(args.week, args.year)
+    events = fetch_week(args.week, year)
     rows: list[dict] = []
     parse_errors: list[str] = []
 
