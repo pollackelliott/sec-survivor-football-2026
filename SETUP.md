@@ -1,63 +1,119 @@
-# SEC Survivor 2026 — Deployment Guide
+# SEC Survivor Football — New Season Setup
 
-## 1. Create the Supabase project
-1. Go to supabase.com → New project. Note the **Project URL** and, under
-   Settings → API, the **anon public key** and the **service_role key**
-   (keep the service_role key secret — it's never used in the browser).
-2. Open the SQL Editor → paste in the entire contents of `supabase/schema.sql`
-   → Run. This creates every table, the opponent classification seed data,
-   and all the RPC functions in one shot.
+This branch is the reusable football engine preserved from the completed 2026 pool.
 
-## 2. Create your commissioner account
-1. In Supabase → Authentication → Users → Add user. Use your own email +
-   a password. This is the *only* real login in the whole system — everyone
-   else uses the token-link identity.
-2. Copy that user's UUID (shown in the users table).
-3. Back in the SQL Editor:
-   ```sql
-   insert into admins (user_id) values ('paste-your-uuid-here');
-   ```
-4. On the site, tap "Commissioner" at the bottom and sign in with that email
-   and password to confirm it works.
+The goal is deliberately simple: **the commissioner's P4G5 Excel workbook is the season-definition file.** Do not convert it to CSV or manually seed the schedule.
 
-## 3. Wire up the frontend
-Open `index.html` and fill in the two placeholders near the top of the
-`<script>` block:
-```js
-const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+## What stays the same
+
+The workbook must use the proven layout:
+
+- Sheet name: `P4G5`
+- Column A: conference teams
+- Row 1, columns B:N: Weeks 1–13
+- Cells contain opponents, optionally prefixed by `at ` or `vs. `
+- Yellow fill (`#FFD966`) = power-conference nonconference opponent
+- Blue fill (`#4A86E8`) = G5 opponent
+- Gray fill (`#CCCCCC`) = FCS / ineligible opponent
+- Unfilled cells = conference games
+- Blank cells = bye
+
+Recommended filename: `2027 SEC Football Schedule Grid.xlsx`.
+
+The initializer validates the workbook before writing anything. It checks team rows, week headers, reciprocal conference matchups, classification fills, duplicate games, ESPN matchup agreement, and road-game `at` notation.
+
+## 1. Start the new season repo
+
+Create the new season repository from this `template/football-next-season` branch.
+
+Do **not** build from the archived `main` branch; `main` is the historical 2026 museum site.
+
+## 2. Create a fresh Supabase project
+
+Create a new Supabase project for this pool.
+
+In the Supabase SQL Editor, run the full current contents of:
+
+`supabase/schema.sql`
+
+The reusable schema intentionally contains no season-specific opponent seed rows. Those are generated from the workbook colors.
+
+Turn off email confirmation for the pool's normal self-service signup flow, matching the proven 2026 setup.
+
+## 3. Create the commissioner account
+
+Create the commissioner user in Supabase Auth, copy its UUID, then run:
+
+```sql
+insert into public.admins (user_id)
+values ('PASTE-COMMISSIONER-UUID-HERE');
 ```
-The anon key is safe to ship in a public file — it only ever grants what the
-RLS policies and RPC functions above allow, which is why all the actual
-business logic lives in `schema.sql` rather than trusted client code.
 
-## 4. Set up the GitHub repo
-1. Push this whole folder to a new GitHub repo.
-2. Repo → Settings → Secrets and variables → Actions → add two secrets:
-   - `SUPABASE_URL` — same project URL as above
-   - `SUPABASE_SERVICE_KEY` — the service_role key (NOT the anon key)
-3. Repo → Settings → Pages → deploy from the `main` branch, root folder.
-4. The workflow in `.github/workflows/update-scores.yml` will start running
-   automatically on its schedule once merged. You can also trigger it by
-   hand from the Actions tab (Run workflow → optionally type a week number)
-   any time you want to force a refresh or backfill early weeks for testing.
+## 4. Add GitHub Actions secrets
 
-## 5. Before the season — testing
-Right now (7 weeks out), the `games` table is empty, so:
-- Signup and "My Pick" will show no options until at least Week 1's games
-  exist in the table.
-- To test end-to-end today, manually trigger the GitHub Action once (Actions
-  tab → Update SEC Survivor scores → Run workflow → week `1`) — this pulls
-  the real Week 1 schedule (kickoff times included) even though the games
-  haven't been played, letting you sign up and submit a real test pick.
-- To remove a test pick/player entirely, either use the Commissioner panel's
-  delete button, or just delete the row directly in Supabase's table editor
-  — you have full access there regardless of what the app's UI exposes.
+Add these repository secrets:
 
-## 6. Season-start checklist
-- [ ] Confirm the Week 1 games loaded correctly (Supabase table editor →
-      `games`, filter week = 1) before announcing signup is open.
-- [ ] Double check `week_deadline(1)` returns the Saturday you expect:
-      run `select week_deadline(1);` in the SQL editor.
-- [ ] Share the site URL with the group — no individual links needed, since
-      signup is self-serve.
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY` — the public anon/client key
+- `SUPABASE_SERVICE_KEY` — the private service-role key
+
+The service-role key is used only by GitHub Actions and must never be put into browser code.
+
+## 5. Upload the schedule workbook
+
+Put the completed Excel workbook in the repository's `data/` folder.
+
+Normally there should be exactly one `.xlsx` workbook there.
+
+## 6. Initialize the season
+
+Open:
+
+**GitHub → Actions → Initialize Football Season → Run workflow**
+
+Usually both inputs can be left blank:
+
+- the year is inferred from the workbook filename when it contains `20XX`;
+- the workbook is inferred when it is the only `.xlsx` file in `data/`.
+
+The workflow will:
+
+1. validate the workbook;
+2. read its P4/G5/FCS color classifications;
+3. match every game against ESPN;
+4. resolve canonical home/away and exact kickoff timestamps;
+5. refuse to proceed if the Supabase project already contains players or picks;
+6. load the `games` table;
+7. load `opponent_classification`;
+8. verify the database exactly matches the normalized workbook;
+9. generate `season.json`;
+10. generate browser-safe `app-config.js`;
+11. save `data/normalized-schedule.json` as an auditable normalized copy.
+
+If validation fails, fix the workbook or a deliberate name alias and rerun it. A validation failure occurs before schedule data is written.
+
+## 7. Turn on GitHub Pages and test
+
+Deploy GitHub Pages from `main`, root folder, as in 2026.
+
+Before opening signups:
+
+- confirm the Picks Grid shows the expected schedule;
+- inspect a few Thursday/Friday games to confirm kickoff locking;
+- inspect P4/G5/FCS eligibility;
+- test signup and Week 1 submission;
+- test commissioner login.
+
+## 8. Normal season operation
+
+The existing **Update SEC Survivor scores** workflow reads `season.json`, so it no longer contains hardcoded 2026 dates or year values.
+
+The final 2026 rules are preserved in the reusable engine, including:
+
+- one team may be used only once;
+- nonconference/G5 limits;
+- FCS opponents are ineligible;
+- Saturday 10:59am Central reveal/lock;
+- earlier Thursday/Friday kickoff locks;
+- missed-pick elimination;
+- final-week dead-man switch preserving a lone winner or a zero-survivor finish.
